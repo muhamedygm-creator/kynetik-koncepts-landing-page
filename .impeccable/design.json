@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T11:52:57.000Z",
+  "title": "Design System: Kynetik Koncepts",
+  "extensions": {
+    "colorMeta": {
+      "vintage-yellow": {
+        "role": "primary",
+        "displayName": "Vintage Yellow",
+        "canonical": "oklch(82.1% 0.123 85.1)",
+        "tonalRamp": ["#492400", "#6B4500", "#926A00", "#BB912D", "#E2B758", "#FFD879", "#FFEF90", "#FFFBF0"]
+      },
+      "kynetik-black": {
+        "role": "neutral",
+        "displayName": "Kynetik Black",
+        "canonical": "oklch(24.4% 0.000 89.9)",
+        "tonalRamp": ["#0B0B0B", "#2E2E2E", "#4D4D4D", "#717171", "#989898", "#BEBEBE", "#DEDEDE", "#F5F5F5"]
+      },
+      "carbon-grey": {
+        "role": "neutral",
+        "displayName": "Carbon Grey",
+        "canonical": "oklch(32.9% 0.000 89.9)",
+        "tonalRamp": ["#0B0B0B", "#2E2E2E", "#4D4D4D", "#717171", "#989898", "#BEBEBE", "#DEDEDE", "#F5F5F5"]
+      },
+      "foster-white": {
+        "role": "neutral",
+        "displayName": "Foster White",
+        "canonical": "oklch(94.3% 0.000 89.9)",
+        "tonalRamp": ["#0B0B0B", "#2E2E2E", "#4D4D4D", "#717171", "#989898", "#BEBEBE", "#DEDEDE", "#F5F5F5"]
+      },
+      "olive-green": {
+        "role": "neutral",
+        "displayName": "Olive Green (retired)",
+        "canonical": "oklch(58.1% 0.127 109.8)",
+        "tonalRamp": ["#343000", "#535100", "#777700", "#9E9E34", "#C3C55E", "#E3E57E", "#FAFD95", "#FDFED0"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The largest headline on a page: hero, section H1-scale moments. Always uppercase." },
+      "headline": { "displayName": "Headline", "purpose": "Standard section headline (.h2), following every section's eyebrow + hairline." },
+      "body": { "displayName": "Body", "purpose": "Running body copy and sub-line intros under headlines." },
+      "label": { "displayName": "Label / Mono", "purpose": "Indices, meta lines, nav links, footer legal text, stage tags — anything numeric or meta is set in mono to read as data." }
+    },
+    "shadows": [
+      { "name": "active-glow", "value": "0 0 12px rgba(233,190,95,0.7)", "purpose": "The Process rail's active-stage dot only. The single permitted glow in an otherwise flat system — marks current state, never decorative." }
+    ],
+    "motion": [
+      { "name": "ease-precise", "value": "cubic-bezier(.22,.61,.36,1)", "purpose": "The system's one easing curve, used for every hover/reveal/scroll transition." },
+      { "name": "dur-slow", "value": "900ms", "purpose": "Section-level reveals (hairline draw-in, tile fade)." },
+      { "name": "dur-med", "value": "500ms", "purpose": "Hover/reveal transitions (hairline extend, description reveal, button color change)." },
+      { "name": "dur-fast", "value": "220ms", "purpose": "Micro-interactions (link color change, magnetic button snap-back)." }
+    ],
+    "breakpoints": [
+      { "name": "nav", "value": "768px / 960px" },
+      { "name": "tile-grid-sm", "value": "600px" },
+      { "name": "tile-grid-md", "value": "900px / 1000px" },
+      { "name": "impact-columns", "value": "700px" },
+      { "name": "process-mobile", "value": "860px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one CTA style. Hard corners, Vintage Yellow fill, uppercase mono-tracked label.",
+      "html": "<button class=\"ds-btn-primary\">START A BUILD</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display, 'Space Grotesk', sans-serif); font-weight: 700; font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 17px 30px; border: none; border-radius: 0; background: var(--vintage-yellow, #E9BE5F); color: var(--kynetik-black, #202020); transition: background 500ms cubic-bezier(.22,.61,.36,1); } .ds-btn-primary:hover, .ds-btn-primary:focus-visible { background: #f2cd7d; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action style (e.g. View / Download links).",
+      "html": "<button class=\"ds-btn-ghost\">DOWNLOAD</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display, 'Space Grotesk', sans-serif); font-weight: 700; font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 17px 30px; border-radius: 0; background: transparent; color: var(--foster-white, #ECECEC); border: 1px solid rgba(236,236,236,0.35); transition: border-color 500ms cubic-bezier(.22,.61,.36,1), color 500ms cubic-bezier(.22,.61,.36,1); } .ds-btn-ghost:hover, .ds-btn-ghost:focus-visible { border-color: var(--vintage-yellow, #E9BE5F); color: var(--vintage-yellow, #E9BE5F); }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Primary navigation link, uppercase mono-tracked, low-opacity at rest.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">OFFERING</a>",
+      "css": ".ds-nav-link { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.85; color: var(--foster-white, #ECECEC); text-decoration: none; padding-bottom: 4px; position: relative; transition: opacity 220ms cubic-bezier(.22,.61,.36,1); } .ds-nav-link:hover, .ds-nav-link:focus-visible { opacity: 1; color: var(--vintage-yellow, #E9BE5F); }"
+    },
+    {
+      "name": "Numbered Tile",
+      "kind": "card",
+      "refersTo": "numbered-tile",
+      "description": "The system's signature repeating content unit (Offerings, What We Make): mono index, uppercase title, hairline rule that extends on hover, description revealed on hover (unconditionally visible on touch).",
+      "html": "<article class=\"ds-tile\" tabindex=\"0\"><p class=\"ds-tile-index\">01</p><h3 class=\"ds-tile-title\">3D Scanning &amp; Modeling</h3><hr class=\"ds-tile-rule\"><p class=\"ds-tile-desc\">We scan and model every surface in three dimensions, the exact foundation a perfect carbon fit demands.</p></article>",
+      "css": ".ds-tile { position: relative; background: var(--kynetik-black, #202020); border-top: 1px solid var(--vintage-yellow, #E9BE5F); padding: 32px 30px; min-height: 230px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; transition: background 900ms cubic-bezier(.22,.61,.36,1); } .ds-tile:hover, .ds-tile:focus-visible { background: rgba(233,190,95,0.05); } .ds-tile-index { font-family: var(--font-mono, 'IBM Plex Mono', monospace); color: var(--vintage-yellow, #E9BE5F); font-size: 0.78rem; letter-spacing: 0.1em; margin: 0 0 auto; } .ds-tile-title { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; font-size: 1.05rem; line-height: 1.25; margin: 24px 0 10px; } .ds-tile-rule { width: 28px; height: 1px; background: var(--vintage-yellow, #E9BE5F); border: 0; margin: 0 0 12px; transition: width 500ms cubic-bezier(.22,.61,.36,1); } .ds-tile:hover .ds-tile-rule, .ds-tile:focus-visible .ds-tile-rule { width: 56px; } .ds-tile-desc { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: 0.78rem; line-height: 1.55; color: rgba(236,236,236,0.55); max-height: 0; opacity: 0; overflow: hidden; margin: 0; transition: max-height 500ms cubic-bezier(.22,.61,.36,1), opacity 220ms cubic-bezier(.22,.61,.36,1); } .ds-tile:hover .ds-tile-desc, .ds-tile:focus-visible .ds-tile-desc { max-height: 90px; opacity: 1; }"
+    },
+    {
+      "name": "Value Column",
+      "kind": "custom",
+      "refersTo": "value-column",
+      "description": "Full-width statement column (What We Stand For): a large de-emphasised number, title, hairline, hover-revealed description. A tall variant of the Numbered Tile pattern for a five-across statement layout rather than a grid of cards.",
+      "html": "<div class=\"ds-value\" tabindex=\"0\"><p class=\"ds-value-num\">01</p><p class=\"ds-value-title\">Design Fidelity</p><hr class=\"ds-value-rule\"><p class=\"ds-value-desc\">Every line stays true to the sketch that started it. Nothing is value-engineered away.</p></div>",
+      "css": ".ds-value { position: relative; border-left: 1px solid rgba(236,236,236,0.22); padding: 0 28px; min-height: 300px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; transition: background 900ms cubic-bezier(.22,.61,.36,1); } .ds-value:hover, .ds-value:focus-visible { background: rgba(236,236,236,0.03); } .ds-value-num { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: clamp(2.2rem,4vw,3.4rem); line-height: 1; color: rgba(236,236,236,0.22); margin: 0; transition: color 500ms cubic-bezier(.22,.61,.36,1); } .ds-value:hover .ds-value-num, .ds-value:focus-visible .ds-value-num { color: rgba(236,236,236,0.4); } .ds-value-title { margin: 20px 0 0; font-family: var(--font-display, 'Space Grotesk', sans-serif); font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; font-size: 1.1rem; color: var(--foster-white, #ECECEC); } .ds-value-rule { width: 28px; height: 1px; background: var(--vintage-yellow, #E9BE5F); border: 0; margin: 16px 0 12px; transition: width 500ms cubic-bezier(.22,.61,.36,1); } .ds-value:hover .ds-value-rule, .ds-value:focus-visible .ds-value-rule { width: 56px; } .ds-value-desc { font-family: var(--font-mono, 'IBM Plex Mono', monospace); font-size: 0.78rem; line-height: 1.55; color: rgba(236,236,236,0.55); max-width: 26ch; max-height: 0; opacity: 0; overflow: hidden; margin: 0; transition: max-height 500ms cubic-bezier(.22,.61,.36,1), opacity 220ms cubic-bezier(.22,.61,.36,1); } .ds-value:hover .ds-value-desc, .ds-value:focus-visible .ds-value-desc { max-height: 100px; opacity: 1; }"
+    },
+    {
+      "name": "Hairline",
+      "kind": "custom",
+      "refersTo": "hairline",
+      "description": "The system's single recurring signature gesture: a 1px rule that draws in from width 0 to 56px as its section scrolls into view, and extends further on hover at component scale. Reuse this for any new divider, underline, or active-state indicator instead of inventing a new one.",
+      "html": "<div class=\"ds-section\"><p class=\"ds-eyebrow\">Offerings</p><hr class=\"ds-hairline is-in\"></div>",
+      "css": ".ds-eyebrow { font-family: var(--font-display, 'Space Grotesk', sans-serif); font-weight: 600; text-transform: uppercase; letter-spacing: 0.24em; font-size: 0.78rem; color: var(--vintage-yellow, #E9BE5F); margin: 0; } .ds-hairline { width: 0; height: 1px; background: var(--vintage-yellow, #E9BE5F); border: 0; margin: 22px 0 0; transition: width 1.1s cubic-bezier(.22,.61,.36,1); } .ds-hairline.is-in { width: 56px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Coachbuilder's Blueprint",
+    "overview": "Kynetik Koncepts reads like a workshop drawing, not a SaaS marketing site: numbered indices, monospace labels, hairline rules, and full-bleed real photography stand in for the decoration a typical luxury-brand microsite would reach for. The system is restrained, precise, and technical — every element earns its place through repetition and discipline (01 through 09, always), not through embellishment. Vintage Yellow is spent like a signature stamp, not a paint color: it marks the thing that matters on a given screen (an eyebrow, a hairline, the one CTA) and stays absent everywhere else. Depth and warmth come from the real photography and deep, near-black grounds, not from surface treatment. Type stays quiet and functional so the car photography and the workshop-drawing motifs (indices, rails, hairlines) carry the emotional weight instead.",
+    "keyCharacteristics": [
+      "Flat-by-default: no card shadows anywhere; the one exception (a soft glow on the Process rail's active-stage dot) is a deliberate, rare signal, never decoration.",
+      "Sharp corners everywhere except true circles (cursor ring/dot, the rail's progress dot, the reduced-motion process icon badge) — no soft-rounded cards.",
+      "Every tile, panel, and value column carries a two-digit mono index (01, 02, 03...) like a catalogue or blueprint sheet entry.",
+      "Resting state is deliberately plain; craft shows up in the hover/reveal transition (hairline extends, description reveals), not the default state."
+    ],
+    "rules": [
+      { "name": "The One Accent Rule", "body": "Vintage Yellow appears on a small fraction of any given screen — an eyebrow, a hairline, one button, a handful of index numbers. If a new element reaches for a second saturated color, that's the signal something has gone off-brand.", "section": "colors" },
+      { "name": "The Gold-on-Olive Rule", "body": "The Vintage Yellow accent must never sit directly on Olive Green — a strict brand-guideline rule preserved even though Olive Green isn't in current use.", "section": "colors" },
+      { "name": "The Uppercase-and-Tracked Rule", "body": "Anything set in Space Grotesk is uppercase with deliberate letter-spacing; the font never appears in sentence case. Reserve sentence-case, tighter-tracked type for Helvetica body copy only.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces stay flat at rest. The only depth cue permitted is the Vintage Yellow glow, and only to mark active/current state on a progress indicator — never applied to cards, buttons, or panels for decoration.", "section": "elevation" },
+      { "name": "The Hairline Rule", "body": "Every section headline is followed by a 1px Vintage Yellow rule that animates from width:0 to 56px as the section scrolls into view, and the same motif reappears at tile/component scale, extending from 28px to 56px on hover. Any new section or component that needs a divider, underline, or active-state indicator should reuse this pattern rather than inventing a new one.", "section": "components" }
+    ],
+    "dos": [
+      "Do reserve Vintage Yellow for one signal per screen — an eyebrow, a hairline, one button, index numbers. Never a second saturated color alongside it.",
+      "Do reuse the hairline-draw / hairline-extend motif for new dividers, underlines, or active-state indicators (see The Hairline Rule).",
+      "Do keep new \"labeled item\" grids (cards, tiles, columns) in the Numbered Tile pattern: mono index, uppercase title, hairline rule, hover/touch-revealed description.",
+      "Do make any newly revealed content (a hover description, an expanded detail) unconditionally visible under max-width:900px so touch devices aren't locked out of it.",
+      "Do match real photography to a section by what it actually depicts; flag a gap rather than force a mismatch (see PRODUCT.md's Product Principles)."
+    ],
+    "donts": [
+      "Don't add card shadows, glassmorphism, or gradient fills. The system is flat by default; the only permitted glow is the Vintage Yellow active-state signal on the Process rail.",
+      "Don't introduce an intermediate border-radius. Corners are either hard 0px or true 50% circles.",
+      "Don't reopen the Carbon Grey ground on the Impact section as a \"make it more colorful\" problem — it's a confirmed brand choice; layout, spacing, and interaction are the tools for fixing a flat-feeling section, not color.",
+      "Don't place the Vintage Yellow accent directly on Olive Green, even though Olive Green is currently unused (The Gold-on-Olive Rule).",
+      "Don't set Space Grotesk in sentence case, or drop its uppercase/tracked treatment — that contrast against Helvetica body copy is what gives the hierarchy its structure."
+    ]
+  }
+}
