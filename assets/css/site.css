@@ -366,16 +366,26 @@
 
   /* left: the visual, full height, dominant */
   .stage-visual{ position:relative; width:64%; height:100%; overflow:hidden; background:var(--carbon-grey); }
-  .stage-visual .panel{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity var(--dur-slow) var(--ease-precise); }
+  .stage-visual .panel{ position:absolute; inset:0; overflow:hidden; opacity:0; transition:opacity var(--dur-slow) var(--ease-precise); }
   @media (prefers-reduced-motion: reduce){ .stage-visual .panel{ transition:none; } }
   .stage-visual .panel.is-active{ opacity:1; }
+  /* round 4: full-bleed photo per stage, replacing the centred vector icon —
+     filter/scale match .make-tile's photographic treatment for consistency.
+     A bottom scrim keeps .stage-tag legible over whatever the photo is. */
+  .stage-visual .panel img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    filter:grayscale(0.1) contrast(1.05);
+  }
   .stage-visual .panel .weave{
-    position:absolute; inset:0;
+    position:absolute; inset:0; z-index:2;
     background-image:
       repeating-linear-gradient(45deg, rgba(233,190,95,0.05) 0 2px, transparent 2px 14px),
       repeating-linear-gradient(-45deg, rgba(236,236,236,0.04) 0 2px, transparent 2px 14px);
   }
-  .stage-visual .panel svg{ width:34%; max-width:280px; position:relative; z-index:2; }
+  .stage-visual .panel::after{
+    content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(180deg, rgba(32,32,32,0) 45%, rgba(32,32,32,0.55) 78%, rgba(32,32,32,0.85) 100%);
+  }
   .stage-visual .stage-tag{ position:absolute; bottom:28px; left:28px; z-index:3; font-size:0.68rem; letter-spacing:0.12em; color:rgba(236,236,236,0.5); }
 
   /* right: content + rail */
@@ -409,7 +419,6 @@
     .stage-content{ width:100%; height:56%; padding:28px 24px calc(100px + env(safe-area-inset-bottom, 0px)); }
     .stage-content__count{ left:24px; top:24px; }
     .rail{ left:24px; right:24px; bottom:calc(28px + env(safe-area-inset-bottom, 0px)); }
-    .stage-visual .panel svg{ width:24%; }
   }
 
   /* ---------- the process, reduced-motion static fallback ----------
