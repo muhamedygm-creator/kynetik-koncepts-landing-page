@@ -269,7 +269,7 @@
     transition:background var(--dur-slow) var(--ease-precise), opacity var(--dur-slow) var(--ease-precise), transform var(--dur-slow) var(--ease-precise), padding var(--dur-med) var(--ease-precise), min-height var(--dur-med) var(--ease-precise);
   }
   .offer-tile.is-visible{ opacity:1; transform:translateY(0); }
-  .offer-tile:hover{ background:rgba(233,190,95,0.05); }
+  .offer-tile:is(:hover, :focus-within){ background:rgba(233,190,95,0.05); }
   /* continuous cursor-tracked spotlight — updated on mousemove in JS, so the
      tile responds to where the pointer actually is rather than a flat
      hover on/off. Sits below .offer-tile__weave so both can layer. */
@@ -278,14 +278,14 @@
     background:radial-gradient(260px circle at var(--mx) var(--my), rgba(233,190,95,0.14), transparent 72%);
     transition:opacity var(--dur-med) var(--ease-precise);
   }
-  .offer-tile:hover::before{ opacity:1; }
+  .offer-tile:is(:hover, :focus-within)::before{ opacity:1; }
   .offer-tile__weave{
     position:absolute; inset:0; opacity:0; transition:opacity var(--dur-med) var(--ease-precise); pointer-events:none;
     background-image:
       repeating-linear-gradient(45deg, rgba(233,190,95,0.06) 0 2px, transparent 2px 14px),
       repeating-linear-gradient(-45deg, rgba(236,236,236,0.03) 0 2px, transparent 2px 14px);
   }
-  .offer-tile:hover .offer-tile__weave{ opacity:1; }
+  .offer-tile:is(:hover, :focus-within) .offer-tile__weave{ opacity:1; }
   @media (prefers-reduced-motion: reduce){
     .offer-tile{ opacity:1; transform:none; transition:background var(--dur-slow) var(--ease-precise); }
     .offer-tile::before{ display:none; }
@@ -297,19 +297,29 @@
   .offer-tile__bottom{ position:relative; z-index:2; }
   .offer-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; max-width:20ch; margin-bottom:10px; }
   .offer-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:0 0 12px; transition:width var(--dur-med) var(--ease-precise); }
-  .offer-tile:hover .offer-tile__rule{ width:56px; }
+  .offer-tile:is(:hover, :focus-within) .offer-tile__rule{ width:56px; }
   /* round 4: was transition:max-height (flagged by /impeccable detect as
      layout-transition — animating max-height forces a reflow every frame).
      Replaced with a compositor-only opacity+transform reveal; the desc now
      always occupies its natural layout space (no more 0-height collapse),
      so .offer-tile is uniformly taller than the old resting state by
      roughly the height of its description text. */
+  /* was font-family:var(--font-mono) — DESIGN.md reserves mono for "data,
+     not prose"; this is full-sentence trust copy, permanently visible on
+     touch, so it reads as body text, not a label. */
   .offer-tile__desc{
-    font-family:var(--font-mono); font-size:0.78rem; line-height:1.55; color:rgba(236,236,236,0.55);
+    font-family:var(--font-body); font-size:0.85rem; line-height:1.6; color:rgba(236,236,236,0.6);
     opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
-  .offer-tile:hover .offer-tile__desc{ opacity:1; transform:translateY(0); }
-  @media(max-width:900px){ .offer-tile__desc{ opacity:1; transform:none; } }
+  .offer-tile:is(:hover, :focus-within) .offer-tile__desc{ opacity:1; transform:translateY(0); }
+  /* touch has no hover, so mobile got only the flat, always-visible desc
+     while desktop also got the weave texture + extended hairline "craft"
+     signal. Give touch the same signal permanently rather than only on tap. */
+  @media(max-width:900px){
+    .offer-tile__desc{ opacity:1; transform:none; }
+    .offer-tile__weave{ opacity:1; }
+    .offer-tile__rule{ width:56px; }
+  }
   @media (prefers-reduced-motion: reduce){ .offer-tile__desc{ transform:none; } }
 
   /* ---------- what we make: photo grid (round 4 — rebuilt section) ----------
@@ -331,29 +341,34 @@
     width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(0.15) contrast(1.05);
     transform:scale(1.04); transition:transform var(--dur-slow) var(--ease-precise), filter var(--dur-slow) var(--ease-precise);
   }
-  .make-tile:hover .make-tile__media img{ transform:scale(1.1); filter:grayscale(0) contrast(1.05); }
+  .make-tile:is(:hover, :focus-within) .make-tile__media img{ transform:scale(1.1); filter:grayscale(0) contrast(1.05); }
   .make-tile__scrim{
     position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(32,32,32,0) 35%, rgba(32,32,32,0.55) 68%, rgba(32,32,32,0.92) 100%);
     transition:background var(--dur-med) var(--ease-precise);
   }
-  .make-tile:hover .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); }
+  .make-tile:is(:hover, :focus-within) .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); }
   .make-tile__body{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 22px 24px; }
   .make-tile__index{ font-family:var(--font-mono); color:var(--vintage-yellow); font-size:0.78rem; letter-spacing:0.1em; margin-bottom:8px; }
   .make-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; }
   .make-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:12px 0; transition:width var(--dur-med) var(--ease-precise); }
-  .make-tile:hover .make-tile__rule{ width:56px; }
+  .make-tile:is(:hover, :focus-within) .make-tile__rule{ width:56px; }
   /* round 4: was transition:max-height (flagged by /impeccable detect as
      layout-transition). Replaced with opacity+transform; .make-tile__body
      already overlays the photo via position:absolute, so the desc's now-
      permanent layout space just sits within the existing bottom scrim
      rather than pushing the tile (which has a fixed aspect-ratio anyway). */
   .make-tile__desc{
-    font-family:var(--font-mono); font-size:0.76rem; line-height:1.55; color:rgba(236,236,236,0.75);
+    font-family:var(--font-body); font-size:0.85rem; line-height:1.6; color:rgba(236,236,236,0.8);
     opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
-  .make-tile:hover .make-tile__desc{ opacity:1; transform:translateY(0); }
-  @media(max-width:900px){ .make-tile__desc{ opacity:1; transform:none; } .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); } }
+  .make-tile:is(:hover, :focus-within) .make-tile__desc{ opacity:1; transform:translateY(0); }
+  @media(max-width:900px){
+    .make-tile__desc{ opacity:1; transform:none; }
+    .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); }
+    .make-tile__rule{ width:56px; }
+    .make-tile__media img{ filter:grayscale(0) contrast(1.05); }
+  }
   @media (prefers-reduced-motion: reduce){ .make-tile__desc{ transform:none; } }
   @media (prefers-reduced-motion: reduce){ .make-tile__media img{ transition:none; } }
 
@@ -485,27 +500,34 @@
     .value-tag:first-child{ border-left:none; padding-left:0; }
     .value-tag:last-child{ padding-right:0; }
   }
-  .value-tag:hover{ background:rgba(236,236,236,0.03); }
+  .value-tag:is(:hover, :focus-within){ background:rgba(236,236,236,0.03); }
   .value-tag__num{
     font-family:var(--font-mono); font-size:clamp(2.2rem,4vw,3.4rem); line-height:1;
     color:rgba(236,236,236,0.22); transition:color var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
     transform-origin:left center;
   }
-  .value-tag:hover .value-tag__num{ color:rgba(236,236,236,0.4); transform:scale(1.06); }
+  .value-tag:is(:hover, :focus-within) .value-tag__num{ color:rgba(236,236,236,0.4); transform:scale(1.06); }
   .value-tag__title{ margin-top:20px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.1rem; }
   .value-tag__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:16px 0 12px; transition:width var(--dur-med) var(--ease-precise); }
-  .value-tag:hover .value-tag__rule{ width:56px; }
+  .value-tag:is(:hover, :focus-within) .value-tag__rule{ width:56px; }
   /* round 4: was transition:max-height (flagged by /impeccable detect as
      layout-transition). Replaced with opacity+transform; the column is
      now uniformly taller than the old resting state by the height of its
      description text (min-height:300px above absorbs most of this). */
+  /* font-family body not mono (trust copy, not a label); color bumped from
+     0.55 to 0.64 opacity — 0.55 over Carbon Grey computed to ~4.36:1, just
+     under the 4.5:1 AA floor for this text size. */
   .value-tag__desc{
-    font-family:var(--font-mono); font-size:0.78rem; line-height:1.55; color:rgba(236,236,236,0.55); max-width:26ch;
+    font-family:var(--font-body); font-size:0.9rem; line-height:1.6; color:rgba(236,236,236,0.64); max-width:26ch;
     opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
-  .value-tag:hover .value-tag__desc{ opacity:1; transform:translateY(0); }
-  @media(max-width:900px){ .value-tag__desc{ opacity:1; transform:none; max-width:none; } }
-  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:hover .value-tag__num{ transform:none; } .value-tag__desc{ transform:none; } }
+  .value-tag:is(:hover, :focus-within) .value-tag__desc{ opacity:1; transform:translateY(0); }
+  @media(max-width:900px){
+    .value-tag__desc{ opacity:1; transform:none; max-width:none; }
+    .value-tag__rule{ width:56px; }
+    .value-tag__num{ color:rgba(236,236,236,0.4); }
+  }
+  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:is(:hover, :focus-within) .value-tag__num{ transform:none; } .value-tag__desc{ transform:none; } }
 
   /* ---------- counters ---------- */
   .counters{ margin-top:56px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:32px; }
@@ -546,7 +568,7 @@
   .footer__social a{ color:var(--foster-white); opacity:0.7; display:flex; transition:color var(--dur-fast) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise); }
   .footer__social a:hover{ color:var(--vintage-yellow); opacity:1; }
 
-  a:focus-visible, button:focus-visible{ outline:2px solid var(--vintage-yellow); outline-offset:3px; }
+  a:focus-visible, button:focus-visible, .offer-tile:focus-visible, .make-tile:focus-visible, .value-tag:focus-visible{ outline:2px solid var(--vintage-yellow); outline-offset:3px; }
 
   /* ==========================================================================
      ADDED FOR SITE EXPANSION (pedigree / projects / downloads)
