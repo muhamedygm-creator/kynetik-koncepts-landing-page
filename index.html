@@ -174,12 +174,25 @@
        "The Origin" and "The Return of the Coachbuilder" (next section) are
        grouped under one #history anchor for the new 5-item nav; id lives on
        this first sub-block, both keep their original copy untouched. ============ -->
+  <!-- Round 5: full redesign. The text column used to top-align a
+       standard eyebrow/h2/sub-line block inside a tall split, leaving
+       dead air below it that didn't match the image's full height. Kept
+       the split (not full-bleed — Proven and the section right after
+       this one both already use a dimmed-photo-ground formula, and
+       stacking a third instance of it back to back would recreate the
+       "everything looks the same" problem this round exists to fix).
+       Instead the text side now carries real weight of its own: a
+       pull-quote-scale headline (clamp up near hero/h1 size, not the
+       standard .h2 step) with the column laid out top-to-bottom via
+       flex + space-between, so the eyebrow sits at the top, the quote
+       dominates the middle, and the sub-line anchors the bottom —
+       filling the frame the way the image already does. -->
   <section class="section ground-black js-scrub-section" id="history">
-    <div class="wrap split">
-      <div>
+    <div class="wrap split split--history">
+      <div class="split__content">
         <p class="eyebrow">History · The Origin</p>
         <hr class="hairline">
-        <h2 class="display h2 js-scrub" style="margin-top:26px;">A car was once the work of two hands.</h2>
+        <blockquote class="split__quote display js-scrub">A car was once the work of two hands.</blockquote>
         <p class="sub-line">Kynetik exists to restore what was lost.</p>
       </div>
       <!-- Round 4: replaced per explicit instruction — the old spoiler
@@ -200,20 +213,40 @@
     </div>
   </section>
 
-  <!-- ============ 4. THE RETURN OF THE COACHBUILDER — BLACK ============ -->
-  <!-- SOURCE: 7.jpg — matte black Rolls-Royce, low front 3/4, deep blacks
-       retained: the strongest "full exterior, dramatic angle" shot left
-       after the hero, used here as a dimmed ambient backdrop. -->
-  <section class="section ground-black js-scrub-section section--photo">
-    <div class="media media--ambient" aria-hidden="true">
-      <img src="assets/img/return-rolls.jpg" alt="" loading="lazy">
-      <div class="media__scrim"></div>
-    </div>
-    <div class="wrap" style="max-width:760px;">
+  <!-- ============ 4. THE RETURN OF THE COACHBUILDER — BLACK ============
+       Round 5: dropped the dimmed-photo-background treatment (return-
+       rolls.jpg) entirely. Proven, right after this section, already
+       owns that exact formula (dimmed ambient photo + centred short
+       line) — keeping it here too was the reason these two sections read
+       as the same thing repeated. Distinction now comes from structure,
+       not photography: a real stat row (build categories, capabilities,
+       location — all facts already established elsewhere on the real
+       site, nothing invented) in the site's existing large-mono-number +
+       label vocabulary (the same idea as the Impact value columns, just
+       without the hover-reveal since there's no extra copy to hide). No
+       ground colour change — still ground-black, per the One Accent Rule
+       this isn't a colour problem to solve with a new palette. -->
+  <section class="section ground-black js-scrub-section">
+    <div class="wrap" style="max-width:820px;">
       <p class="eyebrow">The Return of the Coachbuilder</p>
       <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px;">Carbon fibre is our coachwork, modern platforms are our chassis.</h2>
+      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:16ch;">Carbon fibre is our coachwork, modern platforms are our chassis.</h2>
       <p class="accent-line">Energy in motion.</p>
+
+      <div class="return-stats">
+        <div class="return-stat">
+          <p class="return-stat__num mono">05</p>
+          <p class="return-stat__label">Build categories</p>
+        </div>
+        <div class="return-stat">
+          <p class="return-stat__num mono">09</p>
+          <p class="return-stat__label">Capabilities, one roof</p>
+        </div>
+        <div class="return-stat">
+          <p class="return-stat__num mono">DXB</p>
+          <p class="return-stat__label">Dubai, UAE</p>
+        </div>
+      </div>
     </div>
   </section>
 
