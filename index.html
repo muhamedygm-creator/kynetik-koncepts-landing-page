@@ -76,147 +76,15 @@
       <p class="hero__sub">The modern coachbuilder, Dubai.</p>
       <div class="hero__cta-row">
         <a class="btn btn--primary js-cursor-target js-magnetic" href="#contact">Bring us the car you love</a>
-        <a class="btn btn--ghost js-cursor-target js-magnetic" href="#offering">See what we make</a>
+        <a class="btn btn--ghost js-cursor-target js-magnetic" href="offering.html">See what we make</a>
       </div>
     </div>
     <div class="hero__scroll-cue"><span class="hero__scroll-cue-line"></span> Scroll</div>
   </section>
 
-  <!-- ============ 2. OFFERINGS — BLACK, GRID ============
-       Round 3: full redesign against the approved prototype
-       (claude.ai/artifact/PpvqfPrvT3jF6FpRztvhTy), which is the literal
-       source of truth for this markup/CSS, not a reinterpretation. Real
-       names/order and the round-2 descriptions are unchanged; what's new
-       is the interaction: a carbon-weave texture fades in behind the tile
-       on hover, the gold hairline under the title grows 28px -> 56px, and
-       the one-line description reveals with it. Custom per-offering line
-       icons (inline, not the old oi-* <use> refs — that shared <defs>
-       block in The Process section is removed along with the Process
-       rewrite below). No .js-hover-card tap-toggle here: per the round-3
-       brief, mobile has no hover state to rely on, so .offer-tile__desc is
-       simply always visible <=900px via CSS, no JS needed (the old
-       tap-to-reveal handler in site-interactions.js is removed with this
-       change, since these tiles were its only caller). -->
-  <section class="section ground-black js-scrub-section" id="offering">
-    <div class="wrap">
-      <p class="eyebrow">Offerings</p>
-      <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:20ch;">One philosophy, nine ways to begin.</h2>
-      <p class="sub-line">Every one of these begins the same way: bring us the car, and the vision.</p>
-      <p class="sub-line" style="margin-top:6px; opacity:0.7;">Nine capabilities, one roof: design and engineering, carbon production, and fitment and finish, all done in-house.</p>
-
-      <div class="offerings-grid">
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">01</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><rect x="6" y="6" width="28" height="28" rx="1"/><path d="M6 15 H34 M6 25 H34 M15 6 V34 M25 6 V34" stroke-opacity=".5"/><circle cx="20" cy="20" r="3" fill="#e9be5f" stroke="none"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">3D Scanning &amp; Modeling</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">We scan and model every surface in three dimensions, the exact foundation a perfect carbon fit demands.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">02</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><path d="M8 32 L18 14 L24 24 L32 8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="14" r="2" fill="#e9be5f" stroke="none"/><circle cx="32" cy="8" r="2" fill="#e9be5f" stroke="none"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Engineering &amp; Development</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Engineering that keeps the platform dependable beneath the coachwork, refined until form and function agree.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">03</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><path d="M6 12 L20 6 L34 12 L34 28 L20 34 L6 28 Z"/><path d="M6 12 L20 18 L34 12 M20 18 V34"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Carbon Fiber Production</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Bespoke panels laid up and cured in carbon fibre, to the same standard on every build.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">04</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><path d="M10 30 V20 Q10 12 20 12 Q30 12 30 20 V30" stroke-linecap="round"/><path d="M8 30 H32" stroke-linecap="round"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Interior Customisation</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Bespoke cabins, retrims and carbon trim, composed to the taste of the owner who commissioned it.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">05</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><path d="M8 32 L26 14 L32 20 L14 32 Z"/><path d="M23 17 L29 23"/><path d="M8 32 L12 28 L8 24 Z" fill="#e9be5f" stroke="none"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Design &amp; Ideation</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Every build starts as a conversation, then a sketch, then a shape refined until it feels right.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">06</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><path d="M6 26 L11 15 H29 L34 26" stroke-linejoin="round"/><rect x="4" y="26" width="32" height="6" rx="1"/><circle cx="12" cy="32" r="2.4" fill="#202020"/><circle cx="28" cy="32" r="2.4" fill="#202020"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Vehicle Prototyping</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">We prototype and print before we cut carbon once, proving the fit before it becomes permanent.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">07</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><circle cx="20" cy="20" r="6"/><path d="M20 6 V11 M20 29 V34 M6 20 H11 M29 20 H34 M10 10 L13.5 13.5 M26.5 26.5 L30 30 M30 10 L26.5 13.5 M13.5 26.5 L10 30" stroke-linecap="round"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Fitment</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Every panel is test-fitted and installed by the same hands that built it, panel by panel.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">08</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><path d="M20 6 L32 12 V20 Q32 30 20 34 Q8 30 8 20 V12 Z"/><path d="M14 20 L18 24 L27 14" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">PPS &amp; Finish</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Protective coatings and finish work, all but invisible, done to concours standard.</p>
-          </div>
-        </article>
-        <article class="offer-tile js-cursor-target" tabindex="0">
-          <div class="offer-tile__weave" aria-hidden="true"></div>
-          <div class="offer-tile__top">
-            <p class="offer-tile__index">09</p>
-            <span class="offer-tile__icon"><svg viewBox="0 0 40 40" fill="none" stroke="#e9be5f" stroke-width="1.4"><circle cx="20" cy="20" r="14"/><circle cx="20" cy="20" r="4"/><path d="M20 6 V14 M20 26 V34 M6 20 H14 M26 20 H34 M9.5 9.5 L15 15 M25 25 L30.5 30.5 M30.5 9.5 L25 15 M15 25 L9.5 30.5" stroke-width="1"/></svg></span>
-          </div>
-          <div class="offer-tile__bottom">
-            <h3 class="offer-tile__title">Custom Wheels Design &amp; Production</h3>
-            <hr class="offer-tile__rule">
-            <p class="offer-tile__desc">Bespoke wheel designs, engineered and produced in-house to complete the car's one-of-one character.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+  <!-- Round 5: the old on-page Offerings section moved to its own
+       page, offering.html — same pattern as Pedigree. See offering.html
+       for the real copy and photography notes. -->
 
   <!-- ============ 2B. WHAT WE MAKE — BLACK, PHOTO GRID ============
        Round 4: this five-item build-category section had collapsed into

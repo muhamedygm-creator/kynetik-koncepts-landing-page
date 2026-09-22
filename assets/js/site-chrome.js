@@ -36,7 +36,7 @@
   var navActive = (document.body.getAttribute('data-nav-active') || '').trim();
 
   var NAV_ITEMS = [
-    { key: 'offering',         label: 'Offering',         href: p + 'index.html#offering' },
+    { key: 'offering',         label: 'Offering',         href: p + 'offering.html' },
     { key: 'pedigree',         label: 'Pedigree',         href: p + 'pedigree.html' },
     { key: 'history',          label: 'History',          href: p + 'index.html#history' },
     { key: 'impact',           label: 'Impact',           href: p + 'index.html#impact' },

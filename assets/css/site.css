@@ -372,6 +372,49 @@
   @media (prefers-reduced-motion: reduce){ .make-tile__desc{ transform:none; } }
   @media (prefers-reduced-motion: reduce){ .make-tile__media img{ transition:none; } }
 
+  /* ---------- offering.html: photo-led numbered tiles (round 5) ----------
+     Same pattern as .make-tile (Numbered Tile over full-bleed photography,
+     hover-reveal desc via opacity+transform, permanent weave/hairline/desc
+     on touch) — duplicated under its own name rather than reused directly
+     so a maintainer reading "make-tile" isn't misled onto an unrelated
+     page. 3-column desktop grid (9 items) instead of make-tile's 5. */
+  .offering-grid{ display:grid; grid-template-columns:1fr; gap:2px; margin-top:8px; }
+  @media(min-width:600px){ .offering-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:900px){ .offering-grid{ grid-template-columns:repeat(3,1fr); } }
+  .offering-tile{
+    position:relative; aspect-ratio:3/4; overflow:hidden; cursor:pointer;
+    background:var(--carbon-grey);
+  }
+  .offering-tile__media{ position:absolute; inset:0; }
+  .offering-tile__media img{
+    width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(0.15) contrast(1.05);
+    transform:scale(1.04); transition:transform var(--dur-slow) var(--ease-precise), filter var(--dur-slow) var(--ease-precise);
+  }
+  .offering-tile:is(:hover, :focus-within) .offering-tile__media img{ transform:scale(1.1); filter:grayscale(0) contrast(1.05); }
+  .offering-tile__scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(32,32,32,0) 35%, rgba(32,32,32,0.55) 68%, rgba(32,32,32,0.92) 100%);
+    transition:background var(--dur-med) var(--ease-precise);
+  }
+  .offering-tile:is(:hover, :focus-within) .offering-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); }
+  .offering-tile__body{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 22px 24px; }
+  .offering-tile__index{ font-family:var(--font-mono); color:var(--vintage-yellow); font-size:0.78rem; letter-spacing:0.1em; margin-bottom:8px; }
+  .offering-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; }
+  .offering-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:12px 0; transition:width var(--dur-med) var(--ease-precise); }
+  .offering-tile:is(:hover, :focus-within) .offering-tile__rule{ width:56px; }
+  .offering-tile__desc{
+    font-family:var(--font-body); font-size:0.85rem; line-height:1.6; color:rgba(236,236,236,0.8);
+    opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
+  }
+  .offering-tile:is(:hover, :focus-within) .offering-tile__desc{ opacity:1; transform:translateY(0); }
+  @media(max-width:900px){
+    .offering-tile__desc{ opacity:1; transform:none; }
+    .offering-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); }
+    .offering-tile__rule{ width:56px; }
+    .offering-tile__media img{ filter:grayscale(0) contrast(1.05); }
+  }
+  @media (prefers-reduced-motion: reduce){ .offering-tile__desc{ transform:none; } .offering-tile__media img{ transition:none; } }
+
   /* ---------- the process: pinned crossfade (round 3) ----------
      Full replacement against the approved prototype
      (claude.ai/artifact/RttwB5RuDMJB5Ma7FuGzjg) — ported directly, not
@@ -568,7 +611,7 @@
   .footer__social a{ color:var(--foster-white); opacity:0.7; display:flex; transition:color var(--dur-fast) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise); }
   .footer__social a:hover{ color:var(--vintage-yellow); opacity:1; }
 
-  a:focus-visible, button:focus-visible, .offer-tile:focus-visible, .make-tile:focus-visible, .value-tag:focus-visible{ outline:2px solid var(--vintage-yellow); outline-offset:3px; }
+  a:focus-visible, button:focus-visible, .offer-tile:focus-visible, .make-tile:focus-visible, .value-tag:focus-visible, .offering-tile:focus-visible{ outline:2px solid var(--vintage-yellow); outline-offset:3px; }
 
   /* ==========================================================================
      ADDED FOR SITE EXPANSION (pedigree / projects / downloads)
