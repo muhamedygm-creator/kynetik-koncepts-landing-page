@@ -233,7 +233,8 @@
      from that prototype, not reinterpreted. Replaces round 2's sliding
      translateY panel entirely: now a carbon-weave texture fades in behind
      the tile, the gold rule under the title grows, and the description
-     reveals via max-height/opacity, all on the same hover. Breakpoints
+     reveals via opacity/transform, all on the same hover (round 4: was
+     max-height, switched off animating a layout property). Breakpoints
      (900px/600px) match the prototype exactly rather than the site's usual
      640/960 grid convention. No JS: .offer-tile__desc is always visible
      <=900px since there's no hover state on touch. */
@@ -297,12 +298,19 @@
   .offer-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; max-width:20ch; margin-bottom:10px; }
   .offer-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:0 0 12px; transition:width var(--dur-med) var(--ease-precise); }
   .offer-tile:hover .offer-tile__rule{ width:56px; }
+  /* round 4: was transition:max-height (flagged by /impeccable detect as
+     layout-transition — animating max-height forces a reflow every frame).
+     Replaced with a compositor-only opacity+transform reveal; the desc now
+     always occupies its natural layout space (no more 0-height collapse),
+     so .offer-tile is uniformly taller than the old resting state by
+     roughly the height of its description text. */
   .offer-tile__desc{
     font-family:var(--font-mono); font-size:0.78rem; line-height:1.55; color:rgba(236,236,236,0.55);
-    max-height:0; opacity:0; overflow:hidden; transition:max-height var(--dur-med) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise);
+    opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
-  .offer-tile:hover .offer-tile__desc{ max-height:90px; opacity:1; }
-  @media(max-width:900px){ .offer-tile__desc{ max-height:90px; opacity:1; } }
+  .offer-tile:hover .offer-tile__desc{ opacity:1; transform:translateY(0); }
+  @media(max-width:900px){ .offer-tile__desc{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){ .offer-tile__desc{ transform:none; } }
 
   /* ---------- what we make: photo grid (round 4 — rebuilt section) ----------
      Five build categories, distinct from the nine offer-tile capabilities
@@ -335,12 +343,18 @@
   .make-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; }
   .make-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:12px 0; transition:width var(--dur-med) var(--ease-precise); }
   .make-tile:hover .make-tile__rule{ width:56px; }
+  /* round 4: was transition:max-height (flagged by /impeccable detect as
+     layout-transition). Replaced with opacity+transform; .make-tile__body
+     already overlays the photo via position:absolute, so the desc's now-
+     permanent layout space just sits within the existing bottom scrim
+     rather than pushing the tile (which has a fixed aspect-ratio anyway). */
   .make-tile__desc{
     font-family:var(--font-mono); font-size:0.76rem; line-height:1.55; color:rgba(236,236,236,0.75);
-    max-height:0; opacity:0; overflow:hidden; transition:max-height var(--dur-med) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise);
+    opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
-  .make-tile:hover .make-tile__desc{ max-height:110px; opacity:1; }
-  @media(max-width:900px){ .make-tile__desc{ max-height:110px; opacity:1; } .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); } }
+  .make-tile:hover .make-tile__desc{ opacity:1; transform:translateY(0); }
+  @media(max-width:900px){ .make-tile__desc{ opacity:1; transform:none; } .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); } }
+  @media (prefers-reduced-motion: reduce){ .make-tile__desc{ transform:none; } }
   @media (prefers-reduced-motion: reduce){ .make-tile__media img{ transition:none; } }
 
   /* ---------- the process: pinned crossfade (round 3) ----------
@@ -481,13 +495,17 @@
   .value-tag__title{ margin-top:20px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.1rem; }
   .value-tag__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:16px 0 12px; transition:width var(--dur-med) var(--ease-precise); }
   .value-tag:hover .value-tag__rule{ width:56px; }
+  /* round 4: was transition:max-height (flagged by /impeccable detect as
+     layout-transition). Replaced with opacity+transform; the column is
+     now uniformly taller than the old resting state by the height of its
+     description text (min-height:300px above absorbs most of this). */
   .value-tag__desc{
     font-family:var(--font-mono); font-size:0.78rem; line-height:1.55; color:rgba(236,236,236,0.55); max-width:26ch;
-    max-height:0; opacity:0; overflow:hidden; transition:max-height var(--dur-med) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise);
+    opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
-  .value-tag:hover .value-tag__desc{ max-height:100px; opacity:1; }
-  @media(max-width:900px){ .value-tag__desc{ max-height:100px; opacity:1; max-width:none; } }
-  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:hover .value-tag__num{ transform:none; } }
+  .value-tag:hover .value-tag__desc{ opacity:1; transform:translateY(0); }
+  @media(max-width:900px){ .value-tag__desc{ opacity:1; transform:none; max-width:none; } }
+  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:hover .value-tag__num{ transform:none; } .value-tag__desc{ transform:none; } }
 
   /* ---------- counters ---------- */
   .counters{ margin-top:56px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:32px; }
