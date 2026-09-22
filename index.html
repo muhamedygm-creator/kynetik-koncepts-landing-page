@@ -217,6 +217,90 @@
     </div>
   </section>
 
+  <!-- ============ 2B. WHAT WE MAKE — BLACK, PHOTO GRID ============
+       Round 4: this five-item build-category section had collapsed into
+       the 9-item Offerings grid at some point after round 2 (confirmed by
+       grep — zero matches for any of these five names in this file before
+       this edit). Rebuilt as its own section: five build categories, not
+       the nine service capabilities above. Real copy restored from
+       source/template.html (the pre-multipage build); photography reuses
+       the five offer-*.jpg files that were already sitting matched to
+       these exact categories in assets/img/ but had gone unused since the
+       old carousel version was retired. Interaction language matches
+       .offer-tile: hairline extends + description reveals on hover, both
+       unconditionally visible <=900px for touch. -->
+  <section class="section ground-black js-scrub-section" id="make">
+    <div class="wrap">
+      <p class="eyebrow">What We Make</p>
+      <hr class="hairline">
+      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:18ch;">One philosophy, five ways to begin.</h2>
+      <p class="sub-line">Five build categories. One process, applied without exception.</p>
+
+      <div class="make-grid">
+        <article class="make-tile js-cursor-target">
+          <div class="make-tile__media media">
+            <img src="assets/img/offer-bespoke.jpg" alt="Matte-wrapped one-of-one coachbuilt car, side profile" loading="lazy">
+          </div>
+          <div class="make-tile__scrim" aria-hidden="true"></div>
+          <div class="make-tile__body">
+            <p class="make-tile__index">01</p>
+            <h3 class="make-tile__title">Bespoke One-of-One</h3>
+            <hr class="make-tile__rule">
+            <p class="make-tile__desc">A single car for a single client, refined in three dimensions until every detail is precisely yours.</p>
+          </div>
+        </article>
+        <article class="make-tile js-cursor-target">
+          <div class="make-tile__media media">
+            <img src="assets/img/offer-ikonics.jpg" alt="Modern sports car headlight and carbon front splitter detail" loading="lazy">
+          </div>
+          <div class="make-tile__scrim" aria-hidden="true"></div>
+          <div class="make-tile__body">
+            <p class="make-tile__index">02</p>
+            <h3 class="make-tile__title">Karbon Ikonics</h3>
+            <hr class="make-tile__rule">
+            <p class="make-tile__desc">Iconic silhouettes carried on modern platforms — heritage above, factory reliability beneath.</p>
+          </div>
+        </article>
+        <article class="make-tile js-cursor-target">
+          <div class="make-tile__media media">
+            <img src="assets/img/offer-klassics.jpg" alt="Classic GT silhouette rebodied in exposed carbon fibre" loading="lazy">
+          </div>
+          <div class="make-tile__scrim" aria-hidden="true"></div>
+          <div class="make-tile__body">
+            <p class="make-tile__index">03</p>
+            <h3 class="make-tile__title">Karbon Klassics</h3>
+            <hr class="make-tile__rule">
+            <p class="make-tile__desc">A classic reborn in carbon. The lines that made the original immortal, set upon modern underpinnings.</p>
+          </div>
+        </article>
+        <article class="make-tile js-cursor-target">
+          <div class="make-tile__media media">
+            <img src="assets/img/offer-elektric.jpg" alt="Porsche Taycan, front three-quarter view" loading="lazy">
+          </div>
+          <div class="make-tile__scrim" aria-hidden="true"></div>
+          <div class="make-tile__body">
+            <p class="make-tile__index">04</p>
+            <h3 class="make-tile__title">Karbon Elektric</h3>
+            <hr class="make-tile__rule">
+            <p class="make-tile__desc">Carbon transformation for the car you already drive. The drivetrain stays factory; the character becomes wholly your own.</p>
+          </div>
+        </article>
+        <article class="make-tile js-cursor-target">
+          <div class="make-tile__media media">
+            <img src="assets/img/offer-toys.jpg" alt="Carbon-bodied off-road buggy, rear three-quarter view" loading="lazy">
+          </div>
+          <div class="make-tile__scrim" aria-hidden="true"></div>
+          <div class="make-tile__body">
+            <p class="make-tile__index">05</p>
+            <h3 class="make-tile__title">Karbon Toys</h3>
+            <hr class="make-tile__rule">
+            <p class="make-tile__desc">The same craft, made for the sand. Off-road builds that look extraordinary and perform without fault.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 3. HISTORY — BLACK, SPLIT ============
        "The Origin" and "The Return of the Coachbuilder" (next section) are
        grouped under one #history anchor for the new 5-item nav; id lives on
@@ -454,11 +538,36 @@
       <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:16ch;">Five things we will not compromise.</h2>
 
       <div class="values">
-        <div class="value-tag"><p class="value-tag__num">01</p><p class="value-tag__title">Design Fidelity</p></div>
-        <div class="value-tag"><p class="value-tag__num">02</p><p class="value-tag__title">Daily Ease</p></div>
-        <div class="value-tag"><p class="value-tag__num">03</p><p class="value-tag__title">Self-Expression</p></div>
-        <div class="value-tag"><p class="value-tag__num">04</p><p class="value-tag__title">Playful Utility</p></div>
-        <div class="value-tag"><p class="value-tag__num">05</p><p class="value-tag__title">Care and Craft</p></div>
+        <div class="value-tag js-cursor-target">
+          <p class="value-tag__num">01</p>
+          <p class="value-tag__title">Design Fidelity</p>
+          <hr class="value-tag__rule">
+          <p class="value-tag__desc">Every line stays true to the sketch that started it. Nothing is value-engineered away.</p>
+        </div>
+        <div class="value-tag js-cursor-target">
+          <p class="value-tag__num">02</p>
+          <p class="value-tag__title">Daily Ease</p>
+          <hr class="value-tag__rule">
+          <p class="value-tag__desc">A carbon body built to live with you every day, not just for the show stand.</p>
+        </div>
+        <div class="value-tag js-cursor-target">
+          <p class="value-tag__num">03</p>
+          <p class="value-tag__title">Self-Expression</p>
+          <hr class="value-tag__rule">
+          <p class="value-tag__desc">Built to a client's own vision, never pulled from a catalogue of options.</p>
+        </div>
+        <div class="value-tag js-cursor-target">
+          <p class="value-tag__num">04</p>
+          <p class="value-tag__title">Playful Utility</p>
+          <hr class="value-tag__rule">
+          <p class="value-tag__desc">Performance and personality, in equal measure, on the same car.</p>
+        </div>
+        <div class="value-tag js-cursor-target">
+          <p class="value-tag__num">05</p>
+          <p class="value-tag__title">Care and Craft</p>
+          <hr class="value-tag__rule">
+          <p class="value-tag__desc">Finished to a standard we are willing to put our own name to.</p>
+        </div>
       </div>
     </div>
   </section>

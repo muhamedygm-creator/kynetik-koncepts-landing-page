@@ -240,13 +240,44 @@
   .offerings-grid{ display:grid; gap:1px; background:rgba(236,236,236,0.12); margin-top:56px; }
   @media(min-width:600px){ .offerings-grid{ grid-template-columns:repeat(2,1fr); } }
   @media(min-width:900px){ .offerings-grid{ grid-template-columns:repeat(3,1fr); } }
+  /* Round 4: three tiles (1, 7, 8) get real weight — wider, taller, bigger
+     type — so the grid has rhythm before anyone touches it. Spans are sized
+     so 9 items still tile the 3-column grid with zero gaps (units: 1+2 per
+     row where featured, 1+1+1 where not) — see the round-4 handoff for the
+     row math. Desktop-only; 1000px sits one step above the 3-col breakpoint
+     so tablet keeps a clean uniform grid. */
+  @media(min-width:1000px){
+    .offerings-grid .offer-tile:nth-child(1),
+    .offerings-grid .offer-tile:nth-child(7),
+    .offerings-grid .offer-tile:nth-child(8){
+      grid-column:span 2; padding:40px 38px; min-height:280px;
+    }
+    .offerings-grid .offer-tile:nth-child(1) .offer-tile__icon,
+    .offerings-grid .offer-tile:nth-child(7) .offer-tile__icon,
+    .offerings-grid .offer-tile:nth-child(8) .offer-tile__icon{ width:40px; height:40px; }
+    .offerings-grid .offer-tile:nth-child(1) .offer-tile__title,
+    .offerings-grid .offer-tile:nth-child(7) .offer-tile__title,
+    .offerings-grid .offer-tile:nth-child(8) .offer-tile__title{ font-size:1.3rem; max-width:26ch; }
+  }
   .offer-tile{
     position:relative; background:var(--kynetik-black); border-top:1px solid var(--vintage-yellow);
     padding:32px 30px; min-height:230px; overflow:hidden;
     display:flex; flex-direction:column; justify-content:space-between;
-    cursor:pointer; transition:background var(--dur-slow) var(--ease-precise);
+    cursor:pointer; --mx:50%; --my:50%;
+    opacity:0; transform:translateY(24px);
+    transition:background var(--dur-slow) var(--ease-precise), opacity var(--dur-slow) var(--ease-precise), transform var(--dur-slow) var(--ease-precise), padding var(--dur-med) var(--ease-precise), min-height var(--dur-med) var(--ease-precise);
   }
+  .offer-tile.is-visible{ opacity:1; transform:translateY(0); }
   .offer-tile:hover{ background:rgba(233,190,95,0.05); }
+  /* continuous cursor-tracked spotlight — updated on mousemove in JS, so the
+     tile responds to where the pointer actually is rather than a flat
+     hover on/off. Sits below .offer-tile__weave so both can layer. */
+  .offer-tile::before{
+    content:''; position:absolute; inset:0; opacity:0; pointer-events:none;
+    background:radial-gradient(260px circle at var(--mx) var(--my), rgba(233,190,95,0.14), transparent 72%);
+    transition:opacity var(--dur-med) var(--ease-precise);
+  }
+  .offer-tile:hover::before{ opacity:1; }
   .offer-tile__weave{
     position:absolute; inset:0; opacity:0; transition:opacity var(--dur-med) var(--ease-precise); pointer-events:none;
     background-image:
@@ -254,6 +285,10 @@
       repeating-linear-gradient(-45deg, rgba(236,236,236,0.03) 0 2px, transparent 2px 14px);
   }
   .offer-tile:hover .offer-tile__weave{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){
+    .offer-tile{ opacity:1; transform:none; transition:background var(--dur-slow) var(--ease-precise); }
+    .offer-tile::before{ display:none; }
+  }
   .offer-tile__top{ position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; }
   .offer-tile__index{ font-family:var(--font-mono); color:var(--vintage-yellow); font-size:0.78rem; letter-spacing:0.1em; }
   .offer-tile__icon{ display:block; width:32px; height:32px; opacity:0.85; }
@@ -268,6 +303,45 @@
   }
   .offer-tile:hover .offer-tile__desc{ max-height:90px; opacity:1; }
   @media(max-width:900px){ .offer-tile__desc{ max-height:90px; opacity:1; } }
+
+  /* ---------- what we make: photo grid (round 4 — rebuilt section) ----------
+     Five build categories, distinct from the nine offer-tile capabilities
+     above: photographic rather than icon-driven, so the two sections read
+     as different things at a glance. Same hover language as .offer-tile
+     (hairline extends, desc reveals) for consistency, but the photo fills
+     the tile instead of sitting inside a flat card. */
+  .make-grid{ display:grid; grid-template-columns:1fr; gap:2px; margin-top:56px; }
+  @media(min-width:600px){ .make-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1000px){ .make-grid{ grid-template-columns:repeat(5,1fr); gap:2px; } }
+  .make-tile{
+    position:relative; aspect-ratio:3/4; overflow:hidden; cursor:pointer;
+    background:var(--carbon-grey);
+  }
+  @media(min-width:600px) and (max-width:999px){ .make-tile:first-child{ grid-column:span 2; aspect-ratio:16/9; } }
+  .make-tile__media{ position:absolute; inset:0; }
+  .make-tile__media img{
+    width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(0.15) contrast(1.05);
+    transform:scale(1.04); transition:transform var(--dur-slow) var(--ease-precise), filter var(--dur-slow) var(--ease-precise);
+  }
+  .make-tile:hover .make-tile__media img{ transform:scale(1.1); filter:grayscale(0) contrast(1.05); }
+  .make-tile__scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(32,32,32,0) 35%, rgba(32,32,32,0.55) 68%, rgba(32,32,32,0.92) 100%);
+    transition:background var(--dur-med) var(--ease-precise);
+  }
+  .make-tile:hover .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); }
+  .make-tile__body{ position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 22px 24px; }
+  .make-tile__index{ font-family:var(--font-mono); color:var(--vintage-yellow); font-size:0.78rem; letter-spacing:0.1em; margin-bottom:8px; }
+  .make-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; }
+  .make-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:12px 0; transition:width var(--dur-med) var(--ease-precise); }
+  .make-tile:hover .make-tile__rule{ width:56px; }
+  .make-tile__desc{
+    font-family:var(--font-mono); font-size:0.76rem; line-height:1.55; color:rgba(236,236,236,0.75);
+    max-height:0; opacity:0; overflow:hidden; transition:max-height var(--dur-med) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise);
+  }
+  .make-tile:hover .make-tile__desc{ max-height:110px; opacity:1; }
+  @media(max-width:900px){ .make-tile__desc{ max-height:110px; opacity:1; } .make-tile__scrim{ background:linear-gradient(180deg, rgba(32,32,32,0.1) 0%, rgba(32,32,32,0.65) 55%, rgba(32,32,32,0.95) 100%); } }
+  @media (prefers-reduced-motion: reduce){ .make-tile__media img{ transition:none; } }
 
   /* ---------- the process: pinned crossfade (round 3) ----------
      Full replacement against the approved prototype
@@ -364,12 +438,47 @@
   .proven{ text-align:center; max-width:680px; margin:0 auto; }
   .proven .hairline{ margin-left:auto; margin-right:auto; }
 
-  /* ---------- values (olive): tags only ---------- */
-  .values{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px 32px; margin-top:56px; }
+  /* ---------- values (impact, carbon grey ground): full-width redesign (round 4) ----------
+     Round 2 fixed the ground colour to Carbon Grey; that stays untouched
+     here — this is purely a layout/interaction fix. Previously five thin
+     number+title tags sat in a grid that technically spanned the wrap but
+     read empty because there was almost nothing in each cell. Now each
+     value gets a tall column with real internal space, a large de-
+     emphasised number, and the site's established hairline-extends /
+     description-reveals hover language (borrowed from .offer-tile) so it
+     doesn't read as a bolted-on sixth interaction pattern. */
+  .values{ display:grid; grid-template-columns:1fr; gap:0; margin-top:64px; }
   @media(min-width:700px){ .values{ grid-template-columns:repeat(5,1fr); } }
-  .value-tag{ border-top:1px solid rgba(236,236,236,0.35); padding-top:14px; }
-  .value-tag__num{ font-family:var(--font-mono); font-size:0.75rem; opacity:0.75; }
-  .value-tag__title{ margin-top:10px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1rem; }
+  .value-tag{
+    position:relative; padding:22px 0; border-top:1px solid rgba(236,236,236,0.3);
+    cursor:pointer; transition:background var(--dur-slow) var(--ease-precise);
+  }
+  @media(min-width:700px){
+    .value-tag{
+      border-top:none; border-left:1px solid rgba(236,236,236,0.22);
+      padding:0 28px; min-height:300px;
+      display:flex; flex-direction:column; justify-content:flex-end;
+    }
+    .value-tag:first-child{ border-left:none; padding-left:0; }
+    .value-tag:last-child{ padding-right:0; }
+  }
+  .value-tag:hover{ background:rgba(236,236,236,0.03); }
+  .value-tag__num{
+    font-family:var(--font-mono); font-size:clamp(2.2rem,4vw,3.4rem); line-height:1;
+    color:rgba(236,236,236,0.22); transition:color var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
+    transform-origin:left center;
+  }
+  .value-tag:hover .value-tag__num{ color:rgba(236,236,236,0.4); transform:scale(1.06); }
+  .value-tag__title{ margin-top:20px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.1rem; }
+  .value-tag__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:16px 0 12px; transition:width var(--dur-med) var(--ease-precise); }
+  .value-tag:hover .value-tag__rule{ width:56px; }
+  .value-tag__desc{
+    font-family:var(--font-mono); font-size:0.78rem; line-height:1.55; color:rgba(236,236,236,0.55); max-width:26ch;
+    max-height:0; opacity:0; overflow:hidden; transition:max-height var(--dur-med) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise);
+  }
+  .value-tag:hover .value-tag__desc{ max-height:100px; opacity:1; }
+  @media(max-width:900px){ .value-tag__desc{ max-height:100px; opacity:1; max-width:none; } }
+  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:hover .value-tag__num{ transform:none; } }
 
   /* ---------- counters ---------- */
   .counters{ margin-top:56px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:32px; }

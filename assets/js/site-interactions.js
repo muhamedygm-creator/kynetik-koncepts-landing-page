@@ -74,6 +74,41 @@
     });
   }
 
+  /* ---- offerings: cursor-tracked spotlight + staggered scroll-entrance (round 4) ----
+     Two separate fixes for "the grid only reveals itself if you happen to
+     hover the right tile": (1) a continuous, pointer-tracked spotlight
+     instead of a flat hover on/off — the highlight follows the cursor
+     inside whichever tile it's over; (2) tiles fade/lift into place with a
+     short per-column stagger as the section enters view, so the grid has
+     already made an entrance before anyone touches it. Reduced-motion:
+     spotlight is hidden via CSS, entrance is skipped (tiles start visible). */
+  var offerTiles = document.querySelectorAll('.offer-tile');
+  if(fine && !reduceMotion){
+    offerTiles.forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      });
+    });
+  }
+  if(offerTiles.length){
+    if(reduceMotion || !('IntersectionObserver' in window)){
+      offerTiles.forEach(function(t){ t.classList.add('is-visible'); });
+    } else {
+      var offerIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting) return;
+          var i = Array.prototype.indexOf.call(offerTiles, entry.target);
+          entry.target.style.transitionDelay = ((i % 3) * 90) + 'ms';
+          entry.target.classList.add('is-visible');
+          offerIO.unobserve(entry.target);
+        });
+      }, { threshold:0.2, rootMargin:'0px 0px -60px 0px' });
+      offerTiles.forEach(function(t){ offerIO.observe(t); });
+    }
+  }
+
   /* ---- scroll-scrubbed reveal (headline clip + hairline draw) ---- */
   var scrubSections = document.querySelectorAll('.js-scrub-section');
   function updateScrub(){
