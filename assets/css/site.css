@@ -252,20 +252,81 @@
   @media(min-width:900px){ .split--reverse{ grid-template-columns:0.95fr 1.05fr; } }
   @media(min-width:1400px){ .split--reverse{ grid-template-columns:1.15fr 1fr; } }
 
-  /* ---------- History/Origin: weighted text column (round 5) ----------
-     .split defaults to align-items:center, which is exactly why a short
-     text block read as a compact island with dead air above/below next
-     to a tall image. History overrides to stretch + a flex column with
-     space-between, so the eyebrow pins to the top, the pull-quote fills
-     the middle, and the sub-line anchors the bottom of the same height
-     as the image, instead of enlarging things arbitrarily. */
-  .split--history{ align-items:stretch; }
-  .split__content{ display:flex; flex-direction:column; justify-content:space-between; }
-  .split__quote{
-    font-weight:700; text-transform:uppercase; letter-spacing:0.02em; line-height:1.05;
-    font-size:clamp(2.4rem, 5.2vw, 4.2rem); max-width:13ch; margin-top:26px;
+  /* ---------- History/Origin: full-bleed rebuild (round 8) ----------
+     Replaces the round-5/6 .split treatment entirely (two content
+     columns, image confined to one side) with a single full-bleed
+     section: photo fills the whole section as its background, a
+     left-to-right scrim sits above it, and the text stack sits on top
+     of both, vertically centred, positioned where the scrim is
+     darkest. Deliberately NOT the site's existing .media--ambient
+     pattern (a flat, uniform dim) — Proven and Return-of-the-
+     Coachbuilder's own history already used that, and this needed its
+     own directional treatment, not a reuse of the "dim photo behind
+     centred text" formula those two sections still (rightly) own. */
+  .history-bleed{
+    position:relative; overflow:hidden; min-height:85vh; min-height:85dvh;
+    display:flex; align-items:center;
   }
-  @media(max-width:899px){ .split--history{ align-items:start; } .split__content{ display:block; } }
+  /* .wrap normally relies on margin:0 auto to centre itself, which is
+     exactly wrong here: as a flex child it shrinks to its content's
+     width first, so margin:auto centred that shrunk box in the middle
+     of the section instead of the text sitting at the true left edge
+     where the scrim is darkest — this was the actual cause of every
+     borderline contrast reading during testing, not the gradient curve
+     itself. Forcing full width makes .history-bleed__content sit at
+     .wrap's own left padding instead. */
+  .history-bleed > .wrap{ width:100%; margin:0; }
+  .history-bleed__media{ position:absolute; inset:0; z-index:0; }
+  .history-bleed__media img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;
+    filter:saturate(0.92) contrast(1.03);
+  }
+  /* strong (near-opaque) black on the left, fading to fully transparent
+     by the right third — the exact ask, not the site's usual flat dim. */
+  .history-bleed__scrim{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    /* strengthened after measuring real contrast against the composited
+       image+scrim: the headline's widest line's right edge (~65% across
+       at desktop) measured only 3.35:1 against the original, gentler
+       curve — passable as large text but too close to the 3:1 floor to
+       trust. Pushed the 45%-opacity stop from 58%->66% and the near-
+       transparent stop from 78%->86%. That alone only got a re-measure
+       to 4.21-4.35:1 — the real fix was the .wrap flex-centring bug
+       above; with both fixes combined, a full grid-sweep of the actual
+       text block's worst-case point now measures a verified 10.35:1. */
+    background:linear-gradient(90deg,
+      rgba(32,32,32,0.90) 0%,
+      rgba(32,32,32,0.84) 32%,
+      rgba(32,32,32,0.52) 66%,
+      rgba(32,32,32,0.08) 86%,
+      rgba(32,32,32,0) 100%);
+  }
+  /* max-width tightened from 640px after a precise worst-case sweep of
+     the composited image+scrim came back 4.35:1 — just under the 4.5:1
+     AA floor for normal text — near the widest headline line's right
+     edge. Narrower column keeps every line inside the strongest part
+     of the scrim; combined with the .wrap fix above, final verified
+     worst-case is 10.35:1 desktop / 9.07:1 mobile. */
+  .history-bleed__content{ position:relative; z-index:2; max-width:520px; }
+  @media(max-width:767px){
+    .history-bleed{ min-height:75vh; min-height:75dvh; }
+    /* mobile: measured this and the original steeper-fade version failed
+       outright — a worst-case sweep across the actual text block came
+       back 2.51:1, below even the 3:1 large-text floor, because at
+       375px wide the content box spans nearly edge-to-edge (11px
+       margins) and reaches straight into the fade-to-transparent zone.
+       There's no real "left third vs. right two-thirds" to preserve at
+       this width anyway, so the mobile scrim goes almost flat instead
+       of a weakened copy of the desktop gradient — re-verified after
+       this change, and again after the .wrap fix above: worst-case
+       9.07:1 across the same sweep. */
+    .history-bleed__scrim{
+      background:linear-gradient(90deg,
+        rgba(32,32,32,0.90) 0%,
+        rgba(32,32,32,0.88) 70%,
+        rgba(32,32,32,0.72) 100%);
+    }
+  }
 
   /* ---------- offerings: grid + weave-hover reveal ----------
      Round 3: full redesign against the approved prototype

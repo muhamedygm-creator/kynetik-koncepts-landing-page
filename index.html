@@ -187,29 +187,33 @@
        flex + space-between, so the eyebrow sits at the top, the quote
        dominates the middle, and the sub-line anchors the bottom —
        filling the frame the way the image already does. -->
-  <section class="section ground-black js-scrub-section" id="history">
-    <div class="wrap split split--history">
-      <div class="split__content">
-        <p class="eyebrow">History · The Origin</p>
-        <hr class="hairline">
-        <blockquote class="split__quote display js-scrub">A car was once the work of two hands.</blockquote>
-        <p class="sub-line">Kynetik exists to restore what was lost.</p>
-      </div>
-      <!-- Round 4: replaced per explicit instruction — the old spoiler
-           detail shot didn't support "a car was once the work of two
-           hands." Reviewed every photo in Website Assets/ for real
-           hands-on-craft/workshop imagery; none exists (all 23 source
-           photos are finished-or-near-finished car photography, no people,
-           no work-in-progress). This is the flagged, approved compromise:
-           cropped from DSC00213.jpg (a rear 3/4 of the sage SF90 shot
-           inside an actual garage) to keep the blurred workshop ceiling
-           equipment/ducting visible above the car detail, and to crop out
-           a competing dealer's plate frame that was in the original frame.
-           Still not a real craftsmanship shot — replace with real
-           workshop/hands-on photography when available. -->
-      <div class="split__media media js-cursor-target">
-        <img src="assets/img/history-workshop.jpg" alt="Car detail inside a garage workshop, blurred ceiling equipment visible above" width="1100" height="1465" loading="lazy">
-      </div>
+  <!-- Round 8: full-bleed rebuild, replacing the round-5/6 two-column
+       split entirely — not resized, removed. Image is now the section's
+       whole background (position:absolute inset:0, same structural
+       pattern as .section--photo elsewhere), with a LEFT-to-RIGHT scrim
+       (not the flat/uniform .media--ambient dim Proven and the old
+       Return-of-Coachbuilder background used) so text stays legible on
+       the dark left third while the car stays recognizable on the right.
+       SOURCE: still no real hands-on-craft photography exists anywhere
+       in Website Assets/ (confirmed again this round) — same flagged
+       compromise as round 4, re-cropped specifically for this wide
+       full-bleed use: a fresh, wider, horizontally-flipped crop of
+       DSC00213.jpg (assets/img/history-fullbleed.jpg) chosen because,
+       unlike the original crop, this framing naturally puts the dark
+       workshop ceiling/ductwork on the left and the car on the right —
+       checked directly against the scrim requirement before finalizing,
+       per the round-8 brief's own instruction to verify tonal range
+       first. Dealer plate cropped out again. -->
+  <section class="section history-bleed js-scrub-section" id="history">
+    <div class="history-bleed__media" aria-hidden="true">
+      <img src="assets/img/history-fullbleed.jpg" alt="" loading="lazy">
+    </div>
+    <div class="history-bleed__scrim" aria-hidden="true"></div>
+    <div class="wrap history-bleed__content">
+      <p class="eyebrow">History · The Origin</p>
+      <hr class="hairline">
+      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:11ch;">A car was once the work of two hands.</h2>
+      <p class="sub-line">Kynetik exists to restore what was lost.</p>
     </div>
   </section>
 
