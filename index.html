@@ -214,37 +214,47 @@
   </section>
 
   <!-- ============ 4. THE RETURN OF THE COACHBUILDER — BLACK ============
-       Round 5: dropped the dimmed-photo-background treatment (return-
-       rolls.jpg) entirely. Proven, right after this section, already
-       owns that exact formula (dimmed ambient photo + centred short
-       line) — keeping it here too was the reason these two sections read
-       as the same thing repeated. Distinction now comes from structure,
-       not photography: a real stat row (build categories, capabilities,
-       location — all facts already established elsewhere on the real
-       site, nothing invented) in the site's existing large-mono-number +
-       label vocabulary (the same idea as the Impact value columns, just
-       without the hover-reveal since there's no extra copy to hide). No
-       ground colour change — still ground-black, per the One Accent Rule
-       this isn't a colour problem to solve with a new palette. -->
+       Round 5 dropped the dimmed-photo-background treatment entirely
+       (Proven owns that formula). Round 6: still no photo-background —
+       Proven's formula stays Proven's — but Origin and Return are
+       sequential chapters under the same History nav item, and reviewed
+       side by side they read wrong when one is entirely image-led and
+       the other is pure typography. Fix: a real .split layout here too,
+       matching Origin's mechanics exactly, mirrored — Origin's image
+       sits right (text left), so this one puts the image LEFT (text
+       right), via .split--reverse (same column proportions, swapped
+       sides) so scrolling from one chapter into the next reads as a
+       rhythm, not two unrelated sections. Real stat row from round 5
+       kept as-is inside the text column, it was already working.
+       SOURCE: Website Assets/61.jpg (taycan-hero.jpg) — Porsche Taycan,
+       side 3/4 on wheel/chassis/door line, cropped tight to exclude a
+       visible dealer plate in the original frame. A modern EV platform
+       is a literal, not decorative, match for "modern platforms are
+       our chassis." -->
   <section class="section ground-black js-scrub-section">
-    <div class="wrap" style="max-width:820px;">
-      <p class="eyebrow">The Return of the Coachbuilder</p>
-      <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:16ch;">Carbon fibre is our coachwork, modern platforms are our chassis.</h2>
-      <p class="accent-line">Energy in motion.</p>
+    <div class="wrap split split--reverse">
+      <div class="split__media media js-cursor-target">
+        <img src="assets/img/return-chassis.jpg" alt="Porsche Taycan, side three-quarter on wheel and chassis line" width="629" height="750" loading="lazy">
+      </div>
+      <div>
+        <p class="eyebrow">The Return of the Coachbuilder</p>
+        <hr class="hairline">
+        <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:16ch;">Carbon fibre is our coachwork, modern platforms are our chassis.</h2>
+        <p class="accent-line">Energy in motion.</p>
 
-      <div class="return-stats">
-        <div class="return-stat">
-          <p class="return-stat__num mono">05</p>
-          <p class="return-stat__label">Build categories</p>
-        </div>
-        <div class="return-stat">
-          <p class="return-stat__num mono">09</p>
-          <p class="return-stat__label">Capabilities, one roof</p>
-        </div>
-        <div class="return-stat">
-          <p class="return-stat__num mono">DXB</p>
-          <p class="return-stat__label">Dubai, UAE</p>
+        <div class="return-stats">
+          <div class="return-stat">
+            <p class="return-stat__num mono">05</p>
+            <p class="return-stat__label">Build categories</p>
+          </div>
+          <div class="return-stat">
+            <p class="return-stat__num mono">09</p>
+            <p class="return-stat__label">Capabilities, one roof</p>
+          </div>
+          <div class="return-stat">
+            <p class="return-stat__num mono">DXB</p>
+            <p class="return-stat__label">Dubai, UAE</p>
+          </div>
         </div>
       </div>
     </div>
@@ -332,8 +342,12 @@
         </div>
 
         <div class="stage-content">
-          <p class="stage-content__count mono" id="processCount">01 / 09</p>
-          <p class="eyebrow" id="processEyebrow">THE PROCESS — 01</p>
+          <!-- round 6: the changing digit is now its own inline element
+               (num-roll) so renderProcess() can roll it out/in instead of
+               swapping textContent instantly; " / 09" and "THE PROCESS — "
+               stay static siblings. -->
+          <p class="stage-content__count mono" id="processCount"><span class="num-roll" id="processCountNum">01</span> / 09</p>
+          <p class="eyebrow" id="processEyebrow">THE PROCESS — <span class="num-roll" id="processEyebrowNum">01</span></p>
           <h3 class="stage-content__title" id="processTitle">Design &amp; Ideation</h3>
           <p class="stage-content__desc" id="processDesc">Every build begins as a sketch, refined until the shape feels right.</p>
 

@@ -142,10 +142,10 @@
   var pStage = pScroll ? pScroll.querySelector('.process-stage') : null;
   var pPanels = document.querySelectorAll('#processVisual .panel');
   var pRailButtons = document.querySelectorAll('#processRail button');
-  var pEyebrowEl = document.getElementById('processEyebrow');
+  var pEyebrowNumEl = document.getElementById('processEyebrowNum');
   var pTitleEl = document.getElementById('processTitle');
   var pDescEl = document.getElementById('processDesc');
-  var pCountEl = document.getElementById('processCount');
+  var pCountNumEl = document.getElementById('processCountNum');
   var pSteps = [
     { title:'Design &amp; Ideation', desc:'Every build begins as a sketch, refined until the shape feels right.' },
     { title:'3D Scanning &amp; Modeling', desc:'The vehicle is captured to sub-millimetre accuracy before a single cut is made.' },
@@ -159,6 +159,50 @@
   ];
   var pCurrent = -1;
   function pad2(n){ return (n < 10 ? '0' : '') + n; }
+  /* round 6: odometer-style roll for the two digit displays (eyebrow
+     number, stage count) instead of an instant textContent swap. Builds
+     a two-line track — old digit, new digit — inside the 1-line-tall
+     .num-roll window, then transforms it up by half a track-height so
+     the new digit slides into view while the old one slides out. 900ms
+     below must match --dur-slow in site.css (the same duration the
+     panel crossfade itself runs on), so the digit roll and the photo
+     change read as one synchronized transition, not two unrelated ones
+     that happen to overlap. */
+  function rollNumber(el, text){
+    if(!el) return;
+    /* el.textContent is unreliable as "the current value" once a roll is
+       mid-transition — the track's two stacked digit spans both count as
+       text, so a second call landing before the first one's cleanup timer
+       fires would read a concatenated "02"+"03" as "0203" and corrupt the
+       animation. Track the logical current value separately instead, and
+       cancel any pending cleanup from an unfinished prior roll so it can't
+       later stomp a newer one's final text. */
+    var current = el.dataset.value || el.textContent;
+    if(current === text) return;
+    if(el._rollTimeout){ clearTimeout(el._rollTimeout); el._rollTimeout = null; }
+    if(reduceMotion){ el.textContent = text; el.dataset.value = text; return; }
+    var track = document.createElement('span');
+    track.className = 'num-roll__track';
+    var oldDigit = document.createElement('span');
+    oldDigit.className = 'num-roll__digit';
+    oldDigit.textContent = current;
+    var newDigit = document.createElement('span');
+    newDigit.className = 'num-roll__digit';
+    newDigit.textContent = text;
+    track.appendChild(oldDigit);
+    track.appendChild(newDigit);
+    el.innerHTML = '';
+    el.appendChild(track);
+    el.dataset.value = text;
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ track.style.transform = 'translateY(-50%)'; });
+    });
+    el._rollTimeout = setTimeout(function(){
+      el.textContent = text;
+      el.dataset.value = text;
+      el._rollTimeout = null;
+    }, 900);
+  }
   function renderProcess(i){
     if(i === pCurrent) return;
     pCurrent = i;
@@ -168,10 +212,10 @@
       b.classList.toggle('is-done', idx < i);
     });
     var s = pSteps[i];
-    if(pEyebrowEl){ pEyebrowEl.textContent = 'THE PROCESS — ' + pad2(i + 1); }
+    rollNumber(pEyebrowNumEl, pad2(i + 1));
     if(pTitleEl){ pTitleEl.innerHTML = s.title; }
     if(pDescEl){ pDescEl.textContent = s.desc; }
-    if(pCountEl){ pCountEl.textContent = pad2(i + 1) + ' / 09'; }
+    rollNumber(pCountNumEl, pad2(i + 1));
   }
   function onProcessScroll(){
     if(reduceMotion || !pScroll || !pStage) return;
