@@ -146,6 +146,12 @@
   var pTitleEl = document.getElementById('processTitle');
   var pDescEl = document.getElementById('processDesc');
   var pCountNumEl = document.getElementById('processCountNum');
+  var pBigNumEl = document.getElementById('processBigNum');
+  /* round 7: must match the transform duration on .num-roll__track in
+     site.css exactly (both hardcoded, not var(--dur-slow)) and the
+     .stage-visual .panel opacity transition too, so the digit roll and
+     the photo crossfade complete at the same instant, not just overlap. */
+  var ROLL_MS = 550;
   var pSteps = [
     { title:'Design &amp; Ideation', desc:'Every build begins as a sketch, refined until the shape feels right.' },
     { title:'3D Scanning &amp; Modeling', desc:'The vehicle is captured to sub-millimetre accuracy before a single cut is made.' },
@@ -159,15 +165,14 @@
   ];
   var pCurrent = -1;
   function pad2(n){ return (n < 10 ? '0' : '') + n; }
-  /* round 6: odometer-style roll for the two digit displays (eyebrow
-     number, stage count) instead of an instant textContent swap. Builds
-     a two-line track — old digit, new digit — inside the 1-line-tall
-     .num-roll window, then transforms it up by half a track-height so
-     the new digit slides into view while the old one slides out. 900ms
-     below must match --dur-slow in site.css (the same duration the
-     panel crossfade itself runs on), so the digit roll and the photo
-     change read as one synchronized transition, not two unrelated ones
-     that happen to overlap. */
+  /* round 7: odometer-style roll for the three digit displays (eyebrow
+     number, big stage numeral, corner stage count) instead of an instant
+     textContent swap. Builds a two-line track — old digit, new digit —
+     inside the 1-line-tall .num-roll window, then transforms it up by
+     half a track-height so the new digit slides into view while the old
+     one slides out, over ROLL_MS (550ms, matching .num-roll__track's
+     transition in site.css and .stage-visual .panel's crossfade exactly,
+     so the digit roll and the photo change complete together). */
   function rollNumber(el, text){
     if(!el) return;
     /* el.textContent is unreliable as "the current value" once a roll is
@@ -201,7 +206,7 @@
       el.textContent = text;
       el.dataset.value = text;
       el._rollTimeout = null;
-    }, 900);
+    }, ROLL_MS);
   }
   function renderProcess(i){
     if(i === pCurrent) return;
@@ -213,6 +218,7 @@
     });
     var s = pSteps[i];
     rollNumber(pEyebrowNumEl, pad2(i + 1));
+    rollNumber(pBigNumEl, pad2(i + 1));
     if(pTitleEl){ pTitleEl.innerHTML = s.title; }
     if(pDescEl){ pDescEl.textContent = s.desc; }
     rollNumber(pCountNumEl, pad2(i + 1));
