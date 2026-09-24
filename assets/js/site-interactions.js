@@ -142,7 +142,6 @@
   var pStage = pScroll ? pScroll.querySelector('.process-stage') : null;
   var pPanels = document.querySelectorAll('#processVisual .panel');
   var pRailButtons = document.querySelectorAll('#processRail button');
-  var pEyebrowNumEl = document.getElementById('processEyebrowNum');
   var pTitleEl = document.getElementById('processTitle');
   var pDescEl = document.getElementById('processDesc');
   var pCountNumEl = document.getElementById('processCountNum');
@@ -165,8 +164,9 @@
   ];
   var pCurrent = -1;
   function pad2(n){ return (n < 10 ? '0' : '') + n; }
-  /* round 7: odometer-style roll for the three digit displays (eyebrow
-     number, big stage numeral, corner stage count) instead of an instant
+  /* round 7: odometer-style roll for the digit displays (big stage
+     numeral, corner stage count — round 9 dropped the eyebrow's own
+     rolling number, see renderProcess()) instead of an instant
      textContent swap. Builds a two-line track — old digit, new digit —
      inside the 1-line-tall .num-roll window, then transforms it up by
      half a track-height so the new digit slides into view while the old
@@ -217,7 +217,6 @@
       b.classList.toggle('is-done', idx < i);
     });
     var s = pSteps[i];
-    rollNumber(pEyebrowNumEl, pad2(i + 1));
     rollNumber(pBigNumEl, pad2(i + 1));
     if(pTitleEl){ pTitleEl.innerHTML = s.title; }
     if(pDescEl){ pDescEl.textContent = s.desc; }

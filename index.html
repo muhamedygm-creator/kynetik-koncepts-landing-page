@@ -348,15 +348,20 @@
         <div class="stage-content">
           <!-- round 6: the changing digit is now its own inline element
                (num-roll) so renderProcess() can roll it out/in instead of
-               swapping textContent instantly; " / 09" and "THE PROCESS — "
-               stay static siblings. -->
+               swapping textContent instantly; " / 09" stays a static
+               sibling. -->
           <p class="stage-content__count mono" id="processCount"><span class="num-roll" id="processCountNum">01</span> / 09</p>
           <!-- round 7: large standalone numeral near the headline, same
                big-mono-number-as-visual-element language as .value-tag__num
                and .return-stat__num, on top of the existing small corner
-               counter (which stays, per "apply this at minimum"). -->
+               counter (which stays, per "apply this at minimum"). Round 9:
+               this was the only place the stage number needs to appear
+               beyond the small corner counter — the eyebrow used to also
+               spell out "THE PROCESS — NN", showing the same number twice
+               and competing with this numeral for attention. Eyebrow is
+               now static text; only this numeral rolls. -->
           <p class="stage-content__bignum mono"><span class="num-roll" id="processBigNum">01</span></p>
-          <p class="eyebrow" id="processEyebrow">THE PROCESS — <span class="num-roll" id="processEyebrowNum">01</span></p>
+          <p class="eyebrow" id="processEyebrow">THE PROCESS</p>
           <h3 class="stage-content__title" id="processTitle">Design &amp; Ideation</h3>
           <p class="stage-content__desc" id="processDesc">Every build begins as a sketch, refined until the shape feels right.</p>
 
@@ -487,32 +492,42 @@
 
       <div class="values">
         <div class="value-tag js-cursor-target" tabindex="0">
-          <p class="value-tag__num">01</p>
+          <div class="value-tag__weave" aria-hidden="true"></div>
+          <div class="value-tag__num-wrap"><p class="value-tag__num">01</p></div>
           <p class="value-tag__title">Design Fidelity</p>
+          <p class="value-tag__brief mono">Nothing value-engineered away.</p>
           <hr class="value-tag__rule">
           <p class="value-tag__desc">Every line stays true to the sketch that started it. Nothing is value-engineered away.</p>
         </div>
         <div class="value-tag js-cursor-target" tabindex="0">
-          <p class="value-tag__num">02</p>
+          <div class="value-tag__weave" aria-hidden="true"></div>
+          <div class="value-tag__num-wrap"><p class="value-tag__num">02</p></div>
           <p class="value-tag__title">Daily Ease</p>
+          <p class="value-tag__brief mono">Made for every day, not the show stand.</p>
           <hr class="value-tag__rule">
           <p class="value-tag__desc">A carbon body built to live with you every day, not just for the show stand.</p>
         </div>
         <div class="value-tag js-cursor-target" tabindex="0">
-          <p class="value-tag__num">03</p>
+          <div class="value-tag__weave" aria-hidden="true"></div>
+          <div class="value-tag__num-wrap"><p class="value-tag__num">03</p></div>
           <p class="value-tag__title">Self-Expression</p>
+          <p class="value-tag__brief mono">Never pulled from a catalogue.</p>
           <hr class="value-tag__rule">
           <p class="value-tag__desc">Built to a client's own vision, never pulled from a catalogue of options.</p>
         </div>
         <div class="value-tag js-cursor-target" tabindex="0">
-          <p class="value-tag__num">04</p>
+          <div class="value-tag__weave" aria-hidden="true"></div>
+          <div class="value-tag__num-wrap"><p class="value-tag__num">04</p></div>
           <p class="value-tag__title">Playful Utility</p>
+          <p class="value-tag__brief mono">Performance meets personality.</p>
           <hr class="value-tag__rule">
           <p class="value-tag__desc">Performance and personality, in equal measure, on the same car.</p>
         </div>
         <div class="value-tag js-cursor-target" tabindex="0">
-          <p class="value-tag__num">05</p>
+          <div class="value-tag__weave" aria-hidden="true"></div>
+          <div class="value-tag__num-wrap"><p class="value-tag__num">05</p></div>
           <p class="value-tag__title">Care and Craft</p>
+          <p class="value-tag__brief mono">Finished to our own name.</p>
           <hr class="value-tag__rule">
           <p class="value-tag__desc">Finished to a standard we are willing to put our own name to.</p>
         </div>
@@ -538,18 +553,27 @@
       <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:20ch;">Where the builds live outside the workshop.</h2>
       <p class="sub-line">The process, the deliveries and the garage — as they happen.</p>
 
+      <!-- round 9: Instagram is the channel that actually carries this
+           section (10.1K followers vs. YouTube's 19 subscribers below) but
+           previously sat as an equal-weight card next to YouTube, reading
+           as a small caption rather than the section's hook. Promoted to
+           its own full-weight header row: the gradient ring is Instagram's
+           one recognizable colour cue, used exactly once, on this icon
+           only — not repeated anywhere else in the section. Ring is a true
+           circle per DESIGN.md's shape rule (hard 0px corners or true
+           circles, nothing rounded in between), not a copy of Instagram's
+           own rounded-corner UI. -->
+      <a class="ig-hook js-cursor-target" href="https://www.instagram.com/kynetikkoncepts/" target="_blank" rel="noopener" aria-label="View @kynetikkoncepts on Instagram">
+        <span class="ig-hook__ring" aria-hidden="true"><span class="ig-hook__ring-inner"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span></span>
+        <span class="ig-hook__body">
+          <span class="ig-hook__handle">@kynetikkoncepts</span>
+          <!-- Follower count manually recorded 2026-09-19. Instagram/YouTube block automated scraping and this isn't wired to their APIs — update this number by hand periodically. See amend doc round 2 §5. -->
+          <span class="ig-hook__meta">10.1K followers on Instagram</span>
+        </span>
+        <span class="ig-hook__cta quiet-link">View profile &rarr;</span>
+      </a>
+
       <div class="social-blocks">
-        <div class="social-block">
-          <div class="social-block__head">
-            <svg class="social-block__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
-            <div>
-              <p class="social-block__handle">@kynetikkoncepts</p>
-              <!-- Follower count manually recorded 2026-09-19. Instagram/YouTube block automated scraping and this isn't wired to their APIs — update this number by hand periodically. See amend doc round 2 §5. -->
-              <p class="social-block__meta">Instagram · 10.1K followers</p>
-            </div>
-          </div>
-          <a class="quiet-link js-cursor-target social-block__link" href="https://www.instagram.com/kynetikkoncepts/" target="_blank" rel="noopener">View profile &rarr;</a>
-        </div>
         <div class="social-block">
           <div class="social-block__head">
             <svg class="social-block__icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 8.5s-.2-1.6-.9-2.3c-.8-.9-1.7-.9-2.2-1C15.7 5 12 5 12 5h0s-3.7 0-6.9.2c-.5.1-1.4.1-2.2 1C2.2 6.9 2 8.5 2 8.5S1.8 10.4 1.8 12.2v1.6c0 1.9.2 3.7.2 3.7s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.2.2 7.2.2s3.7 0 6.9-.2c.5-.1 1.4-.1 2.2-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.7v-1.6c0-1.9-.2-3.7-.2-3.7zM9.9 15.5v-6l5.8 3-5.8 3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>

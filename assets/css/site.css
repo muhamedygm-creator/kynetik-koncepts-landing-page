@@ -672,30 +672,90 @@
      emphasised number, and the site's established hairline-extends /
      description-reveals hover language (borrowed from .offer-tile) so it
      doesn't read as a bolted-on sixth interaction pattern. */
+  /* round 9: five columns must stay visually even (round-9 brief flagged
+     the fifth reading narrower with dead space beside it) — grid-
+     template-columns:repeat(5,1fr) already makes every track the same
+     width; the fix here is in the content, not the grid: with the
+     numeral pulled out of flow (below) and a brief line always present,
+     every column now has real content spanning its own track instead of
+     column 5's shorter title leaving visible slack next to it. */
   .values{ display:grid; grid-template-columns:1fr; gap:0; margin-top:64px; }
   @media(min-width:700px){ .values{ grid-template-columns:repeat(5,1fr); } }
   .value-tag{
-    position:relative; padding:22px 0; border-top:1px solid rgba(236,236,236,0.3);
+    position:relative; overflow:hidden; padding:22px 0; border-top:1px solid rgba(236,236,236,0.3);
     cursor:pointer; transition:background var(--dur-slow) var(--ease-precise);
   }
   @media(min-width:700px){
     .value-tag{
       border-top:none; border-left:1px solid rgba(236,236,236,0.22);
-      padding:0 28px; min-height:300px;
-      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:0 28px; min-height:440px;
+      display:flex; flex-direction:column;
     }
     .value-tag:first-child{ border-left:none; padding-left:0; }
     .value-tag:last-child{ padding-right:0; }
   }
   .value-tag:is(:hover, :focus-within){ background:rgba(236,236,236,0.03); }
+  /* round 9: faint carbon-weave texture at rest, not just on hover like
+     .offer-tile__weave — the brief wanted "just enough to keep the
+     column from reading as a flat void" while waiting on content.
+     Sits behind everything (z-index:0); the column's other children get
+     z-index:1 so they stay legible over it. */
+  .value-tag__weave{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    opacity:0.6; transition:opacity var(--dur-med) var(--ease-precise);
+    background-image:
+      repeating-linear-gradient(45deg, rgba(233,190,95,0.05) 0 2px, transparent 2px 14px),
+      repeating-linear-gradient(-45deg, rgba(236,236,236,0.025) 0 2px, transparent 2px 14px);
+  }
+  .value-tag:is(:hover, :focus-within) .value-tag__weave{ opacity:1; }
+  /* round 9: previously the numeral was the first item in a flex column
+     with justify-content:flex-end, so num+title+brief+rule+desc packed
+     into one group low in the column, leaving a bare stretch above with
+     nothing to look at. First attempt at a fix pulled the numeral out
+     of flow with position:absolute + top:50% — that centred it on the
+     FULL column box, but the content block below it is tall enough
+     (title+brief+rule+the always-reserved desc space) that a true
+     mathematical centre landed the numeral right on top of the content,
+     a real overlap confirmed by measuring every column's rects (worst
+     case ~71px of vertical collision on "Playful Utility"). Fixed
+     properly with a flex-grow spacer instead: .value-tag__num-wrap is a
+     flex child with flex:1 that consumes whatever vertical space is
+     left over once the content block below it takes what it needs, and
+     centres the numeral within that leftover space — so the numeral
+     always sits in open space above the content, never inside it,
+     regardless of how long any pillar's copy runs. min-height bumped
+     300->380 to give that leftover space real presence. */
+  .value-tag__num-wrap{ position:relative; z-index:1; }
+  @media(min-width:700px){
+    .value-tag__num-wrap{ flex:1 1 auto; display:flex; align-items:center; }
+  }
   .value-tag__num{
     font-family:var(--font-mono); font-size:clamp(2.2rem,4vw,3.4rem); line-height:1;
     color:rgba(236,236,236,0.22); transition:color var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
     transform-origin:left center;
   }
   .value-tag:is(:hover, :focus-within) .value-tag__num{ color:rgba(236,236,236,0.4); transform:scale(1.06); }
-  .value-tag__title{ margin-top:20px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.1rem; }
-  .value-tag__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:16px 0 12px; transition:width var(--dur-med) var(--ease-precise); }
+  @media(min-width:700px){
+    .value-tag__num{ font-size:clamp(2.6rem,4.6vw,4rem); }
+  }
+  .value-tag__title{ position:relative; z-index:1; margin-top:20px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.1rem; }
+  /* round 9: short, always-visible line in the technical (mono) type
+     tier, so the column has real content at rest instead of relying on
+     hover alone for anything beyond the title. Crossfades into the
+     fuller .value-tag__desc on hover rather than both showing stacked. */
+  .value-tag__brief{
+    position:relative; z-index:1; margin-top:10px;
+    font-family:var(--font-mono); font-size:0.74rem; letter-spacing:0.03em; line-height:1.5;
+    color:rgba(236,236,236,0.45); max-width:22ch;
+    transition:opacity var(--dur-med) var(--ease-precise);
+    /* clamp to 2 lines so every column's content block is a predictable
+       height regardless of exact wording — the num-wrap spacer above
+       still adapts either way, but a consistent content height keeps
+       all five columns' numerals sitting at the same height too. */
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .value-tag:is(:hover, :focus-within) .value-tag__brief{ opacity:0; }
+  .value-tag__rule{ position:relative; z-index:1; width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:16px 0 12px; transition:width var(--dur-med) var(--ease-precise); }
   .value-tag:is(:hover, :focus-within) .value-tag__rule{ width:56px; }
   /* round 4: was transition:max-height (flagged by /impeccable detect as
      layout-transition). Replaced with opacity+transform; the column is
@@ -705,6 +765,7 @@
      0.55 to 0.64 opacity — 0.55 over Carbon Grey computed to ~4.36:1, just
      under the 4.5:1 AA floor for this text size. */
   .value-tag__desc{
+    position:relative; z-index:1;
     font-family:var(--font-body); font-size:0.9rem; line-height:1.6; color:rgba(236,236,236,0.64); max-width:26ch;
     opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
   }
@@ -713,8 +774,12 @@
     .value-tag__desc{ opacity:1; transform:none; max-width:none; }
     .value-tag__rule{ width:56px; }
     .value-tag__num{ color:rgba(236,236,236,0.4); }
+    /* mobile already shows the full .value-tag__desc permanently (no
+       hover to reveal it on touch), so the brief line would just be a
+       redundant, quieter duplicate sitting right above it — hide it here. */
+    .value-tag__brief{ display:none; }
   }
-  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:is(:hover, :focus-within) .value-tag__num{ transform:none; } .value-tag__desc{ transform:none; } }
+  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:is(:hover, :focus-within) .value-tag__num{ transform:none; } .value-tag__desc{ transform:none; } .value-tag__brief{ transition:none; } .value-tag__weave{ transition:none; } }
 
   /* ---------- counters ---------- */
   .counters{ margin-top:56px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:32px; }
@@ -855,8 +920,50 @@
      Reuses .wrap / .eyebrow / .hairline / .media exactly like every other
      section; the two platform "cards" and the embed grid are the only new
      components. */
-  .social-blocks{ display:grid; gap:24px; margin-top:56px; }
-  @media(min-width:700px){ .social-blocks{ grid-template-columns:repeat(2,1fr); gap:32px; } }
+  /* round 9: Instagram is the channel that actually carries this section
+     (10.1K followers vs. YouTube's 19 subscribers below) but previously
+     sat as an equal-weight card next to YouTube — a small caption doing
+     no work as "the section's hook". Given its own full-weight header
+     row instead, sized and coloured to read with real presence. The
+     conic-gradient ring is Instagram's one recognizable colour cue,
+     used exactly once on this icon and nowhere else in the section, per
+     "a small accent... used sparingly, a one-time recognizable nod." */
+  .ig-hook{
+    display:flex; align-items:center; gap:20px; margin-top:56px;
+    padding-bottom:24px; border-bottom:1px solid rgba(236,236,236,0.16);
+  }
+  .ig-hook__ring{
+    flex-shrink:0; width:62px; height:62px; border-radius:50%; padding:3px;
+    background:conic-gradient(from -60deg, #f9ce34, #ee2a7b, #6228d7, #3051f1, #f9ce34);
+    transition:transform var(--dur-med) var(--ease-precise);
+  }
+  .ig-hook:is(:hover, :focus-visible) .ig-hook__ring{ transform:scale(1.06); }
+  /* true circle, not Instagram's own rounded-square avatar frame — keeps
+     the shape language to DESIGN.md's hard-0px-or-true-circle rule. */
+  .ig-hook__ring-inner{
+    width:100%; height:100%; border-radius:50%; background:var(--kynetik-black);
+    display:flex; align-items:center; justify-content:center; color:var(--foster-white);
+  }
+  .ig-hook__body{ flex:1 1 auto; min-width:0; }
+  .ig-hook__handle{
+    display:block; font-family:var(--font-display); font-weight:700; text-transform:uppercase;
+    letter-spacing:0.01em; font-size:clamp(1.6rem,3.4vw,2.3rem); line-height:1.1;
+  }
+  .ig-hook__meta{
+    display:block; margin-top:6px; font-family:var(--font-mono); font-size:0.85rem;
+    letter-spacing:0.04em; color:rgba(236,236,236,0.68);
+  }
+  .ig-hook__cta{ flex-shrink:0; }
+  @media(max-width:640px){
+    .ig-hook{ flex-wrap:wrap; row-gap:12px; }
+    .ig-hook__cta{ width:100%; margin-left:82px; }
+  }
+  @media (prefers-reduced-motion: reduce){ .ig-hook__ring{ transition:none; } }
+
+  /* Instagram used to be the first of these two equal-width cards; it's
+     now the .ig-hook header above, so this is YouTube only — a single
+     narrower card rather than a 2-col grid with an empty second track. */
+  .social-blocks{ margin-top:32px; max-width:360px; }
   .social-block{ border-top:1px solid var(--vintage-yellow); padding-top:22px; }
   .social-block__head{ display:flex; align-items:center; gap:14px; }
   .social-block__icon{ flex-shrink:0; color:var(--vintage-yellow); }
@@ -884,13 +991,25 @@
   .ig-native__bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(0.85) brightness(0.7); transition:transform var(--dur-med) var(--ease-precise); }
   .social-embed--ig-native:hover .ig-native__bg{ transform:scale(1.05); }
   .ig-native__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,20,20,0.35) 0%, rgba(20,20,20,0.55) 100%); }
+  /* round 9: "lean more toward how Instagram actually presents Reels, a
+     cleaner, more centred play affordance" — solid frosted fill instead
+     of a near-invisible dark-on-dark background so it reads immediately
+     against any backdrop photo, and the triangle nudged 1px right of
+     dead-centre since a play glyph's own visual weight sits left of its
+     geometric centre (an unshifted glyph reads as off-centre to the
+     eye). Deliberately no drop shadow here — a thin border plus a wide
+     shadow blur is exactly the generated-UI combination /impeccable
+     flags, and the frosted fill already gives it enough presence
+     without one. Same class on all three ig-native cards, so sizing and
+     position stay identical across them. */
   .ig-native__play{
-    position:relative; width:56px; height:56px; border-radius:50%; border:1.5px solid rgba(236,236,236,0.5);
+    position:relative; width:60px; height:60px; border-radius:50%; border:1.5px solid rgba(236,236,236,0.55);
     display:flex; align-items:center; justify-content:center; color:var(--foster-white);
-    background:rgba(20,20,20,0.35);
-    transition:transform var(--dur-med) var(--ease-precise), border-color var(--dur-med) var(--ease-precise), color var(--dur-med) var(--ease-precise);
+    background:rgba(236,236,236,0.14);
+    transition:transform var(--dur-med) var(--ease-precise), border-color var(--dur-med) var(--ease-precise), color var(--dur-med) var(--ease-precise), background var(--dur-med) var(--ease-precise);
   }
-  .social-embed--ig-native:hover .ig-native__play{ transform:scale(1.1); border-color:var(--vintage-yellow); color:var(--vintage-yellow); }
+  .ig-native__play svg{ transform:translateX(1px); }
+  .social-embed--ig-native:hover .ig-native__play{ transform:scale(1.1); border-color:var(--vintage-yellow); color:var(--vintage-yellow); background:rgba(233,190,95,0.14); }
   .ig-native__meta{
     position:relative; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.72rem;
     letter-spacing:0.04em; color:rgba(236,236,236,0.8); transition:color var(--dur-med) var(--ease-precise);
