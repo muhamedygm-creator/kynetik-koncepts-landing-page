@@ -562,7 +562,15 @@
            only — not repeated anywhere else in the section. Ring is a true
            circle per DESIGN.md's shape rule (hard 0px corners or true
            circles, nothing rounded in between), not a copy of Instagram's
-           own rounded-corner UI. -->
+           own rounded-corner UI.
+           Round 10 (via /impeccable critique): this header used to also
+           carry "View profile →" (.ig-hook__cta), 637-659px of scroll away
+           from the 3 reel cards it should endorse — measured and confirmed
+           by Assessment B as a real proximity defect, not just a stylistic
+           one. That link now lives inside .social-embeds instead, as the
+           grid's 4th tile sitting directly beside the 3 reels (see below);
+           .ig-hook's job stays scoped to proving the account is real:
+           handle + follower count only. -->
       <a class="ig-hook js-cursor-target" href="https://www.instagram.com/kynetikkoncepts/" target="_blank" rel="noopener" aria-label="View @kynetikkoncepts on Instagram">
         <span class="ig-hook__ring" aria-hidden="true"><span class="ig-hook__ring-inner"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span></span>
         <span class="ig-hook__body">
@@ -570,7 +578,6 @@
           <!-- Follower count manually recorded 2026-09-19. Instagram/YouTube block automated scraping and this isn't wired to their APIs — update this number by hand periodically. See amend doc round 2 §5. -->
           <span class="ig-hook__meta">10.1K followers on Instagram</span>
         </span>
-        <span class="ig-hook__cta quiet-link">View profile &rarr;</span>
       </a>
 
       <div class="social-blocks">
@@ -628,6 +635,20 @@
           <span class="ig-native__scrim" aria-hidden="true"></span>
           <span class="ig-native__play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
           <span class="ig-native__meta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.3"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>Watch on Instagram</span>
+        </a>
+        <!-- Round 10 (via /impeccable critique, P1): "View profile" relocated
+             here from .ig-hook above — a 4th grid tile sitting directly
+             beside the 3 reels it endorses instead of 637-659px away.
+             At >=1024px the grid is 4 columns and the two video embeds
+             (grid-column:span 2 each) already fill row 1 completely, so
+             the 3 reel cards wrap to row 2 with one column free — this tile
+             fills that column instead of leaving it empty, landing in the
+             same row as the reels by construction, not a placement hack.
+             Below 1024px it simply follows the reels in normal grid flow,
+             immediately adjacent either way. -->
+        <a class="social-embed social-embed--ig-cta js-cursor-target" href="https://www.instagram.com/kynetikkoncepts/" target="_blank" rel="noopener" aria-label="View @kynetikkoncepts on Instagram">
+          <span class="ig-cta__ring" aria-hidden="true"><span class="ig-cta__ring-inner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span></span>
+          <span class="ig-cta__label">View profile &rarr;</span>
         </a>
       </div>
     </div>

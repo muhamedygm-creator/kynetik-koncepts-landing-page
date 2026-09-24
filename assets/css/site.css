@@ -953,10 +953,14 @@
     display:block; margin-top:6px; font-family:var(--font-mono); font-size:0.85rem;
     letter-spacing:0.04em; color:rgba(236,236,236,0.68);
   }
-  .ig-hook__cta{ flex-shrink:0; }
+  /* round 10 (via /impeccable critique, P1): .ig-hook__cta ("View profile")
+     used to live here, flex-wrapping onto its own row on mobile per the
+     rule this comment replaced — measured at 637-659px from the 3 reel
+     cards it was meant to endorse. Relocated into .social-embeds as the
+     grid's 4th tile (see .social-embed--ig-cta below); this header's job
+     is scoped to proving the account is real now, nothing else. */
   @media(max-width:640px){
     .ig-hook{ flex-wrap:wrap; row-gap:12px; }
-    .ig-hook__cta{ width:100%; margin-left:82px; }
   }
   @media (prefers-reduced-motion: reduce){ .ig-hook__ring{ transition:none; } }
 
@@ -984,8 +988,16 @@
      photo is a real site image standing in for the reel's thumbnail —
      Instagram doesn't expose that without logging in (see the HTML
      comment), so this at least isn't a blank/empty card. */
+  /* round 10 (via /impeccable critique, P1): the accent border here used
+     to just override .social-embed's shared 1px/rgba(236,236,236,0.2)
+     hairline to solid gold at the same 1px weight as the plain video
+     cards next to it — Assessment A/B both read that as "doesn't
+     register" against .ig-hook's full gradient ring. Bumped to 2px, a
+     restrained escalation within the site's own hairline vocabulary, not
+     a new device, so these 3 cards carry a visibly stronger version of
+     the same signal the video cards use only faintly. */
   .social-embed--ig-native{
-    aspect-ratio:9/16; border-top-color:var(--vintage-yellow);
+    aspect-ratio:9/16; border-top:2px solid var(--vintage-yellow);
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
   }
   .ig-native__bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(0.85) brightness(0.7); transition:transform var(--dur-med) var(--ease-precise); }
@@ -1001,17 +1013,59 @@
      shadow blur is exactly the generated-UI combination /impeccable
      flags, and the frosted fill already gives it enough presence
      without one. Same class on all three ig-native cards, so sizing and
-     position stay identical across them. */
+     position stay identical across them.
+     Round 10 (via /impeccable critique, P1): rest state used to be
+     neutral rgba(236,236,236,...) gray, only turning gold on hover —
+     Assessment B confirmed no accent colour touched the card at rest at
+     all. Rather than repeat Instagram's own multi-colour gradient here
+     (round 9 deliberately scoped that to .ig-hook__ring alone, "used
+     exactly once... nowhere else in the section", and DESIGN.md's One
+     Accent Rule backs that scoping), the fix leans on the site's own
+     single accent instead: the play button now rests in the same
+     Vintage Yellow the border above already carries, so the colour
+     signal is present before any hover, not only after. */
   .ig-native__play{
-    position:relative; width:60px; height:60px; border-radius:50%; border:1.5px solid rgba(236,236,236,0.55);
-    display:flex; align-items:center; justify-content:center; color:var(--foster-white);
-    background:rgba(236,236,236,0.14);
+    position:relative; width:60px; height:60px; border-radius:50%; border:1.5px solid rgba(233,190,95,0.5);
+    display:flex; align-items:center; justify-content:center; color:var(--vintage-yellow);
+    background:rgba(233,190,95,0.12);
     transition:transform var(--dur-med) var(--ease-precise), border-color var(--dur-med) var(--ease-precise), color var(--dur-med) var(--ease-precise), background var(--dur-med) var(--ease-precise);
   }
   .ig-native__play svg{ transform:translateX(1px); }
-  .social-embed--ig-native:hover .ig-native__play{ transform:scale(1.1); border-color:var(--vintage-yellow); color:var(--vintage-yellow); background:rgba(233,190,95,0.14); }
+  .social-embed--ig-native:hover .ig-native__play{ transform:scale(1.1); border-color:var(--vintage-yellow); background:rgba(233,190,95,0.22); }
   .ig-native__meta{
     position:relative; display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.72rem;
     letter-spacing:0.04em; color:rgba(236,236,236,0.8); transition:color var(--dur-med) var(--ease-precise);
   }
   .social-embed--ig-native:hover .ig-native__meta{ color:var(--vintage-yellow); }
+
+  /* round 10 (via /impeccable critique, P1): "View profile", relocated
+     from .ig-hook — same card shape/ground as .social-embed--ig-native
+     (dark, hairline top, 9:16) so it reads as one family with the 3
+     reels rather than a foreign element dropped beside them, but with no
+     backdrop photo or play button so it's still unmistakably "the 4th,
+     different tile", not a fourth reel. Reuses the header's own gradient
+     ring at a smaller scale — the section's one Instagram colour cue
+     still appears in exactly two places total (the header, and this,
+     its direct echo), not scattered across the grid. */
+  .social-embed--ig-cta{
+    aspect-ratio:9/16; border-top:2px solid var(--vintage-yellow);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
+    transition:background var(--dur-med) var(--ease-precise);
+  }
+  .social-embed--ig-cta:is(:hover, :focus-visible){ background:rgba(233,190,95,0.06); }
+  .ig-cta__ring{
+    flex-shrink:0; width:52px; height:52px; border-radius:50%; padding:3px;
+    background:conic-gradient(from -60deg, #f9ce34, #ee2a7b, #6228d7, #3051f1, #f9ce34);
+    transition:transform var(--dur-med) var(--ease-precise);
+  }
+  .social-embed--ig-cta:is(:hover, :focus-visible) .ig-cta__ring{ transform:scale(1.08); }
+  .ig-cta__ring-inner{
+    width:100%; height:100%; border-radius:50%; background:#141414;
+    display:flex; align-items:center; justify-content:center; color:var(--foster-white);
+  }
+  .ig-cta__label{
+    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.04em; color:rgba(236,236,236,0.8);
+    transition:color var(--dur-med) var(--ease-precise);
+  }
+  .social-embed--ig-cta:is(:hover, :focus-visible) .ig-cta__label{ color:var(--vintage-yellow); }
+  @media (prefers-reduced-motion: reduce){ .ig-cta__ring{ transition:none; } }
