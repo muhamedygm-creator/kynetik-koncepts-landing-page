@@ -4,6 +4,14 @@
     --foster-white:#ECECEC;
     --vintage-yellow:#E9BE5F;
     --olive-green:#808000;
+    /* full-site polish pass: promoted from a literal #141414 repeated in
+       3 places (.media, .social-embed, .ig-cta__ring-inner) — a deliberately
+       darker-than-Kynetik-Black recessed ground for photo/video embed
+       containers, not a one-off. /impeccable detect flagged the literal as
+       outside DESIGN.md's palette on every page that used it; now a named,
+       documented token instead of unreviewed drift. See DESIGN.md's Colors
+       section for the written rationale. */
+    --media-black:#141414;
 
     --font-display:'Space Grotesk', 'Arial Narrow', sans-serif;
     --font-body:'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -57,7 +65,15 @@
   html.js-custom-cursor, html.js-custom-cursor *{ cursor:none !important; }
 
   /* ---------- typography ---------- */
-  .display{ font-family:var(--font-display); text-transform:uppercase; font-weight:700; letter-spacing:0.06em; line-height:1.08; }
+  /* full-site polish pass: base letter-spacing was 0.06em, undocumented
+     in DESIGN.md (its Display tier specifies 0.03em) and never actually
+     rendered at that value anywhere live — every real usage pairs
+     .display with .h1 (0.03em) or .h2 (0.04em), both of which override
+     it, except the closing tagline's bare .display usage, which already
+     carries its own inline override. Corrected to match DESIGN.md so a
+     future bare .display usage gets the documented value by default
+     instead of this stray one. */
+  .display{ font-family:var(--font-display); text-transform:uppercase; font-weight:700; letter-spacing:0.03em; line-height:1.08; }
   .h1{ font-size:clamp(2.6rem, 7vw, 5.2rem); letter-spacing:0.03em; }
   .h2{ font-size:clamp(2.1rem, 5vw, 3.4rem); letter-spacing:0.04em; }
 
@@ -204,7 +220,7 @@
   /* every photo on the page gets the same cool-neutral grade cue: a soft
      diagonal gold sheen, keeping the brand's raking-light direction even
      across photography shot at different times/locations. */
-  .media{ position:relative; overflow:hidden; background:#141414; }
+  .media{ position:relative; overflow:hidden; background:var(--media-black); }
   .media img, .media video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; filter:saturate(0.92) contrast(1.03); }
   .media::after{
     content:''; position:absolute; top:-30%; left:-10%; width:70%; height:160%;
@@ -218,7 +234,16 @@
   .section--photo > .media{ position:absolute; inset:0; z-index:0; }
   .section--photo > .wrap{ position:relative; z-index:2; }
 
-  .hero__overlay{ position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(32,32,32,0.92) 0%, rgba(32,32,32,0.35) 42%, transparent 70%); }
+  /* full-site polish pass (via /impeccable critique, P1): the headline
+     ("ENERGY IN MOTION.") sits bottom-anchored in this section, right
+     where the previous gradient had already faded to ~0.35 opacity by
+     42% up — confirmed visually, the wheel's spokes/hub read clearly
+     through the text at that strength. Extended the strong zone further
+     up the frame so the headline's actual vertical position gets real
+     coverage, without changing the gradient's direction or the fact
+     that the top of the frame stays clear (matches how History's own
+     full-bleed scrim was tuned the same way in an earlier round). */
+  .hero__overlay{ position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(32,32,32,0.92) 0%, rgba(32,32,32,0.72) 42%, rgba(32,32,32,0.2) 78%, transparent 92%); }
 
   /* ---------- hero ---------- */
   .hero{ min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding-top:calc(var(--nav-h) + 40px); padding-bottom:72px; }
@@ -227,7 +252,12 @@
   .hero__headline{ max-width:14ch; }
   .hero__sub{ margin-top:22px; font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(236,236,236,0.75); }
   .hero__cta-row{ margin-top:44px; display:flex; flex-wrap:wrap; gap:18px; align-items:center; }
-  .hero__scroll-cue{ position:absolute; bottom:28px; left:24px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(236,236,236,0.55); z-index:2; }
+  /* full-site polish pass: 0.68rem = 10.88px, under the 11px functional-
+     text floor /impeccable detect flags sitewide. Bumped to 0.72rem
+     (11.52px), matching the size already used for .ig-native__meta so
+     the smallest mono labels on the site share one floor rather than
+     drifting per section. */
+  .hero__scroll-cue{ position:absolute; bottom:28px; left:24px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(236,236,236,0.55); z-index:2; }
   @media(min-width:768px){ .hero__scroll-cue{ left:56px; } }
   .hero__scroll-cue-line{ width:28px; height:1px; background:rgba(236,236,236,0.4); }
 
@@ -570,7 +600,13 @@
     content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
     background:linear-gradient(180deg, rgba(32,32,32,0) 45%, rgba(32,32,32,0.55) 78%, rgba(32,32,32,0.85) 100%);
   }
-  .stage-visual .stage-tag{ position:absolute; bottom:28px; left:28px; z-index:3; font-size:0.68rem; letter-spacing:0.12em; color:rgba(236,236,236,0.5); }
+  /* full-site polish pass: was 0.68rem (10.88px, under the 11px floor)
+     with 0.12em tracking — reasonable on a short uppercase label but
+     these captions run up to ~45 characters ("DESIGN & IDEATION — FORM
+     STUDY (PLACEHOLDER)"), long enough that the wide tracking actively
+     hurts legibility rather than reading as a stencilled label. Bumped
+     size to the site's 11.52px mono floor, tracking down to 0.06em. */
+  .stage-visual .stage-tag{ position:absolute; bottom:28px; left:28px; z-index:3; font-size:0.72rem; letter-spacing:0.04em; color:rgba(236,236,236,0.5); }
 
   /* right: content + rail */
   .stage-content{ width:55%; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0 56px; position:relative; }
@@ -615,7 +651,11 @@
   @media (prefers-reduced-motion: reduce){ .num-roll__track{ transition:none; } }
 
   /* progress rail, bottom, minimal footprint, safe-area aware on mobile */
-  .rail{ position:absolute; left:56px; right:56px; bottom:64px; display:flex; align-items:center; gap:6px; }
+  /* full-site polish pass (via spacing audit): right inset widened from
+     56px so the rail's last dot(s) clear .sticky-wa's known footprint
+     (fixed, right:20px/bottom:20px) instead of sitting under it —
+     confirmed overlapping via getBoundingClientRect before this fix. */
+  .rail{ position:absolute; left:56px; right:220px; bottom:64px; display:flex; align-items:center; gap:6px; }
   .rail button{ flex:1; height:2px; padding:0; background:rgba(236,236,236,0.18); position:relative; transition:background var(--dur-med) var(--ease-precise); }
   .rail button.is-done{ background:var(--vintage-yellow); }
   .rail button.is-current{ background:var(--vintage-yellow); }
@@ -632,9 +672,16 @@
     .process-scroll{ height:585vh; height:calc(9 * 65dvh); }
     .process-stage{ flex-direction:column; height:calc(100vh - var(--nav-h)); height:calc(100dvh - var(--nav-h)); }
     .stage-visual{ width:100%; height:44%; }
-    .stage-content{ width:100%; height:56%; padding:28px 24px calc(100px + env(safe-area-inset-bottom, 0px)); }
+    /* full-site polish pass (via spacing audit): bottom padding raised
+       130px (was 100px) — with content vertically centred in this box,
+       more bottom padding shifts that centred content up, away from
+       .sticky-wa's collapsed mobile circle (fixed, right:20px/bottom:20px)
+       — confirmed overlapping the stage title text via getBoundingClientRect
+       before this fix. .rail's own right inset widened to clear the same
+       button, matching the desktop fix above. */
+    .stage-content{ width:100%; height:56%; padding:28px 24px calc(130px + env(safe-area-inset-bottom, 0px)); }
     .stage-content__count{ left:24px; top:24px; }
-    .rail{ left:24px; right:24px; bottom:calc(28px + env(safe-area-inset-bottom, 0px)); }
+    .rail{ left:24px; right:90px; bottom:calc(28px + env(safe-area-inset-bottom, 0px)); }
   }
 
   /* ---------- the process, reduced-motion static fallback ----------
@@ -662,6 +709,14 @@
   /* ---------- proven: single centred line ---------- */
   .proven{ text-align:center; max-width:680px; margin:0 auto; }
   .proven .hairline{ margin-left:auto; margin-right:auto; }
+  /* full-site polish pass (via /impeccable critique, P2): confirmed via
+     mobile screenshot — .section--tight's reduced padding plus this
+     section's short content can land the sub-line's last wrapped word
+     right where .sticky-wa sits fixed at bottom:20px/right:20px. Caps
+     the line's own width so it can't reach that corner, rather than
+     changing the button's position or the section's padding (both would
+     affect other sections/content this fix doesn't need to touch). */
+  @media(max-width:600px){ .proven .sub-line{ max-width:calc(100% - 64px); margin-left:auto; margin-right:auto; } }
 
   /* ---------- values (impact, carbon grey ground): full-width redesign (round 4) ----------
      Round 2 fixed the ground colour to Carbon Grey; that stays untouched
@@ -794,7 +849,7 @@
      than the whole wrap being constrained. */
   .contact{ max-width:860px; }
   .contact__cta-row{ margin-top:40px; display:flex; flex-wrap:wrap; gap:18px; }
-  .contact__meta{ margin-top:64px; display:flex; flex-wrap:wrap; gap:8px 18px; font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.06em; color:rgba(236,236,236,0.55); }
+  .contact__meta{ margin-top:64px; display:flex; flex-wrap:wrap; gap:8px 18px; font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.04em; color:rgba(236,236,236,0.55); }
 
   /* ---------- sticky whatsapp ---------- */
   .sticky-wa{
@@ -839,8 +894,15 @@
 
   /* ---------- page hero (non-home pages: pedigree, downloads, projects) ---------- */
   .page-hero{ padding-top:calc(var(--nav-h) + 64px); padding-bottom:56px; }
+  /* full-site polish pass (via spacing audit): unlike every .section on
+     the site (120px->84px under 767px), this had no mobile override at
+     all — a fixed 140px top / 56px bottom regardless of viewport, ~23%
+     of a typical mobile viewport's height on offering/pedigree/downloads/
+     every project page. Scaled down proportionally to match .section's
+     own reduction instead of leaving this one class as the exception. */
+  @media(max-width:767px){ .page-hero{ padding-top:calc(var(--nav-h) + 40px); padding-bottom:40px; } }
   .page-hero .h1{ font-size:clamp(2.2rem, 6vw, 3.8rem); max-width:18ch; }
-  .breadcrumb{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.06em; color:rgba(236,236,236,0.5); margin-bottom:18px; }
+  .breadcrumb{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.04em; color:rgba(236,236,236,0.5); margin-bottom:18px; }
   .breadcrumb a{ color:rgba(236,236,236,0.75); transition:color var(--dur-fast) var(--ease-precise); }
   .breadcrumb a:hover{ color:var(--vintage-yellow); }
 
@@ -859,6 +921,10 @@
   /* Round 2 spacing pass: .wrap is wider now — let a pillar with enough
      cards actually use a third column instead of capping at two forever. */
   @media(min-width:1300px){ .project-grid{ grid-template-columns:repeat(3,1fr); gap:32px; } }
+  /* full-site polish pass: "Delivered" has exactly 4 cards, which orphans
+     a lone tile in row 2 of the 3-column layout above — override back to
+     2 columns specifically for that pillar so 4 always divides evenly. */
+  .project-grid--pair{ grid-template-columns:repeat(2,1fr); }
   .project-card{ display:flex; flex-direction:column; background:var(--carbon-grey); border-top:1px solid var(--vintage-yellow); transition:transform var(--dur-fast) var(--ease-precise); }
   .project-card:hover{ transform:translateY(-4px); }
   .project-card__media{ aspect-ratio:4/3; }
@@ -868,6 +934,13 @@
   .project-card__eyebrow{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--vintage-yellow); }
   .project-card__title{ margin-top:12px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.2rem; }
   .project-card__tagline{ margin-top:10px; color:rgba(236,236,236,0.75); font-size:0.92rem; flex:1; }
+  /* full-site polish pass (via /impeccable critique, P1): a quiet, honest
+     flag for the two cards (Kobra, e-tron) still using stand-in photography
+     — same "say so, don't fake it" instinct as the PDF coming-soon state,
+     styled as a muted caveat rather than the brand accent (this isn't a
+     highlight, it's a caveat, and shouldn't compete with the gold CTA
+     immediately below it for attention). */
+  .project-card__pending{ margin-top:10px; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.04em; color:rgba(236,236,236,0.45); }
   .project-card__cta{ margin-top:18px; font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--vintage-yellow); display:inline-flex; align-items:center; gap:6px; }
 
   /* ---------- project page: gallery ---------- */
@@ -896,6 +969,15 @@
   .field input::placeholder{ color:rgba(236,236,236,0.35); }
   .field input:focus{ outline:none; border-color:var(--vintage-yellow); }
   .convert-form .btn{ grid-column:1 / -1; justify-self:start; border:0; }
+  /* full-site polish pass (via /impeccable critique, P1): status message
+     injected by the js-convert-form submit handler in site-interactions.js
+     — confirms the WhatsApp tab opened, or surfaces a direct fallback
+     link when the popup was blocked (silent failure was the real bug;
+     see that file's comment for the diagnosis). Quiet by default, shifts
+     to the accent colour only in the blocked/fallback state, where it's
+     the one thing on the page the visitor actually needs to notice. */
+  .convert-form__status{ grid-column:1 / -1; margin-top:4px; font-family:var(--font-mono); font-size:0.82rem; color:rgba(236,236,236,0.65); }
+  .convert-form__status--blocked{ color:var(--vintage-yellow); }
 
   /* ---------- project page / downloads hub: PDF block ---------- */
   .pdf-block{ margin-top:28px; }
@@ -910,7 +992,7 @@
     padding:26px 0; border-bottom:1px solid rgba(236,236,236,0.14);
   }
   .downloads-row__name{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; }
-  .downloads-row__meta{ margin-top:6px; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.06em; color:rgba(236,236,236,0.5); }
+  .downloads-row__meta{ margin-top:6px; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.04em; color:rgba(236,236,236,0.5); }
   .downloads-row .pdf-block{ margin-top:0; }
   /* .downloads-section-label removed in round 2: downloads.html was
      flattened to one undivided list (no more "Projects" / "Company
@@ -978,7 +1060,7 @@
   .social-embeds{ display:grid; gap:24px; margin-top:56px; grid-template-columns:1fr; }
   @media(min-width:640px){ .social-embeds{ grid-template-columns:repeat(2,1fr); } }
   @media(min-width:1024px){ .social-embeds{ grid-template-columns:repeat(4,1fr); gap:20px; } }
-  .social-embed{ position:relative; background:#141414; border-top:1px solid rgba(236,236,236,0.2); overflow:hidden; }
+  .social-embed{ position:relative; background:var(--media-black); border-top:1px solid rgba(236,236,236,0.2); overflow:hidden; }
   .social-embed--video{ aspect-ratio:16/9; grid-column:span 1; }
   @media(min-width:1024px){ .social-embed--video{ grid-column:span 2; } }
   .social-embed--video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
@@ -1060,7 +1142,7 @@
   }
   .social-embed--ig-cta:is(:hover, :focus-visible) .ig-cta__ring{ transform:scale(1.08); }
   .ig-cta__ring-inner{
-    width:100%; height:100%; border-radius:50%; background:#141414;
+    width:100%; height:100%; border-radius:50%; background:var(--media-black);
     display:flex; align-items:center; justify-content:center; color:var(--foster-white);
   }
   .ig-cta__label{

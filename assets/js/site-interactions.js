@@ -257,6 +257,49 @@
     document.addEventListener('scroll', onScroll, { passive:true });
     updateScrub();
     onProcessScroll();
+    /* full-site polish pass (via /impeccable critique, P2): a nav link or
+       any #anchor jump triggers the browser's own scroll-behavior:smooth
+       animation (site.css line ~37). updateScrub() was only ever called
+       from the scroll listener, computing progress from the section's
+       CURRENT position — at the instant 'hashchange' fires (synchronously
+       on click, before the smooth-scroll animation has moved the viewport
+       at all) the destination section is still off-screen below, so
+       progress computes to ~0 and .is-in never gets added by that call
+       either; a first attempt at this fix called updateScrub() here and
+       looked correct in a quick check, but re-verified with a real nav
+       click plus getComputedStyle on .ground-curtain, .is-in only landed
+       once the ordinary scroll listener caught up mid-animation, same
+       delay as before, since progress-from-current-position is exactly
+       what's unreliable during a jump.
+       Fixed properly by not depending on position at all for this case:
+       on a hash change (or a direct load of a URL with a hash already in
+       it), reveal the exact target section immediately by id — add
+       .is-in straight away (revealing .ground-curtain instantly, matching
+       the reduced-motion treatment's instant-reveal, which is the
+       correct UX for a jump the user didn't scroll through) and clear
+       its .js-scrub clip-path inline style too, since that's normally
+       only ever written by updateScrub()'s own progress math and would
+       otherwise stay clipped from whatever it was before the jump. */
+    function revealForHash(){
+      /* updateScrub() first, for every section's own natural progress —
+         then the explicit target override after, so its instant reveal
+         isn't immediately overwritten back to a clipped/hidden state by
+         updateScrub()'s own progress-from-current-position math (which
+         still reads ~0 for the target at this point, same root cause as
+         the bug this function exists to fix). */
+      updateScrub();
+      onProcessScroll();
+      var id = location.hash.slice(1);
+      var target = id ? document.getElementById(id) : null;
+      var sec = target ? target.closest('.js-scrub-section') : null;
+      if(sec){
+        sec.classList.add('is-in');
+        var clip = sec.querySelector('.js-scrub');
+        if(clip){ clip.style.clipPath = 'none'; }
+      }
+    }
+    window.addEventListener('hashchange', revealForHash);
+    if(location.hash){ revealForHash(); }
   }
 
   /* ---- animated counters ---- */
@@ -343,7 +386,15 @@
 
   /* ---- "Convert Yours" lead form: no backend, so compile the fields into
      a WhatsApp message client-side and open wa.me with it. Any form with
-     class js-convert-form + data-project + data-wa-number triggers this. ---- */
+     class js-convert-form + data-project + data-wa-number triggers this.
+     Full-site polish pass (via /impeccable critique, P1): window.open()'s
+     return value was never checked and nothing on the page confirmed the
+     submit did anything — a popup-blocked browser (common on mobile
+     Safari outside a trusted gesture chain) left the visitor with zero
+     feedback that their enquiry went nowhere. Now checks the returned
+     window handle and shows an inline status either way, with a direct
+     fallback link when the popup was blocked. Status element is created
+     once per form and reused on repeat submits rather than duplicated. */
   document.addEventListener('submit', function(e){
     var form = e.target;
     if(!form || !form.classList || !form.classList.contains('js-convert-form')) return;
@@ -354,6 +405,30 @@
     var message = 'New enquiry — ' + project + '. Car model: ' + val('car_model') +
       '. Year: ' + val('car_year') + '. Location: ' + val('location') +
       '. Phone: ' + val('phone') + '.';
-    window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
+    var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(message);
+    var opened = window.open(url, '_blank', 'noopener');
+
+    var status = form.querySelector('.convert-form__status');
+    if(!status){
+      status = document.createElement('p');
+      status.className = 'convert-form__status';
+      status.setAttribute('aria-live', 'polite');
+      form.appendChild(status);
+    }
+    if(opened){
+      status.textContent = 'WhatsApp opened in a new tab — send the pre-filled message to reach us.';
+      status.classList.remove('convert-form__status--blocked');
+    } else {
+      status.innerHTML = '';
+      status.appendChild(document.createTextNode('Pop-up blocked. '));
+      var fallback = document.createElement('a');
+      fallback.href = url;
+      fallback.target = '_blank';
+      fallback.rel = 'noopener';
+      fallback.className = 'quiet-link js-cursor-target';
+      fallback.textContent = 'Tap here to open WhatsApp →';
+      status.appendChild(fallback);
+      status.classList.add('convert-form__status--blocked');
+    }
   });
 })();

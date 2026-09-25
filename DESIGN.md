@@ -7,6 +7,7 @@ colors:
   carbon-grey: "#353535"
   foster-white: "#ECECEC"
   olive-green: "#808000"
+  media-black: "#141414"
 typography:
   display:
     fontFamily: "Space Grotesk, Arial Narrow, sans-serif"
@@ -30,6 +31,11 @@ typography:
     fontSize: "0.78rem"
     fontWeight: 400
     letterSpacing: "0.1em"
+  tile-title:
+    fontFamily: "Space Grotesk, Arial Narrow, sans-serif"
+    fontSize: "1.1rem"
+    fontWeight: 700
+    letterSpacing: "0.02em"
 rounded:
   none: "0px"
   full: "50%"
@@ -83,6 +89,7 @@ A near-monochrome black/grey/white system with one reserved accent; the accent's
 - **Carbon Grey** (`#353535`): the secondary ground (the "What We Stand For" / Impact section, the Process stage-visual backdrop before a photo loads). A deliberate, confirmed choice from an earlier revision — do not reopen it as a "flat/boring" problem; treat layout and interaction as the levers instead.
 - **Foster White** (`#ECECEC`): primary text color on dark grounds, and the ground color for the rare light section (`.ground-white`). Body copy on dark grounds is rarely pure white — commonly stepped down to 50–75% opacity (`rgba(236,236,236,0.5–0.75)`) for secondary text (meta lines, descriptions, labels).
 - **Olive Green** (`#808000`, retired from active use): still declared as a brand token from the original guidelines but not currently referenced anywhere in the live CSS. **The Gold-on-Olive Rule.** The Vintage Yellow accent must never sit directly on Olive Green — a strict brand-guideline rule preserved even though Olive Green isn't in current use.
+- **Media Black** (`#141414`): a deliberately darker-than-Kynetik-Black recessed ground, reserved for photo/video embed containers (`.media`, `.social-embed`) and the small dark circle behind an icon ring (`.ig-cta__ring-inner`) — never a section ground. Promoted from a repeated literal to a named token during the full-site polish pass.
 
 ### Named Rules
 **The One Accent Rule.** Vintage Yellow appears on a small fraction of any given screen — an eyebrow, a hairline, one button, a handful of index numbers. If a new element reaches for a second saturated color, that's the signal something has gone off-brand.
@@ -99,8 +106,9 @@ A near-monochrome black/grey/white system with one reserved accent; the accent's
 - **Display** (700, `clamp(2.6rem, 7vw, 5.2rem)`, line-height 1.08): the largest headline on a page (hero, section H1-scale moments). Always uppercase, 0.03em tracking.
 - **Headline** (700, `clamp(2.1rem, 5vw, 3.4rem)`, line-height 1.08): standard section headline (`.h2`). Uppercase, 0.04em tracking.
 - **Eyebrow** (600, 0.78rem, 0.24em tracking, uppercase): the small Vintage Yellow label above every section headline ("Offerings", "History · The Origin", "What We Stand For").
+- **Tile Title** (700, 1.1rem, 0.02em tracking, uppercase): the title line inside a repeating card/tile component (`.value-tag__title`, `.social-block__handle`) — smaller and tighter-tracked than a section Headline since it's reading as a component label, not a page-level heading.
 - **Body** (400, 1.05rem for `.sub-line` intros / 16px for running body, line-height 1.55): plain-language supporting copy under headlines. Cap around 36em measure for sub-lines.
-- **Label** (IBM Plex Mono, 0.7–0.85rem, 0.06–0.16em tracking): indices, meta lines, nav links, footer legal text, stage tags, mono-numbered counters.
+- **Label** (IBM Plex Mono, 0.7–0.85rem, 0.04–0.16em tracking): indices, meta lines, nav links, footer legal text, stage tags, mono-numbered counters. 0.04em is the floor for anything that can run longer than a couple of words (breadcrumbs, contact meta, stage-tag captions); reserve the top of the range (0.14–0.16em) for genuinely short labels only.
 
 ### Named Rules
 **The Uppercase-and-Tracked Rule.** Anything set in Space Grotesk is uppercase with deliberate letter-spacing; the font never appears in sentence case. Reserve sentence-case, tighter-tracked type for Helvetica body copy only.

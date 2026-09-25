@@ -19,7 +19,7 @@
    Digital Presence, which points at index.html#digital-presence.
 
    To mark the current nav item active, set on <body>:
-     <body data-nav-active="offering|pedigree|history|impact|digital-presence">
+     <body data-nav-active="offering|pedigree|history|process|impact|digital-presence">
    Pages with no matching nav item (hero/contact-only sections, project
    pages, downloads.html) simply omit the attribute and no link gets
    marked active.
@@ -35,10 +35,22 @@
 
   var navActive = (document.body.getAttribute('data-nav-active') || '').trim();
 
+  /* full-site polish pass (via /impeccable critique, P1): The Process
+     had an #process anchor and was the single strongest section on the
+     page by Assessment A's own read ("the one most likely to convince a
+     skeptical buyer"), yet had no way to reach it except scrolling past
+     everything before it — no direct link, no shareable in-page URL.
+     Added as a 6th item, one past the cognitive-load guideline's ≤5
+     top-level-nav rule (see DESIGN.md's Layout section) but a deliberate
+     exception for the page's own best section rather than adding both
+     #process and #make and drifting further past it; What We Make sits
+     immediately after the hero already, so it's reached within the
+     first scroll or two regardless of a nav entry. */
   var NAV_ITEMS = [
     { key: 'offering',         label: 'Offering',         href: p + 'offering.html' },
     { key: 'pedigree',         label: 'Pedigree',         href: p + 'pedigree.html' },
     { key: 'history',          label: 'History',          href: p + 'index.html#history' },
+    { key: 'process',          label: 'The Process',      href: p + 'index.html#process' },
     { key: 'impact',           label: 'Impact',           href: p + 'index.html#impact' },
     { key: 'digital-presence', label: 'Digital Presence', href: p + 'index.html#digital-presence' }
   ];

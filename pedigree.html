@@ -39,10 +39,17 @@
     <div class="wrap">
       <p class="eyebrow">Delivered</p>
       <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px;">Completed Projects.</h2>
+      <h2 class="display h2 js-scrub" style="margin-top:26px;">Completed projects.</h2>
       <p class="sub-line">Four builds, delivered.</p>
 
-      <div class="project-grid">
+      <!-- full-site polish pass (via /impeccable critique): 4 cards in the
+           shared 3-column grid left an orphaned single tile alone in row 2
+           at >=1300px, with the other two columns empty beside it —
+           confirmed via getBoundingClientRect. project-grid--pair caps this
+           pillar at 2 columns so 4 always divides evenly (2x2); the
+           "Upcoming" pillar below keeps the plain .project-grid 3-column
+           behaviour since its own 3 cards fill that exactly. -->
+      <div class="project-grid project-grid--pair">
         <!-- SOURCE: DSC00262 (1).JPG — same 599 RF hero shot used on its project page. -->
         <a class="project-card js-cursor-target" href="projects/599-rf.html">
           <div class="project-card__media media">
@@ -55,7 +62,14 @@
             <p class="project-card__cta">View Project &rarr;</p>
           </div>
         </a>
-        <!-- SOURCE: 12-2 (2).jpg — generic carbon-detail stand-in; no Karbon Kobra photography exists yet. -->
+        <!-- SOURCE: 12-2 (2).jpg — generic carbon-detail stand-in; no Karbon Kobra photography exists yet.
+             Full-site polish pass (via /impeccable critique, P1): flagged as a real
+             finding — this page's entire premise is "the record, in full," so a
+             generic stand-in silently presented as this specific build is a bigger
+             credibility risk here than an unphotographed capability would be on
+             offering.html. Given an honest visible flag rather than staying silent,
+             matching the same "say so, don't fake it" instinct the PDF coming-soon
+             state and the Process placeholder photography already use elsewhere. -->
         <a class="project-card js-cursor-target" href="projects/karbon-kobra.html">
           <div class="project-card__media media">
             <img src="assets/img/projects/kobra-detail.jpg" alt="Matte carbon coachwork detail" loading="lazy">
@@ -64,6 +78,7 @@
             <p class="project-card__eyebrow">Karbon Klassics</p>
             <h3 class="project-card__title">Karbon Kobra</h3>
             <p class="project-card__tagline">A classic reborn in carbon, set upon modern underpinnings.</p>
+            <p class="project-card__pending">Photography pending</p>
             <p class="project-card__cta">View Project &rarr;</p>
           </div>
         </a>
@@ -75,11 +90,14 @@
           <div class="project-card__body">
             <p class="project-card__eyebrow">Karbon Elektric</p>
             <h3 class="project-card__title">Karbon Elektric — Porsche Taycan</h3>
-            <p class="project-card__tagline">Carbon transformation for the Porsche Taycan you already drive.</p>
+            <p class="project-card__tagline">Carbon transformation for the Porsche Taycan already on the road.</p>
             <p class="project-card__cta">View Project &rarr;</p>
           </div>
         </a>
-        <!-- SOURCE: magnific_..._1lOPUnBr4r (1).jpg — tight macro crop; no Karbon Elektric e-tron photography exists yet. -->
+        <!-- SOURCE: magnific_..._1lOPUnBr4r (1).jpg — tight macro crop; no Karbon Elektric e-tron photography exists yet.
+             Full-site polish pass (via /impeccable critique, P1): same visible-flag
+             treatment as the Kobra card above, and see index.html's polish-pass
+             comments for why "you already drive" was dropped from this tagline. -->
         <a class="project-card js-cursor-target" href="projects/karbon-elektric-etron.html">
           <div class="project-card__media media">
             <img src="assets/img/projects/etron-detail.jpg" alt="Carbon intake panel detail" loading="lazy">
@@ -87,7 +105,8 @@
           <div class="project-card__body">
             <p class="project-card__eyebrow">Karbon Elektric</p>
             <h3 class="project-card__title">Karbon Elektric — Audi e-tron</h3>
-            <p class="project-card__tagline">Carbon transformation for the Audi e-tron you already drive.</p>
+            <p class="project-card__tagline">Carbon transformation for the Audi e-tron already on the road.</p>
+            <p class="project-card__pending">Photography pending</p>
             <p class="project-card__cta">View Project &rarr;</p>
           </div>
         </a>
@@ -99,7 +118,7 @@
     <div class="wrap">
       <p class="eyebrow">In Development</p>
       <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px;">Upcoming Projects.</h2>
+      <h2 class="display h2 js-scrub" style="margin-top:26px;">Upcoming projects.</h2>
       <p class="sub-line">Three builds, already underway.</p>
 
       <div class="project-grid">
