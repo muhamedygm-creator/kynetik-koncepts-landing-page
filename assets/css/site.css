@@ -585,10 +585,20 @@
   .stage-visual .panel.is-active{ opacity:1; }
   /* round 4: full-bleed photo per stage, replacing the centred vector icon —
      filter/scale match .make-tile's photographic treatment for consistency.
-     A bottom scrim keeps .stage-tag legible over whatever the photo is. */
+     A bottom scrim keeps .stage-tag legible over whatever the photo is.
+     Round 12 (via /impeccable critique): headline-dominance review found
+     this section's per-stage headline reliably wins the "what grabs your
+     eye first" contest on a muted photo (e.g. stage 4, Prototyping) but
+     can lose it on a glossy, saturated one (stage 1's blue carbon macro
+     shot, stage 9's warm hero-carbon-ferrari.jpg) — nothing kept the
+     images inside a consistent tonal range the way .make-tile's own
+     grayscale(0.15) rest state does. Bumped 0.1->0.3, a bit further than
+     that precedent since .make-tile only needs to hold at rest (hover
+     reveals full colour); these 9 photos have no such fallback and need
+     to hold the line on every single stage, whichever one is showing. */
   .stage-visual .panel img{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    filter:grayscale(0.1) contrast(1.05);
+    filter:grayscale(0.3) contrast(1.05);
   }
   .stage-visual .panel .weave{
     position:absolute; inset:0; z-index:2;
@@ -620,9 +630,16 @@
     letter-spacing:0.14em; color:rgba(236,236,236,0.65);
   }
   .stage-content .eyebrow{ margin-bottom:16px; font-size:14px; }
+  /* round 12: round 7's clamp(64px,5vw,72px) minimum was itself an
+     improvement over the original but still read as secondary to the
+     large image beside it — a 8px range top-to-bottom gave it almost no
+     room to grow with viewport width either. Pushed well past that
+     minimum per the explicit round-12 target: clamp(56px,7vw,96px), so
+     this headline is the clear visual anchor of the content panel, not
+     competing with the photo. */
   .stage-content__title{
     font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.03em;
-    font-size:clamp(64px, 5vw, 72px); line-height:1.03; margin-bottom:22px;
+    font-size:clamp(56px, 7vw, 96px); line-height:1.02; margin-bottom:22px;
   }
   .stage-content__desc{ font-size:19px; line-height:1.65; color:rgba(236,236,236,0.72); max-width:36ch; }
   /* round 7 (optional per brief, implemented since 55% now gives room): a
