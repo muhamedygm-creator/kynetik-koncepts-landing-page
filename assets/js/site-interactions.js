@@ -431,4 +431,114 @@
       status.classList.add('convert-form__status--blocked');
     }
   });
+
+  /* ---- Horizontal card sliders (Pedigree pillars + homepage teasers) ----
+     Native overflow-x:auto + scroll-snap does the actual sliding with
+     zero JS (real touch/trackpad scroll always works); this wires the
+     two visible nav buttons per slider and keeps each pair's disabled
+     state in sync with real scroll position — including scroll driven
+     by touch/trackpad, not just the buttons, via the track's own
+     'scroll' listener.
+
+     Round 14 amends: pedigree.html's own Completed/Upcoming pillars
+     (.pedigree-slider) keep the original click-to-step-one-card
+     behaviour, untouched — round 14 only asked to change the homepage
+     teasers. The homepage Pedigree + Offering teasers (.card-slider)
+     instead get hover-and-hold continuous scroll on round 14's explicit
+     ask ("inviting the visitor to keep browsing rather than making them
+     click nine times"); click still does a single step too, since hover
+     never fires for keyboard-only activation. Reduced-motion visitors
+     get plain click-to-step on both — no auto-driven motion. */
+  function wireCardSlider(track, opts){
+    var container = track.closest(opts.containerSelector);
+    if(!container) return;
+    var prevBtn = container.querySelector(opts.prevSelector);
+    var nextBtn = container.querySelector(opts.nextSelector);
+
+    function step(){
+      var card = track.querySelector('.project-card');
+      var cardWidth = card ? card.getBoundingClientRect().width : track.clientWidth * 0.8;
+      var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 24;
+      return cardWidth + gap;
+    }
+    function updateNav(){
+      var max = track.scrollWidth - track.clientWidth;
+      if(prevBtn){ prevBtn.disabled = track.scrollLeft <= 2; }
+      if(nextBtn){ nextBtn.disabled = track.scrollLeft >= max - 2; }
+    }
+    if(prevBtn){
+      prevBtn.addEventListener('click', function(){
+        track.scrollBy({ left: -step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+    if(nextBtn){
+      nextBtn.addEventListener('click', function(){
+        track.scrollBy({ left: step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    }
+
+    if(opts.continuousHover && !reduceMotion){
+      var SPEED = 360; // px/second while an arrow is held with the cursor
+      var rafId = null, lastTs = null, dir = 0;
+      /* scroll-snap-type fights a synchronous track.scrollLeft write —
+         the browser re-snaps the position back on every frame, so the
+         track visually never moves. Suspending snap for the duration of
+         the hover (restored on stop, once the user has let go) is the
+         standard hybrid pattern: free continuous motion while held,
+         clean snap alignment at rest. */
+      function frame(ts){
+        if(lastTs == null){ lastTs = ts; }
+        var dt = (ts - lastTs) / 1000; lastTs = ts;
+        var max = track.scrollWidth - track.clientWidth;
+        var next = track.scrollLeft + dir * SPEED * dt;
+        next = Math.max(0, Math.min(max, next));
+        track.scrollLeft = next;
+        if((dir < 0 && next <= 0) || (dir > 0 && next >= max)){ stop(); return; }
+        rafId = requestAnimationFrame(frame);
+      }
+      function start(direction){
+        dir = direction; lastTs = null;
+        track.style.scrollSnapType = 'none';
+        if(rafId){ cancelAnimationFrame(rafId); }
+        rafId = requestAnimationFrame(frame);
+      }
+      function stop(){
+        if(rafId){ cancelAnimationFrame(rafId); }
+        rafId = null; lastTs = null;
+        track.style.scrollSnapType = '';
+      }
+      if(prevBtn){
+        prevBtn.addEventListener('mouseenter', function(){ if(!prevBtn.disabled){ start(-1); } });
+        prevBtn.addEventListener('mouseleave', stop);
+      }
+      if(nextBtn){
+        nextBtn.addEventListener('mouseenter', function(){ if(!nextBtn.disabled){ start(1); } });
+        nextBtn.addEventListener('mouseleave', stop);
+      }
+    }
+
+    var navTicking = false;
+    track.addEventListener('scroll', function(){
+      if(!navTicking){ requestAnimationFrame(function(){ updateNav(); navTicking = false; }); navTicking = true; }
+    }, { passive:true });
+    updateNav();
+    window.addEventListener('resize', updateNav);
+  }
+
+  document.querySelectorAll('.pedigree-slider__track').forEach(function(track){
+    wireCardSlider(track, {
+      containerSelector: '.pedigree-slider',
+      prevSelector: '.pedigree-slider__nav--prev',
+      nextSelector: '.pedigree-slider__nav--next',
+      continuousHover: false
+    });
+  });
+  document.querySelectorAll('.card-slider__track').forEach(function(track){
+    wireCardSlider(track, {
+      containerSelector: '.card-slider',
+      prevSelector: '.card-slider__nav--prev',
+      nextSelector: '.card-slider__nav--next',
+      continuousHover: true
+    });
+  });
 })();

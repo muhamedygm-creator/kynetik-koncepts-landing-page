@@ -42,14 +42,19 @@
       <h2 class="display h2 js-scrub" style="margin-top:26px;">Completed projects.</h2>
       <p class="sub-line">Four builds, delivered.</p>
 
-      <!-- full-site polish pass (via /impeccable critique): 4 cards in the
-           shared 3-column grid left an orphaned single tile alone in row 2
-           at >=1300px, with the other two columns empty beside it —
-           confirmed via getBoundingClientRect. project-grid--pair caps this
-           pillar at 2 columns so 4 always divides evenly (2x2); the
-           "Upcoming" pillar below keeps the plain .project-grid 3-column
-           behaviour since its own 3 cards fill that exactly. -->
-      <div class="project-grid project-grid--pair">
+      <!-- Round 13 (content update from client docx): "show our cars in a
+           horizontal card slide element" — see .pedigree-slider in
+           site.css for the full rationale. Nav buttons are wired up in
+           site-interactions.js (data-slide-target links each button to
+           its own track by id). -->
+      <div class="pedigree-slider">
+        <button class="pedigree-slider__nav pedigree-slider__nav--prev js-cursor-target" data-slide="prev" data-slide-target="pedigreeSliderDelivered" aria-label="Previous" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="pedigree-slider__nav pedigree-slider__nav--next js-cursor-target" data-slide="next" data-slide-target="pedigreeSliderDelivered" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pedigree-slider__track" id="pedigreeSliderDelivered">
         <!-- SOURCE: DSC00262 (1).JPG — same 599 RF hero shot used on its project page. -->
         <a class="project-card js-cursor-target" href="projects/599-rf.html">
           <div class="project-card__media media">
@@ -110,6 +115,7 @@
             <p class="project-card__cta">View Project &rarr;</p>
           </div>
         </a>
+        </div>
       </div>
     </div>
   </section>
@@ -121,7 +127,14 @@
       <h2 class="display h2 js-scrub" style="margin-top:26px;">Upcoming projects.</h2>
       <p class="sub-line">Three builds, already underway.</p>
 
-      <div class="project-grid">
+      <div class="pedigree-slider">
+        <button class="pedigree-slider__nav pedigree-slider__nav--prev js-cursor-target" data-slide="prev" data-slide-target="pedigreeSliderUpcoming" aria-label="Previous" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="pedigree-slider__nav pedigree-slider__nav--next js-cursor-target" data-slide="next" data-slide-target="pedigreeSliderUpcoming" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="pedigree-slider__track" id="pedigreeSliderUpcoming">
         <!-- SOURCE: 4.png — CGI concept render, same asset used on its project page. -->
         <a class="project-card js-cursor-target" href="projects/karbon-toys-canam.html">
           <div class="project-card__media media">
@@ -158,6 +171,7 @@
             <p class="project-card__cta">View Project &rarr;</p>
           </div>
         </a>
+        </div>
       </div>
     </div>
   </section>

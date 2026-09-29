@@ -19,7 +19,7 @@
    Digital Presence, which points at index.html#digital-presence.
 
    To mark the current nav item active, set on <body>:
-     <body data-nav-active="offering|pedigree|history|process|impact|digital-presence">
+     <body data-nav-active="offering|koncepts|pedigree|philosophy|process|digital-presence">
    Pages with no matching nav item (hero/contact-only sections, project
    pages, downloads.html) simply omit the attribute and no link gets
    marked active.
@@ -35,23 +35,23 @@
 
   var navActive = (document.body.getAttribute('data-nav-active') || '').trim();
 
-  /* full-site polish pass (via /impeccable critique, P1): The Process
-     had an #process anchor and was the single strongest section on the
-     page by Assessment A's own read ("the one most likely to convince a
-     skeptical buyer"), yet had no way to reach it except scrolling past
-     everything before it — no direct link, no shareable in-page URL.
-     Added as a 6th item, one past the cognitive-load guideline's ≤5
-     top-level-nav rule (see DESIGN.md's Layout section) but a deliberate
-     exception for the page's own best section rather than adding both
-     #process and #make and drifting further past it; What We Make sits
-     immediately after the hero already, so it's reached within the
-     first scroll or two regardless of a nav entry. */
+  /* Round 13 (content update from client docx): nav restructured per the
+     doc's own "Menu" list — Offerings, Koncepts, Pedigree, Philosophy,
+     Process, Digital Presence. "Koncepts" is the renamed What We Make
+     section (#koncepts, was #make); "Philosophy" replaces "History" and
+     now covers the merged History+Return-of-the-Coachbuilder content
+     (#philosophy, was #history — the old Return-of-Coachbuilder section
+     had no nav entry of its own, so this isn't a removed link, just a
+     renamed/expanded one). Impact dropped per the doc's explicit
+     "(remove)" — the section itself is removed too, see index.html.
+     Still 6 items, unchanged from the round-11 count despite swapping
+     Impact out for Koncepts in. */
   var NAV_ITEMS = [
     { key: 'offering',         label: 'Offering',         href: p + 'offering.html' },
+    { key: 'koncepts',         label: 'Koncepts',         href: p + 'index.html#koncepts' },
     { key: 'pedigree',         label: 'Pedigree',         href: p + 'pedigree.html' },
-    { key: 'history',          label: 'History',          href: p + 'index.html#history' },
-    { key: 'process',          label: 'The Process',      href: p + 'index.html#process' },
-    { key: 'impact',           label: 'Impact',           href: p + 'index.html#impact' },
+    { key: 'philosophy',       label: 'Philosophy',       href: p + 'index.html#philosophy' },
+    { key: 'process',          label: 'Process',          href: p + 'index.html#process' },
     { key: 'digital-presence', label: 'Digital Presence', href: p + 'index.html#digital-presence' }
   ];
   var CTA_HREF = p + 'index.html#contact';

@@ -71,12 +71,25 @@
     </div>
     <div class="hero__overlay" aria-hidden="true"></div>
     <div class="wrap hero__content">
+      <!-- Round 13 (content update from client docx): headline replaced
+           per the doc's Hero Section spec ("A Modern Coachbuilder",
+           written in the site's established sentence-case-in-source
+           convention — CSS uppercases it regardless). "Bring us the car
+           you love" / "See what we make" replaced with the doc's own
+           CTA1/CTA2 labels; CTA2 now points at Pedigree (past, delivered
+           work) rather than offering.html, matching "Previous Builds"
+           literally instead of leaving it pointed at the capabilities
+           page the old label described. -->
       <p class="eyebrow">Kynetik Koncepts</p>
-      <h1 class="display h1 hero__headline">Energy in motion.</h1>
-      <p class="hero__sub">The modern coachbuilder, Dubai.</p>
+      <h1 class="display h1 hero__headline">A modern coachbuilder.</h1>
+      <!-- was "The modern coachbuilder, Dubai." — nearly word-for-word
+           the new headline sitting directly above it once that changed
+           to "A modern coachbuilder." Kept just the grounding detail the
+           sub-line was actually doing work for. -->
+      <p class="hero__sub">Energy in Motion.</p>
       <div class="hero__cta-row">
-        <a class="btn btn--primary js-cursor-target js-magnetic" href="#contact">Bring us the car you love</a>
-        <a class="btn btn--ghost js-cursor-target js-magnetic" href="offering.html">See what we make</a>
+        <a class="btn btn--primary js-cursor-target js-magnetic" href="#contact">Start your build</a>
+        <a class="btn btn--ghost js-cursor-target js-magnetic" href="pedigree.html">Previous builds</a>
       </div>
     </div>
     <div class="hero__scroll-cue"><span class="hero__scroll-cue-line"></span> Scroll</div>
@@ -84,9 +97,89 @@
 
   <!-- Round 5: the old on-page Offerings section moved to its own
        page, offering.html — same pattern as Pedigree. See offering.html
-       for the real copy and photography notes. -->
+       for the real copy and photography notes.
 
-  <!-- ============ 2B. WHAT WE MAKE — BLACK, PHOTO GRID ============
+       Round 13 amends: homepage teaser reinstated below. Reuses
+       .project-card + .card-slider (the .pedigree-slider carousel
+       mechanics, generically renamed so "pedigree" doesn't show up on an
+       unrelated section — see site.css) instead of .offering-tile's
+       overlay pattern, and shows only the 4 of 9 tiles with real
+       photography already shot (03 Carbon Fiber Production, 04 Interior
+       Customisation, 08 PPS & Finish, 09 Custom Wheels) — a preview, not
+       the full catalogue. Nav item stays "Offering" (singular, per this
+       round's brief); this heading is deliberately "Service Offering" —
+       see offering.html's own eyebrow for the same intentional split.
+
+       Round 14 amends: dropped the per-card "NN / 09" eyebrow — only 4
+       of the 9 real tiles show here, so consecutive cards jumped
+       non-adjacent numbers as the carousel was browsed and read as
+       broken rather than intentional; a fixed 1-9 count belongs on the
+       dedicated Offering page's full grid, not a scrollable preview
+       with no fixed visible order. Also dropped each card's repeated
+       "View All Offerings" line (redundant, didn't point anywhere
+       specific) — one CTA now, after the carousel, styled solid gold
+       (.btn--primary, matching the WhatsApp/hero CTA) instead of the
+       outline treatment. Arrow hover-to-scroll: see .card-slider's JS
+       wiring in site-interactions.js. -->
+  <section class="section ground-black js-scrub-section" id="offering-teaser">
+    <div class="wrap">
+      <p class="eyebrow">Service Offering</p>
+      <hr class="hairline">
+      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:18ch;">Nine disciplines, on call.</h2>
+      <p class="sub-line">A preview of the capabilities we offer as their own service, each mastered building our own cars first.</p>
+
+      <div class="card-slider">
+        <button class="card-slider__nav card-slider__nav--prev js-cursor-target" aria-label="Previous" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="card-slider__nav card-slider__nav--next js-cursor-target" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="card-slider__track" id="offeringTeaserSlider">
+        <a class="project-card js-cursor-target" href="offering.html">
+          <div class="project-card__media media">
+            <img src="assets/img/service-panels.jpg" alt="Moulded carbon exterior panel" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title" style="margin-top:0;">Carbon Fiber Production</h3>
+            <p class="project-card__tagline">Bespoke panels laid up and cured in carbon fibre, to the same standard on every build.</p>
+          </div>
+        </a>
+        <a class="project-card js-cursor-target" href="offering.html">
+          <div class="project-card__media media">
+            <img src="assets/img/service-interior.jpg" alt="Bespoke car interior, contrast stitching" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title" style="margin-top:0;">Interior Customisation</h3>
+            <p class="project-card__tagline">Bespoke cabins, retrims and carbon trim, composed to the taste of the owner who commissioned it.</p>
+          </div>
+        </a>
+        <a class="project-card js-cursor-target" href="offering.html">
+          <div class="project-card__media media">
+            <img src="assets/img/service-protective.jpg" alt="Glossy protective coating on a carbon surface" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title" style="margin-top:0;">PPS &amp; Finish</h3>
+            <p class="project-card__tagline">Protective coatings and finish work, all but invisible, done to concours standard.</p>
+          </div>
+        </a>
+        <a class="project-card js-cursor-target" href="offering.html">
+          <div class="project-card__media media">
+            <img src="assets/img/offer-wheels.jpg" alt="Custom multi-spoke wheel, full profile" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title" style="margin-top:0;">Custom Wheels Design &amp; Production</h3>
+            <p class="project-card__tagline">Bespoke wheel designs, engineered and produced in-house to complete the car's one-of-one character.</p>
+          </div>
+        </a>
+        </div>
+      </div>
+
+      <a class="btn btn--primary js-cursor-target js-magnetic" href="offering.html" style="margin-top:40px;">View All Offerings</a>
+    </div>
+  </section>
+
+  <!-- ============ 2B. KONCEPTS — BLACK, PHOTO GRID ============
        Round 4: this five-item build-category section had collapsed into
        the 9-item Offerings grid at some point after round 2 (confirmed by
        grep — zero matches for any of these five names in this file before
@@ -97,13 +190,25 @@
        these exact categories in assets/img/ but had gone unused since the
        old carousel version was retired. Interaction language matches
        .offer-tile: hairline extends + description reveals on hover, both
-       unconditionally visible <=900px for touch. -->
-  <section class="section ground-black js-scrub-section" id="make">
+       unconditionally visible <=900px for touch.
+
+       Round 13 (content update from client docx): renamed "What We Make"
+       -> "Karbon Koncepts" (eyebrow + nav item + section id, #make ->
+       #koncepts), new headline/sub-line.
+
+       Round 14 amends: round 13 also moved each tile's text out of the
+       photo (normal-flow body above its own media block) to close a
+       spacing gap — that only tightened the gap, it didn't remove it.
+       Reverted back to full-bleed: media + .make-tile__scrim + body,
+       same DOM order and CSS as the section's pre-round-13 shape
+       (restored from the round-12 commit), title sitting directly over
+       the photo again. -->
+  <section class="section ground-black js-scrub-section" id="koncepts">
     <div class="wrap">
-      <p class="eyebrow">What We Make</p>
+      <p class="eyebrow">Karbon Koncepts</p>
       <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:18ch;">One philosophy, five ways to begin.</h2>
-      <p class="sub-line">Five build categories. One process, applied without exception.</p>
+      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:18ch;">One philosophy, five implementations.</h2>
+      <p class="sub-line">One process carries every creation, whatever form it takes.</p>
 
       <div class="make-grid">
         <article class="make-tile js-cursor-target" tabindex="0">
@@ -170,101 +275,127 @@
     </div>
   </section>
 
-  <!-- ============ 3. HISTORY — BLACK, SPLIT ============
-       "The Origin" and "The Return of the Coachbuilder" (next section) are
-       grouped under one #history anchor for the new 5-item nav; id lives on
-       this first sub-block, both keep their original copy untouched. ============ -->
-  <!-- Round 5: full redesign. The text column used to top-align a
-       standard eyebrow/h2/sub-line block inside a tall split, leaving
-       dead air below it that didn't match the image's full height. Kept
-       the split (not full-bleed — Proven and the section right after
-       this one both already use a dimmed-photo-ground formula, and
-       stacking a third instance of it back to back would recreate the
-       "everything looks the same" problem this round exists to fix).
-       Instead the text side now carries real weight of its own: a
-       pull-quote-scale headline (clamp up near hero/h1 size, not the
-       standard .h2 step) with the column laid out top-to-bottom via
-       flex + space-between, so the eyebrow sits at the top, the quote
-       dominates the middle, and the sub-line anchors the bottom —
-       filling the frame the way the image already does. -->
-  <!-- Round 8: full-bleed rebuild, replacing the round-5/6 two-column
-       split entirely — not resized, removed. Image is now the section's
-       whole background (position:absolute inset:0, same structural
-       pattern as .section--photo elsewhere), with a LEFT-to-RIGHT scrim
-       (not the flat/uniform .media--ambient dim Proven and the old
-       Return-of-Coachbuilder background used) so text stays legible on
-       the dark left third while the car stays recognizable on the right.
-       SOURCE: still no real hands-on-craft photography exists anywhere
-       in Website Assets/ (confirmed again this round) — same flagged
-       compromise as round 4, re-cropped specifically for this wide
-       full-bleed use: a fresh, wider, horizontally-flipped crop of
-       DSC00213.jpg (assets/img/history-fullbleed.jpg) chosen because,
-       unlike the original crop, this framing naturally puts the dark
-       workshop ceiling/ductwork on the left and the car on the right —
-       checked directly against the scrim requirement before finalizing,
-       per the round-8 brief's own instruction to verify tonal range
-       first. Dealer plate cropped out again. -->
-  <section class="section history-bleed js-scrub-section" id="history">
-    <div class="history-bleed__media" aria-hidden="true">
-      <img src="assets/img/history-fullbleed.jpg" alt="" loading="lazy">
-    </div>
-    <div class="history-bleed__scrim" aria-hidden="true"></div>
-    <div class="wrap history-bleed__content">
-      <p class="eyebrow">History · The Origin</p>
+  <!-- ============ 2C. PEDIGREE TEASER — BLACK ============
+       Round 13 amends: homepage teaser reinstated (Round 13's docx-driven
+       update had explicitly said "section not avail in home page" for
+       Pedigree — this round reverses that call). A highlights reel, not
+       the full Delivered/Upcoming breakdown: cards mixed from both
+       pillars in one shuffled sequence, reusing the exact .project-card
+       markup and .card-slider carousel mechanics already built for
+       pedigree.html (see site.css's .pedigree-slider / .card-slider
+       comment for why the class is generically named). Full breakdown
+       stays on pedigree.html, unchanged.
+
+       Round 14 amends: per-card "View Project" links stay (each one is
+       correctly scoped to its own project, unlike the Offering teaser's
+       old repeated link). Only the arrow hover-behaviour and the final
+       button's style change — same as Offering, see that section's
+       comment and .card-slider's JS wiring in site-interactions.js. -->
+  <section class="section ground-black js-scrub-section" id="pedigree-teaser">
+    <div class="wrap">
+      <p class="eyebrow">Pedigree</p>
       <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:11ch;">A car was once the work of two hands.</h2>
-      <p class="sub-line">Kynetik exists to restore what was lost.</p>
+      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:18ch;">A few of our builds.</h2>
+      <p class="sub-line">Delivered and already underway, mixed — see the full record on the Pedigree page.</p>
+
+      <div class="card-slider">
+        <button class="card-slider__nav card-slider__nav--prev js-cursor-target" aria-label="Previous" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="card-slider__nav card-slider__nav--next js-cursor-target" aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="card-slider__track" id="pedigreeTeaserSlider">
+        <a class="project-card js-cursor-target" href="projects/599-rf.html">
+          <div class="project-card__media media">
+            <img src="assets/img/projects/599rf-hero.jpg" alt="599 RF, rear three-quarter, exposed carbon fibre" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__eyebrow">Bespoke One-of-One &middot; Delivered</p>
+            <h3 class="project-card__title">599 RF</h3>
+            <p class="project-card__tagline">Kynetik's flagship one-of-one build, numbered edition of twelve.</p>
+            <p class="project-card__cta">View Project &rarr;</p>
+          </div>
+        </a>
+        <a class="project-card js-cursor-target" href="projects/karbon-toys-canam.html">
+          <div class="project-card__media media">
+            <img src="assets/img/projects/canam-render.jpg" alt="Karbon Toys Can-Am buggy concept render" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__eyebrow">Karbon Toys &middot; In Development</p>
+            <h3 class="project-card__title">Karbon Toys — Can-Am Buggy</h3>
+            <p class="project-card__tagline">The Can-Am reimagined as a Lamborghini-styled machine, built for the dunes.</p>
+            <p class="project-card__cta">View Project &rarr;</p>
+          </div>
+        </a>
+        <a class="project-card js-cursor-target" href="projects/karbon-elektric-taycan.html">
+          <div class="project-card__media media">
+            <img src="assets/img/projects/taycan-hero.jpg" alt="Porsche Taycan, front three-quarter" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__eyebrow">Karbon Elektric &middot; Delivered</p>
+            <h3 class="project-card__title">Karbon Elektric — Porsche Taycan</h3>
+            <p class="project-card__tagline">Carbon transformation for the Porsche Taycan already on the road.</p>
+            <p class="project-card__cta">View Project &rarr;</p>
+          </div>
+        </a>
+        <a class="project-card js-cursor-target" href="projects/karbon-ikonics-bmw.html">
+          <div class="project-card__media media">
+            <img src="assets/img/projects/bmw-detail.jpg" alt="Carbon exterior panel detail" loading="lazy">
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__eyebrow">Karbon Ikonics &middot; In Development</p>
+            <h3 class="project-card__title">Karbon Ikonics — BMW</h3>
+            <p class="project-card__tagline">A proven platform, reclothed in the silhouette of an icon.</p>
+            <p class="project-card__cta">View Project &rarr;</p>
+          </div>
+        </a>
+        </div>
+      </div>
+
+      <a class="btn btn--primary js-cursor-target js-magnetic" href="pedigree.html" style="margin-top:40px;">Explore Pedigree</a>
     </div>
   </section>
 
-  <!-- ============ 4. THE RETURN OF THE COACHBUILDER — BLACK ============
-       Round 5 dropped the dimmed-photo-background treatment entirely
-       (Proven owns that formula). Round 6: still no photo-background —
-       Proven's formula stays Proven's — but Origin and Return are
-       sequential chapters under the same History nav item, and reviewed
-       side by side they read wrong when one is entirely image-led and
-       the other is pure typography. Fix: a real .split layout here too,
-       matching Origin's mechanics exactly, mirrored — Origin's image
-       sits right (text left), so this one puts the image LEFT (text
-       right), via .split--reverse (same column proportions, swapped
-       sides) so scrolling from one chapter into the next reads as a
-       rhythm, not two unrelated sections. Real stat row from round 5
-       kept as-is inside the text column, it was already working.
-       SOURCE: Website Assets/61.jpg (taycan-hero.jpg) — Porsche Taycan,
-       side 3/4 on wheel/chassis/door line, cropped tight to exclude a
-       visible dealer plate in the original frame. A modern EV platform
-       is a literal, not decorative, match for "modern platforms are
-       our chassis." -->
-  <section class="section ground-black js-scrub-section">
-    <div class="wrap split split--reverse">
-      <div class="split__media media js-cursor-target">
-        <img src="assets/img/return-chassis.jpg" alt="Porsche Taycan, side three-quarter on wheel and chassis line" width="629" height="750" loading="lazy">
-      </div>
+  <!-- ============ 3. PHILOSOPHY — BLACK, SPLIT ============
+       Round 13 (content update from client docx): the docx merges what
+       had been two sequential chapters under one nav item — "History ·
+       The Origin" (round 8's full-bleed rebuild) and "The Return of the
+       Coachbuilder" (round 6's mirrored-split treatment) — into a single
+       "Philosophy" section carrying one unified essay about why Kynetik
+       calls itself a modern-day coachbuilder. Both old sections' real
+       copy is gone (superseded by the docx's own text, not merely
+       resized); the round-8 full-bleed treatment doesn't suit five
+       paragraphs of running body copy the way it suited one short
+       pull-quote line, so this reverts to the .split component (text
+       column + image column) that predates round 8 — same mechanics as
+       the old Return-of-Coachbuilder chapter, not a new pattern.
+       Image: assets/img/history-workshop.jpg, the original pre-round-8
+       split-era workshop/tail-light detail shot (583x1300, already the
+       right portrait proportions for .split__media's 4:5 aspect-ratio)
+       — unused since round 8 moved to a wide full-bleed crop of a
+       different photo, reinstated here since the section is back to a
+       split layout. Return-of-Coachbuilder's own stat row (build
+       categories / capabilities / Dubai) didn't have an obvious home in
+       the new essay copy and isn't part of the docx's replacement text,
+       so it's been dropped along with the rest of that section's old
+       copy rather than bolted onto unrelated content. -->
+  <section class="section ground-black js-scrub-section" id="philosophy">
+    <div class="wrap split">
       <div>
-        <p class="eyebrow">The Return of the Coachbuilder</p>
+        <p class="eyebrow">Our Philosophy</p>
         <hr class="hairline">
-        <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:16ch;">Carbon fibre is our coachwork, modern platforms are our chassis.</h2>
-        <!-- full-site polish pass: was "Energy in motion." — an exact
-             duplicate of the closing Contact section's own accent-line
-             further down this same page. Replaced with a line specific
-             to this section's own coachwork/chassis metaphor instead of
-             borrowing the page's closing signature line. -->
-        <p class="accent-line">The craft returns.</p>
-
-        <div class="return-stats">
-          <div class="return-stat">
-            <p class="return-stat__num mono">05</p>
-            <p class="return-stat__label">Build categories</p>
-          </div>
-          <div class="return-stat">
-            <p class="return-stat__num mono">09</p>
-            <p class="return-stat__label">Capabilities, one roof</p>
-          </div>
-          <div class="return-stat">
-            <p class="return-stat__num mono">DXB</p>
-            <p class="return-stat__label">Dubai, UAE</p>
-          </div>
+        <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:18ch;">Why we call ourselves a modern-day coachbuilder.</h2>
+        <div class="philosophy-copy">
+          <p>There was a time when a car was not bought. It was commissioned.</p>
+          <p>A manufacturer supplied the mechanical promise: the engine, the frame, the chassis. What clothed it was a separate decision, carried to a coachbuilder who shaped a body by hand, for one client and no other. The result was never a product. It was a masterpiece, made once.</p>
+          <p>Then efficiency became the only question worth asking. Production scaled. The car grew standardised, affordable, and within reach of almost everyone — a triumph for society. But something was surrendered to achieve it. Individuality. Craftsmanship. The idea that a car could carry its owner&rsquo;s character. Coachbuilding was not carried forward. It was simply set aside.</p>
+          <p>We are living through another such reckoning. Electric drivetrains, new manufacturers, autonomous machines — the question of how a person moves is being rewritten once more. And in this age of standardisation, self-expression has not faded. It has surged.</p>
+          <p>Kynetik exists for that return. We are a modern-day coachbuilder, because the moment calls for one again.</p>
         </div>
+      </div>
+      <div class="split__media media js-cursor-target">
+        <img src="assets/img/history-workshop.jpg" alt="Carbon-bodied car detail under workshop lighting, rear three-quarter" loading="lazy">
       </div>
     </div>
   </section>
@@ -483,68 +614,17 @@
     </div>
   </section>
 
-  <!-- ============ 7. WHAT WE STAND FOR — CARBON GREY, TAGS ============
-       Round 2: was ground-olive; moved to ground-grey (#353535, already
-       defined in site.css and used elsewhere e.g. project "Convert Yours"
-       sections) to match the amend brief's Carbon Grey requirement. Text
-       stays Foster White — .ground-grey already resolves to that. ============ -->
-  <section class="section ground-grey js-scrub-section" id="impact" style="overflow:hidden;">
-    <div class="ground-curtain"></div>
-    <div class="wrap">
-      <p class="eyebrow">What We Stand For</p>
-      <hr class="hairline">
-      <h2 class="display h2 js-scrub" style="margin-top:26px; max-width:16ch;">Five things we will not compromise.</h2>
-
-      <div class="values">
-        <div class="value-tag js-cursor-target" tabindex="0">
-          <div class="value-tag__weave" aria-hidden="true"></div>
-          <div class="value-tag__num-wrap"><p class="value-tag__num">01</p></div>
-          <p class="value-tag__title">Design Fidelity</p>
-          <p class="value-tag__brief mono">Nothing value-engineered away.</p>
-          <hr class="value-tag__rule">
-          <p class="value-tag__desc">Every line stays true to the sketch that started it. Nothing is value-engineered away.</p>
-        </div>
-        <div class="value-tag js-cursor-target" tabindex="0">
-          <div class="value-tag__weave" aria-hidden="true"></div>
-          <div class="value-tag__num-wrap"><p class="value-tag__num">02</p></div>
-          <p class="value-tag__title">Daily Ease</p>
-          <p class="value-tag__brief mono">Made for every day, not the show stand.</p>
-          <hr class="value-tag__rule">
-          <p class="value-tag__desc">A carbon body built for daily use, not just for the show stand.</p>
-        </div>
-        <div class="value-tag js-cursor-target" tabindex="0">
-          <div class="value-tag__weave" aria-hidden="true"></div>
-          <div class="value-tag__num-wrap"><p class="value-tag__num">03</p></div>
-          <p class="value-tag__title">Self-Expression</p>
-          <p class="value-tag__brief mono">Never pulled from a catalogue.</p>
-          <hr class="value-tag__rule">
-          <p class="value-tag__desc">Built to a client's own vision, never pulled from a catalogue of options.</p>
-        </div>
-        <div class="value-tag js-cursor-target" tabindex="0">
-          <div class="value-tag__weave" aria-hidden="true"></div>
-          <div class="value-tag__num-wrap"><p class="value-tag__num">04</p></div>
-          <p class="value-tag__title">Playful Utility</p>
-          <p class="value-tag__brief mono">Performance meets personality.</p>
-          <hr class="value-tag__rule">
-          <p class="value-tag__desc">Performance and personality, in equal measure, on the same car.</p>
-        </div>
-        <div class="value-tag js-cursor-target" tabindex="0">
-          <div class="value-tag__weave" aria-hidden="true"></div>
-          <div class="value-tag__num-wrap"><p class="value-tag__num">05</p></div>
-          <p class="value-tag__title">Care and Craft</p>
-          <p class="value-tag__brief mono">Finished to our own name.</p>
-          <hr class="value-tag__rule">
-          <p class="value-tag__desc">Finished to a standard worth putting a name to.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 8. DIGITAL PRESENCE — BLACK ============
+  <!-- ============ 7. DIGITAL PRESENCE — BLACK ============
        New in round 2, sits after Impact and before Contact — this is the
        nav-order slot Downloads used to hold (Digital Presence is now the
        5th/last header nav item; Downloads moved to the footer only, #4 of
        the round 2 brief).
+
+       Round 13 (content update from client docx): "What We Stand For" /
+       Impact (the five-value-tile Carbon Grey section, #impact) removed
+       entirely per the docx's explicit "Impact (remove)" instruction —
+       nav link dropped in site-chrome.js too. Digital Presence now
+       follows directly after Philosophy + The Process.
 
        Handles, profile/channel URLs and follower/subscriber counts below
        are real, checked by hand against the live profiles. Both platforms

@@ -104,20 +104,6 @@
     color:var(--vintage-yellow); font-size:clamp(1.05rem,1.8vw,1.35rem); line-height:1.3; margin-top:28px;
   }
 
-  /* ---------- return of the coachbuilder: stat row (round 5) ----------
-     Same large-mono-number + label idea as the Impact value columns, in
-     miniature and without the hover-reveal (no extra copy to hide here,
-     just three facts already established elsewhere on the real site). */
-  .return-stats{ display:grid; grid-template-columns:1fr; gap:20px; margin-top:48px; }
-  @media(min-width:560px){ .return-stats{ grid-template-columns:repeat(3,1fr); gap:0; } }
-  .return-stat{ padding:16px 0; border-top:1px solid rgba(236,236,236,0.25); }
-  @media(min-width:560px){
-    .return-stat{ border-top:none; border-left:1px solid rgba(236,236,236,0.22); padding:0 24px; }
-    .return-stat:first-child{ border-left:none; padding-left:0; }
-  }
-  .return-stat__num{ font-family:var(--font-mono); font-size:clamp(1.9rem,3.4vw,2.6rem); color:var(--vintage-yellow); line-height:1; }
-  .return-stat__label{ margin-top:10px; font-family:var(--font-display); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; font-size:0.82rem; color:rgba(236,236,236,0.75); }
-
   /* ---------- scroll-scrubbed headline clip reveal ---------- */
   .js-scrub{
     clip-path: inset(0 100% 0 0);
@@ -180,9 +166,11 @@
   .logo-word{ width:96px; height:14px; background-image:var(--logo-wordmark-white); background-size:contain; background-repeat:no-repeat; }
   .footer .logo-mark{ width:24px; height:24px; }
 
-  .nav__links{ display:none; align-items:center; gap:40px; }
-  @media(min-width:960px){ .nav__links{ display:flex; } }
-  .nav__link{ font-family:var(--font-display); font-weight:600; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; opacity:0.85; position:relative; padding-bottom:4px; }
+  .nav__links{ display:none; align-items:center; gap:22px; }
+  @media(min-width:1180px){ .nav__links{ display:flex; } }
+  @media(min-width:1320px){ .nav__links{ gap:40px; } }
+  .nav__link{ font-family:var(--font-display); font-weight:600; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; opacity:0.85; position:relative; padding-bottom:4px; white-space:nowrap; }
+  @media(min-width:1320px){ .nav__link{ font-size:0.72rem; letter-spacing:0.16em; } }
   .nav__link::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--vintage-yellow); transform:scaleX(0); transform-origin:left; transition:transform var(--dur-med) var(--ease-precise); }
   .nav__link:hover{ opacity:1; } .nav__link:hover::after{ transform:scaleX(1); }
 
@@ -192,7 +180,7 @@
   }
 
   .nav__toggle{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; z-index:600; }
-  @media(min-width:960px){ .nav__toggle{ display:none; } }
+  @media(min-width:1180px){ .nav__toggle{ display:none; } }
   .nav__toggle-bars{ position:relative; width:22px; height:14px; }
   .nav__toggle-bars span{ position:absolute; left:0; right:0; height:1.5px; background:var(--foster-white); transition:transform var(--dur-med) var(--ease-precise), opacity var(--dur-med) var(--ease-precise), top var(--dur-med) var(--ease-precise); }
   .nav__toggle-bars span:nth-child(1){ top:0; } .nav__toggle-bars span:nth-child(2){ top:6px; } .nav__toggle-bars span:nth-child(3){ top:12px; }
@@ -271,92 +259,19 @@
   .split__media{ aspect-ratio:4/5; width:100%; }
   @media(max-width:899px){ .split__media{ aspect-ratio:16/10; order:-1; } }
 
-  /* ---------- Return of the Coachbuilder: mirrored split (round 6) ----------
-     Same .split mechanics as Origin, DOM order swapped (media first, text
-     second) so the image lands on the opposite side. Column proportions
-     are swapped too (not just left/right flipped) so the media column
-     keeps the same relative width it always had, wherever it sits —
-     a true mirror rather than an asymmetric flip. Mobile is unaffected:
-     .split__media's order:-1 already puts the image first regardless of
-     DOM order below 900px. */
-  @media(min-width:900px){ .split--reverse{ grid-template-columns:0.95fr 1.05fr; } }
-  @media(min-width:1400px){ .split--reverse{ grid-template-columns:1.15fr 1fr; } }
-
-  /* ---------- History/Origin: full-bleed rebuild (round 8) ----------
-     Replaces the round-5/6 .split treatment entirely (two content
-     columns, image confined to one side) with a single full-bleed
-     section: photo fills the whole section as its background, a
-     left-to-right scrim sits above it, and the text stack sits on top
-     of both, vertically centred, positioned where the scrim is
-     darkest. Deliberately NOT the site's existing .media--ambient
-     pattern (a flat, uniform dim) — Proven and Return-of-the-
-     Coachbuilder's own history already used that, and this needed its
-     own directional treatment, not a reuse of the "dim photo behind
-     centred text" formula those two sections still (rightly) own. */
-  .history-bleed{
-    position:relative; overflow:hidden; min-height:85vh; min-height:85dvh;
-    display:flex; align-items:center;
-  }
-  /* .wrap normally relies on margin:0 auto to centre itself, which is
-     exactly wrong here: as a flex child it shrinks to its content's
-     width first, so margin:auto centred that shrunk box in the middle
-     of the section instead of the text sitting at the true left edge
-     where the scrim is darkest — this was the actual cause of every
-     borderline contrast reading during testing, not the gradient curve
-     itself. Forcing full width makes .history-bleed__content sit at
-     .wrap's own left padding instead. */
-  .history-bleed > .wrap{ width:100%; margin:0; }
-  .history-bleed__media{ position:absolute; inset:0; z-index:0; }
-  .history-bleed__media img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;
-    filter:saturate(0.92) contrast(1.03);
-  }
-  /* strong (near-opaque) black on the left, fading to fully transparent
-     by the right third — the exact ask, not the site's usual flat dim. */
-  .history-bleed__scrim{
-    position:absolute; inset:0; z-index:1; pointer-events:none;
-    /* strengthened after measuring real contrast against the composited
-       image+scrim: the headline's widest line's right edge (~65% across
-       at desktop) measured only 3.35:1 against the original, gentler
-       curve — passable as large text but too close to the 3:1 floor to
-       trust. Pushed the 45%-opacity stop from 58%->66% and the near-
-       transparent stop from 78%->86%. That alone only got a re-measure
-       to 4.21-4.35:1 — the real fix was the .wrap flex-centring bug
-       above; with both fixes combined, a full grid-sweep of the actual
-       text block's worst-case point now measures a verified 10.35:1. */
-    background:linear-gradient(90deg,
-      rgba(32,32,32,0.90) 0%,
-      rgba(32,32,32,0.84) 32%,
-      rgba(32,32,32,0.52) 66%,
-      rgba(32,32,32,0.08) 86%,
-      rgba(32,32,32,0) 100%);
-  }
-  /* max-width tightened from 640px after a precise worst-case sweep of
-     the composited image+scrim came back 4.35:1 — just under the 4.5:1
-     AA floor for normal text — near the widest headline line's right
-     edge. Narrower column keeps every line inside the strongest part
-     of the scrim; combined with the .wrap fix above, final verified
-     worst-case is 10.35:1 desktop / 9.07:1 mobile. */
-  .history-bleed__content{ position:relative; z-index:2; max-width:520px; }
-  @media(max-width:767px){
-    .history-bleed{ min-height:75vh; min-height:75dvh; }
-    /* mobile: measured this and the original steeper-fade version failed
-       outright — a worst-case sweep across the actual text block came
-       back 2.51:1, below even the 3:1 large-text floor, because at
-       375px wide the content box spans nearly edge-to-edge (11px
-       margins) and reaches straight into the fade-to-transparent zone.
-       There's no real "left third vs. right two-thirds" to preserve at
-       this width anyway, so the mobile scrim goes almost flat instead
-       of a weakened copy of the desktop gradient — re-verified after
-       this change, and again after the .wrap fix above: worst-case
-       9.07:1 across the same sweep. */
-    .history-bleed__scrim{
-      background:linear-gradient(90deg,
-        rgba(32,32,32,0.90) 0%,
-        rgba(32,32,32,0.88) 70%,
-        rgba(32,32,32,0.72) 100%);
-    }
-  }
+  /* ---------- Philosophy: multi-paragraph body copy (round 13) ----------
+     Round 13 (content update from client docx): the merged Philosophy
+     section is the first place on the site carrying real running body
+     copy — five paragraphs, not one short .sub-line — so .sub-line's own
+     36em cap (tuned for a single line or two) isn't the right container.
+     Widened measure a little (42em) so five stacked paragraphs don't run
+     taller than the split column needs to be, still comfortably inside
+     the ~65-75ch readable-measure range. Font-size/color match .sub-line
+     exactly for consistency; line-height opened up from body copy's
+     usual 1.55 to 1.65 since this is sustained reading, not a caption. */
+  .philosophy-copy{ margin-top:20px; max-width:42em; }
+  .philosophy-copy p{ font-size:1.05rem; line-height:1.65; color:rgba(236,236,236,0.72); }
+  .philosophy-copy p + p{ margin-top:16px; }
 
   /* ---------- offerings: grid + weave-hover reveal ----------
      Round 3: full redesign against the approved prototype
@@ -459,9 +374,31 @@
      as different things at a glance. Same hover language as .offer-tile
      (hairline extends, desc reveals) for consistency, but the photo fills
      the tile instead of sitting inside a flat card. */
+  /* Round 14 amends: reverts round 13's normal-flow rework. That fix
+     ("put titles above image tiles instead of TOV") only tightened the
+     gap, it didn't remove it — grid-stretch still left dead space
+     around a fixed-aspect-ratio media block whenever a row's tallest
+     tile didn't match. Round 14 asks to go further: full-bleed photo,
+     no separate text block, title sits directly over the image via the
+     same scrim technique this project already uses elsewhere. This is
+     the tile's pre-round-13 structure, restored from the round-12
+     commit rather than re-derived, since it's the exact "already
+     established" pattern the brief points at. */
   .make-grid{ display:grid; grid-template-columns:1fr; gap:2px; margin-top:56px; }
   @media(min-width:600px){ .make-grid{ grid-template-columns:repeat(2,1fr); } }
-  @media(min-width:1000px){ .make-grid{ grid-template-columns:repeat(5,1fr); gap:2px; } }
+  /* Round 15: asymmetric row at full width — Bespoke One-of-One (tile 1)
+     and Karbon Elektric (tile 4) run wide as featured cards, the other
+     three stay narrow, so this reads as its own composition instead of
+     Offering's and Pedigree's equal-card rows. Only at the 5-across
+     tier: two or three columns below this doesn't have room for the
+     asymmetry to read, so it stays the plain even grid there. A fixed
+     row height (not aspect-ratio) is what makes the width vary while
+     every tile still lines up edge to edge — aspect-ratio would make
+     the wider tiles taller too and break the row. */
+  @media(min-width:1000px){
+    .make-grid{ grid-template-columns:1.6fr 1fr 1fr 1.6fr 1fr; gap:2px; }
+    .make-tile{ aspect-ratio:auto; height:clamp(380px, 30vw, 520px); }
+  }
   .make-tile{
     position:relative; aspect-ratio:3/4; overflow:hidden; cursor:pointer;
     background:var(--carbon-grey);
@@ -484,11 +421,6 @@
   .make-tile__title{ font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.05rem; line-height:1.25; }
   .make-tile__rule{ width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:12px 0; transition:width var(--dur-med) var(--ease-precise); }
   .make-tile:is(:hover, :focus-within) .make-tile__rule{ width:56px; }
-  /* round 4: was transition:max-height (flagged by /impeccable detect as
-     layout-transition). Replaced with opacity+transform; .make-tile__body
-     already overlays the photo via position:absolute, so the desc's now-
-     permanent layout space just sits within the existing bottom scrim
-     rather than pushing the tile (which has a fixed aspect-ratio anyway). */
   .make-tile__desc{
     font-family:var(--font-body); font-size:0.85rem; line-height:1.6; color:rgba(236,236,236,0.8);
     opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
@@ -579,7 +511,16 @@
      to a literal 550ms so it finishes exactly alongside the number roll
      (item 3), which also runs at 550ms — scoped to this rule only, the
      shared --dur-slow token elsewhere on the site is untouched. */
-  .stage-visual{ position:relative; width:45%; height:100%; overflow:hidden; background:var(--carbon-grey); }
+  /* Round 15: was width:45%/height:100% — percentage-height on a flex
+     child whose container's own height comes from calc(100dvh - ...)
+     inside a position:sticky box is a known cross-browser trouble spot
+     (the % can fail to resolve and the column collapses to its content's
+     natural height, leaving a small image over empty background rather
+     than filling the column). flex-basis + the default align-items:
+     stretch fills the cross-axis reliably regardless of how the
+     container's height was computed, so it doesn't depend on % height
+     resolution at all. */
+  .stage-visual{ position:relative; flex:0 0 45%; align-self:stretch; overflow:hidden; background:var(--carbon-grey); }
   .stage-visual .panel{ position:absolute; inset:0; overflow:hidden; opacity:0; transition:opacity 550ms var(--ease-precise); }
   @media (prefers-reduced-motion: reduce){ .stage-visual .panel{ transition:none; } }
   .stage-visual .panel.is-active{ opacity:1; }
@@ -619,7 +560,7 @@
   .stage-visual .stage-tag{ position:absolute; bottom:28px; left:28px; z-index:3; font-size:0.72rem; letter-spacing:0.04em; color:rgba(236,236,236,0.5); }
 
   /* right: content + rail */
-  .stage-content{ width:55%; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0 56px; position:relative; }
+  .stage-content{ flex:0 0 55%; align-self:stretch; height:auto; display:flex; flex-direction:column; justify-content:center; padding:0 56px; position:relative; }
   /* round 7: exact px minimums per the brief, not relative bumps —
      eyebrow >=14px, headline >=64px (clamp floor, so it never drops below
      regardless of viewport), desc >=19px/1.6 line-height, counter >=15px
@@ -688,7 +629,7 @@
        small screen. Matches the prototype's mobile override exactly. */
     .process-scroll{ height:585vh; height:calc(9 * 65dvh); }
     .process-stage{ flex-direction:column; height:calc(100vh - var(--nav-h)); height:calc(100dvh - var(--nav-h)); }
-    .stage-visual{ width:100%; height:44%; }
+    .stage-visual{ flex-basis:44%; align-self:stretch; }
     /* full-site polish pass (via spacing audit): bottom padding raised
        130px (was 100px) — with content vertically centred in this box,
        more bottom padding shifts that centred content up, away from
@@ -696,7 +637,7 @@
        — confirmed overlapping the stage title text via getBoundingClientRect
        before this fix. .rail's own right inset widened to clear the same
        button, matching the desktop fix above. */
-    .stage-content{ width:100%; height:56%; padding:28px 24px calc(130px + env(safe-area-inset-bottom, 0px)); }
+    .stage-content{ flex-basis:56%; align-self:stretch; height:auto; padding:28px 24px calc(130px + env(safe-area-inset-bottom, 0px)); }
     .stage-content__count{ left:24px; top:24px; }
     .rail{ left:24px; right:90px; bottom:calc(28px + env(safe-area-inset-bottom, 0px)); }
   }
@@ -735,123 +676,13 @@
      affect other sections/content this fix doesn't need to touch). */
   @media(max-width:600px){ .proven .sub-line{ max-width:calc(100% - 64px); margin-left:auto; margin-right:auto; } }
 
-  /* ---------- values (impact, carbon grey ground): full-width redesign (round 4) ----------
-     Round 2 fixed the ground colour to Carbon Grey; that stays untouched
-     here — this is purely a layout/interaction fix. Previously five thin
-     number+title tags sat in a grid that technically spanned the wrap but
-     read empty because there was almost nothing in each cell. Now each
-     value gets a tall column with real internal space, a large de-
-     emphasised number, and the site's established hairline-extends /
-     description-reveals hover language (borrowed from .offer-tile) so it
-     doesn't read as a bolted-on sixth interaction pattern. */
-  /* round 9: five columns must stay visually even (round-9 brief flagged
-     the fifth reading narrower with dead space beside it) — grid-
-     template-columns:repeat(5,1fr) already makes every track the same
-     width; the fix here is in the content, not the grid: with the
-     numeral pulled out of flow (below) and a brief line always present,
-     every column now has real content spanning its own track instead of
-     column 5's shorter title leaving visible slack next to it. */
-  .values{ display:grid; grid-template-columns:1fr; gap:0; margin-top:64px; }
-  @media(min-width:700px){ .values{ grid-template-columns:repeat(5,1fr); } }
-  .value-tag{
-    position:relative; overflow:hidden; padding:22px 0; border-top:1px solid rgba(236,236,236,0.3);
-    cursor:pointer; transition:background var(--dur-slow) var(--ease-precise);
-  }
-  @media(min-width:700px){
-    .value-tag{
-      border-top:none; border-left:1px solid rgba(236,236,236,0.22);
-      padding:0 28px; min-height:440px;
-      display:flex; flex-direction:column;
-    }
-    .value-tag:first-child{ border-left:none; padding-left:0; }
-    .value-tag:last-child{ padding-right:0; }
-  }
-  .value-tag:is(:hover, :focus-within){ background:rgba(236,236,236,0.03); }
-  /* round 9: faint carbon-weave texture at rest, not just on hover like
-     .offer-tile__weave — the brief wanted "just enough to keep the
-     column from reading as a flat void" while waiting on content.
-     Sits behind everything (z-index:0); the column's other children get
-     z-index:1 so they stay legible over it. */
-  .value-tag__weave{
-    position:absolute; inset:0; z-index:0; pointer-events:none;
-    opacity:0.6; transition:opacity var(--dur-med) var(--ease-precise);
-    background-image:
-      repeating-linear-gradient(45deg, rgba(233,190,95,0.05) 0 2px, transparent 2px 14px),
-      repeating-linear-gradient(-45deg, rgba(236,236,236,0.025) 0 2px, transparent 2px 14px);
-  }
-  .value-tag:is(:hover, :focus-within) .value-tag__weave{ opacity:1; }
-  /* round 9: previously the numeral was the first item in a flex column
-     with justify-content:flex-end, so num+title+brief+rule+desc packed
-     into one group low in the column, leaving a bare stretch above with
-     nothing to look at. First attempt at a fix pulled the numeral out
-     of flow with position:absolute + top:50% — that centred it on the
-     FULL column box, but the content block below it is tall enough
-     (title+brief+rule+the always-reserved desc space) that a true
-     mathematical centre landed the numeral right on top of the content,
-     a real overlap confirmed by measuring every column's rects (worst
-     case ~71px of vertical collision on "Playful Utility"). Fixed
-     properly with a flex-grow spacer instead: .value-tag__num-wrap is a
-     flex child with flex:1 that consumes whatever vertical space is
-     left over once the content block below it takes what it needs, and
-     centres the numeral within that leftover space — so the numeral
-     always sits in open space above the content, never inside it,
-     regardless of how long any pillar's copy runs. min-height bumped
-     300->380 to give that leftover space real presence. */
-  .value-tag__num-wrap{ position:relative; z-index:1; }
-  @media(min-width:700px){
-    .value-tag__num-wrap{ flex:1 1 auto; display:flex; align-items:center; }
-  }
-  .value-tag__num{
-    font-family:var(--font-mono); font-size:clamp(2.2rem,4vw,3.4rem); line-height:1;
-    color:rgba(236,236,236,0.22); transition:color var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
-    transform-origin:left center;
-  }
-  .value-tag:is(:hover, :focus-within) .value-tag__num{ color:rgba(236,236,236,0.4); transform:scale(1.06); }
-  @media(min-width:700px){
-    .value-tag__num{ font-size:clamp(2.6rem,4.6vw,4rem); }
-  }
-  .value-tag__title{ position:relative; z-index:1; margin-top:20px; font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:0.02em; font-size:1.1rem; }
-  /* round 9: short, always-visible line in the technical (mono) type
-     tier, so the column has real content at rest instead of relying on
-     hover alone for anything beyond the title. Crossfades into the
-     fuller .value-tag__desc on hover rather than both showing stacked. */
-  .value-tag__brief{
-    position:relative; z-index:1; margin-top:10px;
-    font-family:var(--font-mono); font-size:0.74rem; letter-spacing:0.03em; line-height:1.5;
-    color:rgba(236,236,236,0.45); max-width:22ch;
-    transition:opacity var(--dur-med) var(--ease-precise);
-    /* clamp to 2 lines so every column's content block is a predictable
-       height regardless of exact wording — the num-wrap spacer above
-       still adapts either way, but a consistent content height keeps
-       all five columns' numerals sitting at the same height too. */
-    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
-  }
-  .value-tag:is(:hover, :focus-within) .value-tag__brief{ opacity:0; }
-  .value-tag__rule{ position:relative; z-index:1; width:28px; height:1px; background:var(--vintage-yellow); border:0; margin:16px 0 12px; transition:width var(--dur-med) var(--ease-precise); }
-  .value-tag:is(:hover, :focus-within) .value-tag__rule{ width:56px; }
-  /* round 4: was transition:max-height (flagged by /impeccable detect as
-     layout-transition). Replaced with opacity+transform; the column is
-     now uniformly taller than the old resting state by the height of its
-     description text (min-height:300px above absorbs most of this). */
-  /* font-family body not mono (trust copy, not a label); color bumped from
-     0.55 to 0.64 opacity — 0.55 over Carbon Grey computed to ~4.36:1, just
-     under the 4.5:1 AA floor for this text size. */
-  .value-tag__desc{
-    position:relative; z-index:1;
-    font-family:var(--font-body); font-size:0.9rem; line-height:1.6; color:rgba(236,236,236,0.64); max-width:26ch;
-    opacity:0; transform:translateY(6px); transition:opacity var(--dur-med) var(--ease-precise), transform var(--dur-med) var(--ease-precise);
-  }
-  .value-tag:is(:hover, :focus-within) .value-tag__desc{ opacity:1; transform:translateY(0); }
-  @media(max-width:900px){
-    .value-tag__desc{ opacity:1; transform:none; max-width:none; }
-    .value-tag__rule{ width:56px; }
-    .value-tag__num{ color:rgba(236,236,236,0.4); }
-    /* mobile already shows the full .value-tag__desc permanently (no
-       hover to reveal it on touch), so the brief line would just be a
-       redundant, quieter duplicate sitting right above it — hide it here. */
-    .value-tag__brief{ display:none; }
-  }
-  @media (prefers-reduced-motion: reduce){ .value-tag__num{ transition:none; } .value-tag:is(:hover, :focus-within) .value-tag__num{ transform:none; } .value-tag__desc{ transform:none; } .value-tag__brief{ transition:none; } .value-tag__weave{ transition:none; } }
+  /* ---------- [removed round 13] .values / .value-tag* ----------
+     The "What We Stand For" / Impact section these styled was removed
+     entirely per the client docx's explicit "Impact (remove)"
+     instruction — see index.html. No other page ever used this
+     component, so the rules are deleted rather than left as dead
+     weight; .value-tag:focus-visible's entry in the shared focus-ring
+     selector list further down was removed too. */
 
   /* ---------- counters ---------- */
   .counters{ margin-top:56px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:32px; }
@@ -892,7 +723,7 @@
   .footer__social a{ color:var(--foster-white); opacity:0.7; display:flex; transition:color var(--dur-fast) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise); }
   .footer__social a:hover{ color:var(--vintage-yellow); opacity:1; }
 
-  a:focus-visible, button:focus-visible, .offer-tile:focus-visible, .make-tile:focus-visible, .value-tag:focus-visible, .offering-tile:focus-visible{ outline:2px solid var(--vintage-yellow); outline-offset:3px; }
+  a:focus-visible, button:focus-visible, .offer-tile:focus-visible, .make-tile:focus-visible, .offering-tile:focus-visible{ outline:2px solid var(--vintage-yellow); outline-offset:3px; }
 
   /* ==========================================================================
      ADDED FOR SITE EXPANSION (pedigree / projects / downloads)
@@ -931,17 +762,66 @@
      codebase referenced it. */
   .pedigree-pillar + .pedigree-pillar{ border-top:1px solid rgba(236,236,236,0.12); }
 
-  /* ---------- project grid: pedigree completed / upcoming pillars ---------- */
-  .project-grid{ display:grid; gap:24px; margin-top:56px; }
-  @media(min-width:640px){ .project-grid{ grid-template-columns:repeat(2,1fr); } }
-  @media(min-width:1024px){ .project-grid{ grid-template-columns:repeat(2,1fr); gap:32px; } }
-  /* Round 2 spacing pass: .wrap is wider now — let a pillar with enough
-     cards actually use a third column instead of capping at two forever. */
-  @media(min-width:1300px){ .project-grid{ grid-template-columns:repeat(3,1fr); gap:32px; } }
-  /* full-site polish pass: "Delivered" has exactly 4 cards, which orphans
-     a lone tile in row 2 of the 3-column layout above — override back to
-     2 columns specifically for that pillar so 4 always divides evenly. */
-  .project-grid--pair{ grid-template-columns:repeat(2,1fr); }
+  /* ---------- pedigree slider: horizontal card slide (round 13) ----------
+     Round 13 (content update from client docx): replaces the old
+     .project-grid (a responsive 2/3-column CSS grid, plus a --pair
+     modifier capping the 4-card "Delivered" pillar at 2 columns so it
+     never orphaned a card) with a real horizontal-scrolling carousel per
+     the docx's explicit "show our cars in a horizontal card slide
+     element." Both pillars (Delivered, In Development) use this now,
+     each its own independent slider — the ground-colour-shift and
+     eyebrow/headline distinction between the two pillars is untouched,
+     only how each pillar's own cards are laid out changed.
+     Native scroll-snap, not a JS-driven carousel library (none exists
+     anywhere in this codebase, and this doesn't need one) — real
+     touch/trackpad horizontal scroll works with zero JS; the two nav
+     buttons are a progressive enhancement for mouse users, wired up in
+     site-interactions.js, and hidden entirely on touch-sized viewports
+     where swipe is the native, expected gesture. .project-card itself
+     is unchanged — same component, just a flex item with a fixed width
+     now instead of a grid cell. */
+  .pedigree-slider, .card-slider{ position:relative; margin-top:56px; }
+  .pedigree-slider__track, .card-slider__track{
+    display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x proximity;
+    padding-bottom:4px; scroll-padding-left:56px;
+    scrollbar-width:none; -ms-overflow-style:none;
+  }
+  .pedigree-slider__track::-webkit-scrollbar, .card-slider__track::-webkit-scrollbar{ display:none; }
+  @media(min-width:640px){ .pedigree-slider__track, .card-slider__track{ gap:32px; scroll-padding-left:56px; } }
+  .pedigree-slider .project-card, .card-slider .project-card{ flex:0 0 78vw; max-width:340px; scroll-snap-align:start; }
+  @media(min-width:640px){ .pedigree-slider .project-card, .card-slider .project-card{ flex-basis:360px; } }
+  /* Round 15: the homepage Pedigree teaser sat right under Offering using
+     the identical card proportions — same component, so fine, but with
+     nothing to tell the two sections apart at a glance. Narrower and
+     taller here (portrait 3:4 media vs Offering's 4:3) breaks that echo
+     without touching the shared .project-card component Offering and
+     pedigree.html's own pillars still use at their normal proportions. */
+  #pedigree-teaser .project-card{ flex-basis:260px; max-width:260px; }
+  #pedigree-teaser .project-card__media{ aspect-ratio:3/4; }
+  /* true circles per DESIGN.md's shape rule — hard 0px corners or true
+     50% circles only, nothing in between, so these can't borrow the
+     rounded-square button style used elsewhere. Hidden below 900px:
+     touch is the native, already-discoverable way to move a horizontal
+     list on a phone/tablet, and floating circular buttons over a
+     78vw-wide card at that size cost more thumb-real-estate than they
+     give back.
+     .card-slider is the generic twin of .pedigree-slider (round 13
+     amends): same mechanics, reused for the homepage's Pedigree and
+     Offering teaser carousels — named generically since "pedigree"
+     would be misleading on the Offering teaser. */
+  .pedigree-slider__nav, .card-slider__nav{
+    display:none; position:absolute; top:50%; margin-top:-24px; width:48px; height:48px; border-radius:50%;
+    background:var(--kynetik-black); border:1px solid rgba(236,236,236,0.3); color:var(--foster-white);
+    align-items:center; justify-content:center; z-index:2; cursor:pointer;
+    transition:border-color var(--dur-fast) var(--ease-precise), color var(--dur-fast) var(--ease-precise), opacity var(--dur-fast) var(--ease-precise);
+  }
+  .pedigree-slider__nav:hover, .card-slider__nav:hover{ border-color:var(--vintage-yellow); color:var(--vintage-yellow); }
+  .pedigree-slider__nav[disabled], .card-slider__nav[disabled]{ opacity:0.3; cursor:default; }
+  .pedigree-slider__nav[disabled]:hover, .card-slider__nav[disabled]:hover{ border-color:rgba(236,236,236,0.3); color:var(--foster-white); }
+  .pedigree-slider__nav--prev, .card-slider__nav--prev{ left:-20px; }
+  .pedigree-slider__nav--next, .card-slider__nav--next{ right:-20px; }
+  @media(min-width:900px){ .pedigree-slider__nav, .card-slider__nav{ display:flex; } }
+  @media (prefers-reduced-motion: reduce){ .pedigree-slider__track, .card-slider__track{ scroll-behavior:auto; } }
   .project-card{ display:flex; flex-direction:column; background:var(--carbon-grey); border-top:1px solid var(--vintage-yellow); transition:transform var(--dur-fast) var(--ease-precise); }
   .project-card:hover{ transform:translateY(-4px); }
   .project-card__media{ aspect-ratio:4/3; }
